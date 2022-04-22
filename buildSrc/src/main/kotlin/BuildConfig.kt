@@ -10,6 +10,7 @@ object Versions {
     const val appCompat = "1.4.1"
     const val material = "1.5.0"
     const val constraint = "2.1.3"
+    const val lifecycle = "1.4.1"
 }
 
 object BuildPlugins {
@@ -45,6 +46,12 @@ object Dependencies {
         val runtime by lazy { "androidx.room:room-runtime:${Versions.roomVersion}" }
         val compiler by lazy { "androidx.room:room-compiler:${Versions.roomVersion}" }
         val coroutines by lazy { "androidx.room:room-ktx:${Versions.roomVersion}" }
+    }
+
+    object Lifecycle {
+        val viewModel by lazy { "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}" }
+        val liveData by lazy { "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle}" }
+        val saveState by lazy { "androidx.lifecycle:lifecycle-viewmodel-savedstate:${Versions.lifecycle}" }
     }
 
     val coreKtx by lazy {"androidx.core:core-ktx:${Versions.coreKtx}" }

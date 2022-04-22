@@ -4,6 +4,7 @@ plugins {
     kotlin("kapt")
     id("dagger.hilt.android.plugin")
     id("com.google.devtools.ksp")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -34,16 +35,25 @@ android {
 }
 
 dependencies {
+    //Hilt
     implementation(Dependencies.Hilt.runtime)
     kapt(Dependencies.Hilt.compiler)
 
+    //Coroutines
     implementation(Dependencies.Coroutines.core)
     implementation(Dependencies.Coroutines.android)
 
+    //Room
     implementation(Dependencies.Room.runtime)
     implementation(Dependencies.Room.coroutines)
     ksp(Dependencies.Room.compiler)
 
+    //Lifecycle
+    implementation(Dependencies.Lifecycle.viewModel)
+    implementation(Dependencies.Lifecycle.liveData)
+    implementation(Dependencies.Lifecycle.saveState)
+
+    //Other
     implementation(Dependencies.coreKtx)
     implementation(Dependencies.appCompat)
     implementation(Dependencies.material)

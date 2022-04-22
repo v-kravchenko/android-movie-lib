@@ -1,7 +1,21 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
-plugins {
-    id("com.android.application") version Versions.gradleVersion apply false
-    kotlin("android") version Versions.kotlinVersion apply false
+buildscript {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath(BuildPlugins.gradle)
+        classpath(BuildPlugins.kotlin)
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
 }
 
 tasks.register("clean", Delete::class) {

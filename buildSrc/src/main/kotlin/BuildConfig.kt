@@ -7,6 +7,11 @@ object Versions {
     const val constraint = "2.1.3"
 }
 
+object BuildPlugins {
+    val gradle by lazy { "com.android.application:com.android.application.gradle.plugin:${Versions.gradleVersion}" }
+    val kotlin by lazy { "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlinVersion}" }
+}
+
 object AppConfig {
     const val id = "com.redcatgames.musiclib"
     const val compileSdkVersion = 32
@@ -15,10 +20,6 @@ object AppConfig {
     const val targetSdkVersion = compileSdkVersion
     const val versionCode = 1
     const val versionName = "1.01"
-}
-
-object BuildPlugins {
-
 }
 
 object Dependencies {

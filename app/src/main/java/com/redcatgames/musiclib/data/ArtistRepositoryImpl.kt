@@ -17,6 +17,6 @@ object ArtistRepositoryImpl : ArtistRepository {
 
     override fun getArtist(id: Int): Artist {
         return artistList.find { it.id == id }
-            ?: throw RuntimeException("Element with id $id not found!")
+            ?: throw RuntimeException("Element with id $id not found")
     }
 }

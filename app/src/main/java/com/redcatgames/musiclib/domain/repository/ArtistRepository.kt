@@ -1,4 +1,6 @@
-package com.redcatgames.musiclib.domain
+package com.redcatgames.musiclib.domain.repository
+
+import com.redcatgames.musiclib.domain.model.Artist
 
 interface ArtistRepository {
     fun getArtistList(): List<Artist>

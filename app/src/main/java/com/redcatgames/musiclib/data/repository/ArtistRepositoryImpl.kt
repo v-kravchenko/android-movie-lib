@@ -1,9 +1,9 @@
-package com.redcatgames.musiclib.data
+package com.redcatgames.musiclib.data.repository
 
-import com.redcatgames.musiclib.domain.Artist
-import com.redcatgames.musiclib.domain.ArtistRepository
+import com.redcatgames.musiclib.domain.model.Artist
+import com.redcatgames.musiclib.domain.repository.ArtistRepository
 
-object ArtistRepositoryImpl : ArtistRepository {
+class ArtistRepositoryImpl : ArtistRepository {
 
     private val artistList = listOf(
         Artist(1, "Ivanov"),

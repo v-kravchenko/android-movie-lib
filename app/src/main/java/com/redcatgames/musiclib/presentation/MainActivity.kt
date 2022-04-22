@@ -3,7 +3,9 @@ package com.redcatgames.musiclib.presentation
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.redcatgames.musiclib.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }

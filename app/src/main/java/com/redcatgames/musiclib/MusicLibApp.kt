@@ -2,8 +2,10 @@ package com.redcatgames.musiclib;
 
 import android.app.Application;
 import android.os.Build
+import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 
+@HiltAndroidApp
 class MusicLibApp: Application() {
     override fun onCreate() {
         super.onCreate()

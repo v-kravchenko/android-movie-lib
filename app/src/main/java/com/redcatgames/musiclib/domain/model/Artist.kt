@@ -1,4 +1,4 @@
-package com.redcatgames.musiclib.domain
+package com.redcatgames.musiclib.domain.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

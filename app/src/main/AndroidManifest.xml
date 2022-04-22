@@ -11,7 +11,7 @@
         android:theme="@style/Theme.MusicLib"
         android:name=".MusicLibApp">
         <activity
-            android:name="com.redcatgames.musiclib.MainActivity"
+            android:name="com.redcatgames.musiclib.presentation.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

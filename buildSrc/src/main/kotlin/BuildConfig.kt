@@ -10,7 +10,7 @@ object Versions {
     const val appCompat = "1.4.1"
     const val material = "1.5.0"
     const val constraint = "2.1.3"
-    const val lifecycle = "1.4.1"
+    const val lifecycle = "2.4.1"
 }
 
 object BuildPlugins {

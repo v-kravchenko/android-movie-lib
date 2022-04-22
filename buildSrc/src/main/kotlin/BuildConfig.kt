@@ -12,6 +12,7 @@ object Versions {
     const val constraint = "2.1.3"
     const val lifecycle = "2.4.1"
     const val navigation = "2.4.2"
+    const val timber = "5.0.1"
 }
 
 object BuildPlugins {
@@ -65,4 +66,5 @@ object Dependencies {
     val appCompat by lazy { "androidx.appcompat:appcompat:${Versions.appCompat}"}
     val material by lazy { "com.google.android.material:material:${Versions.material}"}
     val constraint by lazy { "androidx.constraintlayout:constraintlayout:${Versions.constraint}" }
+    val timber by lazy { "com.jakewharton.timber:timber:${Versions.timber}" }
 }

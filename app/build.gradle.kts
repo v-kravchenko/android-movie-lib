@@ -66,6 +66,7 @@ dependencies {
     implementation(Dependencies.appCompat)
     implementation(Dependencies.material)
     implementation(Dependencies.constraint)
+    implementation(Dependencies.timber)
 }
 
 kapt {

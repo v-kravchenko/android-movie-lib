@@ -53,6 +53,10 @@ dependencies {
     implementation(Dependencies.Lifecycle.liveData)
     implementation(Dependencies.Lifecycle.saveState)
 
+    //Navigation
+    implementation(Dependencies.Navigation.fragment)
+    implementation(Dependencies.Navigation.ui)
+
     //Other
     implementation(Dependencies.coreKtx)
     implementation(Dependencies.appCompat)

@@ -11,6 +11,7 @@ object Versions {
     const val material = "1.5.0"
     const val constraint = "2.1.3"
     const val lifecycle = "2.4.1"
+    const val navigation = "2.4.2"
 }
 
 object BuildPlugins {
@@ -52,6 +53,11 @@ object Dependencies {
         val viewModel by lazy { "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}" }
         val liveData by lazy { "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle}" }
         val saveState by lazy { "androidx.lifecycle:lifecycle-viewmodel-savedstate:${Versions.lifecycle}" }
+    }
+
+    object Navigation {
+        val fragment by lazy { "androidx.navigation:navigation-fragment-ktx:${Versions.navigation}" }
+        val ui by lazy {"androidx.navigation:navigation-ui-ktx:${Versions.navigation}" }
     }
 
     val coreKtx by lazy {"androidx.core:core-ktx:${Versions.coreKtx}" }

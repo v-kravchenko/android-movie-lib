@@ -10,6 +10,7 @@ buildscript {
         classpath(BuildPlugins.kotlin)
         classpath(BuildPlugins.hilt)
         classpath(BuildPlugins.ksp)
+        classpath(BuildPlugins.safeArgs)
     }
 }
 

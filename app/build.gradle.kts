@@ -3,6 +3,7 @@ plugins {
     kotlin("android")
     kotlin("kapt")
     id("dagger.hilt.android.plugin")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -33,8 +34,15 @@ android {
 }
 
 dependencies {
-    implementation(Dependencies.hilt)
-    kapt(Dependencies.hiltCompiler)
+    implementation(Dependencies.Hilt.runtime)
+    kapt(Dependencies.Hilt.compiler)
+
+    implementation(Dependencies.Coroutines.core)
+    implementation(Dependencies.Coroutines.android)
+
+    implementation(Dependencies.Room.runtime)
+    implementation(Dependencies.Room.coroutines)
+    ksp(Dependencies.Room.compiler)
 
     implementation(Dependencies.coreKtx)
     implementation(Dependencies.appCompat)

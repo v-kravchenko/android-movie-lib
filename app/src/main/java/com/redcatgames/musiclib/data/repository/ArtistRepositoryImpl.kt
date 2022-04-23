@@ -5,7 +5,6 @@ import com.redcatgames.musiclib.data.source.local.mapper.toEntity
 import com.redcatgames.musiclib.data.source.local.mapper.toRecord
 import com.redcatgames.musiclib.domain.model.Artist
 import com.redcatgames.musiclib.domain.repository.ArtistRepository
-import java.util.*
 
 class ArtistRepositoryImpl(
     private val artistDao: ArtistDao
@@ -13,9 +12,9 @@ class ArtistRepositoryImpl(
 
     init {
         artistDao.deleteAll()
-        artistDao.insert(Artist(1, "Ivanov", Calendar.getInstance().time).toEntity())
-        artistDao.insert(Artist(2, "Petrov", Calendar.getInstance().time).toEntity())
-        artistDao.insert(Artist(3, "Sidorov", Calendar.getInstance().time).toEntity())
+        artistDao.insert(Artist(name = "Ivanov").toEntity())
+        artistDao.insert(Artist(name = "Petrov").toEntity())
+        artistDao.insert(Artist(name = "Sidorov").toEntity())
     }
 
     override fun getArtistList(): List<Artist> {

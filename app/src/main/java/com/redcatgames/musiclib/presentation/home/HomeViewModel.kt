@@ -22,7 +22,7 @@ class HomeViewModel @Inject constructor(
 ): AndroidViewModel(appContext as Application) {
     fun test() {
         val artistList = getArtistListUseCase.invoke()
-        val artist1 = getArtistUseCase.invoke(1)
+        val artist1 = getArtistUseCase.invoke(artistList.first().id)
         Timber.d("artist count: ${artistList.size}, artist1: $artist1")
     }
 }

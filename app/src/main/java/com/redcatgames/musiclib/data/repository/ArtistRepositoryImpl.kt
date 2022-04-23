@@ -12,15 +12,6 @@ class ArtistRepositoryImpl(
     private val artistDao: ArtistDao
 ) : ArtistRepository {
 
-    /*init {
-        with(artistDao) {
-            deleteAll()
-            insert(Artist(name = "Ivanov").mapTo())
-            insert(Artist(name = "Petrov").mapTo())
-            insert(Artist(name = "Sidorov").mapTo())
-        }
-    }*/
-
     override fun getArtistList(): LiveData<List<Artist>> {
         return Transformations.map(artistDao.loadAll()) {
             it.map { entity -> entity.mapFrom() }

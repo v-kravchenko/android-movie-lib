@@ -1,15 +1,16 @@
 package com.redcatgames.musiclib.data.source.local.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.redcatgames.musiclib.data.source.local.entity.ArtistEntity
 
 @Dao
 interface ArtistDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(photo: ArtistEntity): Long
+    fun insert(artist: ArtistEntity): Long
 
     @Delete
-    fun delete(photo: ArtistEntity)
+    fun delete(artist: ArtistEntity)
 
     @Query("DELETE FROM artists")
     fun deleteAll()
@@ -18,8 +19,8 @@ interface ArtistDao {
     fun update(artist: ArtistEntity)
 
     @Query("SELECT * FROM artists where id = :artistId")
-    fun loadOneByArtistId(artistId: Long): ArtistEntity?
+    fun loadOneByArtistId(artistId: Long): LiveData<ArtistEntity?>
 
     @Query("SELECT * FROM artists")
-    fun loadAll(): List<ArtistEntity>
+    fun loadAll(): LiveData<List<ArtistEntity>>
 }

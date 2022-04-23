@@ -26,7 +26,7 @@ class RepositoryModule {
             AppDatabase.DB_NAME
         )
             .fallbackToDestructiveMigration()
-            .allowMainThreadQueries()
+            //.allowMainThreadQueries()
             .setJournalMode(RoomDatabase.JournalMode.TRUNCATE)
             .build()
     }

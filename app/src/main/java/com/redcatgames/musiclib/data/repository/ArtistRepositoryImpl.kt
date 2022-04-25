@@ -24,6 +24,12 @@ class ArtistRepositoryImpl(
         }
     }
 
+    override fun getArtistByName(name: String): LiveData<Artist?> {
+        return Transformations.map(artistDao.loadOneByArtistName(name)) {
+            it?.mapFrom()
+        }
+    }
+
     override suspend fun putArtist(artist: Artist) {
         artistDao.insert(artist.mapTo())
     }

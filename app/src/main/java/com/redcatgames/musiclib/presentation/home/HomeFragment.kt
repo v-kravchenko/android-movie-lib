@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.redcatgames.musiclib.databinding.HomeFragmentBinding
+import com.redcatgames.musiclib.presentation.util.autoCleared
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -15,16 +16,13 @@ import timber.log.Timber
 class HomeFragment : Fragment() {
 
     private val viewModel: HomeViewModel by viewModels()
-
-    private var _binding: HomeFragmentBinding? = null
-    private val binding: HomeFragmentBinding
-        get() = _binding ?: throw RuntimeException("HomeFragmentBinding is null")
+    private var binding: HomeFragmentBinding by autoCleared()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = HomeFragmentBinding.inflate(inflater, container, false)
+        binding = HomeFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -45,10 +43,9 @@ class HomeFragment : Fragment() {
                 Toast.LENGTH_SHORT
             ).show()
         }
-    }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
+        viewModel.artistIvanov.observe(viewLifecycleOwner) {
+            Timber.d("Artist by name: $it")
+        }
     }
 }

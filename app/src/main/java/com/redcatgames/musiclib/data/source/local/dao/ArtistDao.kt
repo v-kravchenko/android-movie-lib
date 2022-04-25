@@ -21,6 +21,9 @@ interface ArtistDao {
     @Query("SELECT * FROM artists where id = :artistId")
     fun loadOneByArtistId(artistId: Long): LiveData<ArtistEntity?>
 
+    @Query("SELECT * FROM artists where name = :artistName")
+    fun loadOneByArtistName(artistName: String): LiveData<ArtistEntity?>
+
     @Query("SELECT * FROM artists")
     fun loadAll(): LiveData<List<ArtistEntity>>
 }

@@ -6,6 +6,7 @@ import com.redcatgames.musiclib.domain.model.Artist
 interface ArtistRepository {
     fun getArtistList(): LiveData<List<Artist>>
     fun getArtist(id: Long): LiveData<Artist?>
+    fun getArtistByName(name: String): LiveData<Artist?>
     suspend fun putArtist(artist: Artist)
     suspend fun deleteAllArtist()
 }

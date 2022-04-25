@@ -3,8 +3,8 @@ package com.redcatgames.musiclib.data.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import com.redcatgames.musiclib.data.source.local.dao.ArtistDao
-import com.redcatgames.musiclib.data.source.local.mapper.mapTo
 import com.redcatgames.musiclib.data.source.local.mapper.mapFrom
+import com.redcatgames.musiclib.data.source.local.mapper.mapTo
 import com.redcatgames.musiclib.domain.model.Artist
 import com.redcatgames.musiclib.domain.repository.ArtistRepository
 

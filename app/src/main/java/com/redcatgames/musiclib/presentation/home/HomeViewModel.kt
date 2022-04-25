@@ -21,7 +21,7 @@ class HomeViewModel @Inject constructor(
     private val putArtistUseCase: PutArtistUseCase,
     private val getArtistListUseCase: GetArtistListUseCase,
     private val getArtistUseCase: GetArtistUseCase
-): AndroidViewModel(appContext as Application) {
+) : AndroidViewModel(appContext as Application) {
 
     val artistList = getArtistListUseCase()
 

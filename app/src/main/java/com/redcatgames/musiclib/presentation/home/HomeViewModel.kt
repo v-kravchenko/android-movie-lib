@@ -3,7 +3,6 @@ package com.redcatgames.musiclib.presentation.home
 import android.app.Application
 import android.content.Context
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.redcatgames.musiclib.domain.model.Artist
 import com.redcatgames.musiclib.domain.usecase.DeleteAllArtistUseCase
@@ -12,9 +11,7 @@ import com.redcatgames.musiclib.domain.usecase.GetArtistUseCase
 import com.redcatgames.musiclib.domain.usecase.PutArtistUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -29,7 +26,7 @@ class HomeViewModel @Inject constructor(
     val artistList = getArtistListUseCase()
 
     init {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             deleteAllArtistUseCase()
             putArtistUseCase(Artist(name = "Ivanov"))
             putArtistUseCase(Artist(name = "Petrov"))

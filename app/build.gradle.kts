@@ -61,6 +61,9 @@ dependencies {
     implementation(Dependencies.Navigation.fragment)
     implementation(Dependencies.Navigation.ui)
 
+    //LeakCanary
+    debugImplementation(Dependencies.leakCanary)
+
     //Other
     implementation(Dependencies.coreKtx)
     implementation(Dependencies.appCompat)

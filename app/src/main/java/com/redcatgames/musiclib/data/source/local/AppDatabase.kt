@@ -7,7 +7,7 @@ import com.redcatgames.musiclib.data.source.local.converter.DateConverter
 import com.redcatgames.musiclib.data.source.local.dao.ArtistDao
 import com.redcatgames.musiclib.data.source.local.entity.ArtistEntity
 
-@Database(entities = [ArtistEntity::class], version = 1, exportSchema = true)
+@Database(entities = [ArtistEntity::class], version = 1, exportSchema = false)
 @TypeConverters(DateConverter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract val artistDao: ArtistDao

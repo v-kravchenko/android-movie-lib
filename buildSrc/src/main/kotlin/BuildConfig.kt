@@ -13,6 +13,7 @@ object Versions {
     const val lifecycle = "2.4.1"
     const val navigation = "2.4.2"
     const val timber = "5.0.1"
+    const val leakCanary = "2.9.1"
 }
 
 object BuildPlugins {
@@ -59,12 +60,14 @@ object Dependencies {
 
     object Navigation {
         val fragment by lazy { "androidx.navigation:navigation-fragment-ktx:${Versions.navigation}" }
-        val ui by lazy {"androidx.navigation:navigation-ui-ktx:${Versions.navigation}" }
+        val ui by lazy { "androidx.navigation:navigation-ui-ktx:${Versions.navigation}" }
     }
 
-    val coreKtx by lazy {"androidx.core:core-ktx:${Versions.coreKtx}" }
-    val appCompat by lazy { "androidx.appcompat:appcompat:${Versions.appCompat}"}
-    val material by lazy { "com.google.android.material:material:${Versions.material}"}
+    val leakCanary by lazy { "com.squareup.leakcanary:leakcanary-android:${Versions.leakCanary}" }
+
+    val coreKtx by lazy { "androidx.core:core-ktx:${Versions.coreKtx}" }
+    val appCompat by lazy { "androidx.appcompat:appcompat:${Versions.appCompat}" }
+    val material by lazy { "com.google.android.material:material:${Versions.material}" }
     val constraint by lazy { "androidx.constraintlayout:constraintlayout:${Versions.constraint}" }
     val timber by lazy { "com.jakewharton.timber:timber:${Versions.timber}" }
 }

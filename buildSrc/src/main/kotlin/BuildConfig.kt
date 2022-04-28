@@ -14,6 +14,7 @@ object Versions {
     const val navigation = "2.4.2"
     const val timber = "5.0.1"
     const val leakCanary = "2.9.1"
+    const val retrofit2 = "2.9.0"
 }
 
 object BuildPlugins {
@@ -61,6 +62,11 @@ object Dependencies {
     object Navigation {
         val fragment by lazy { "androidx.navigation:navigation-fragment-ktx:${Versions.navigation}" }
         val ui by lazy { "androidx.navigation:navigation-ui-ktx:${Versions.navigation}" }
+    }
+
+    object Retrofit2 {
+        val retrofit by lazy { "com.squareup.retrofit2:retrofit:${Versions.retrofit2}" }
+        val gson by lazy { "com.squareup.retrofit2:converter-gson:${Versions.retrofit2}" }
     }
 
     val leakCanary by lazy { "com.squareup.leakcanary:leakcanary-android:${Versions.leakCanary}" }

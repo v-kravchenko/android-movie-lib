@@ -64,6 +64,10 @@ dependencies {
     //LeakCanary
     debugImplementation(Dependencies.leakCanary)
 
+    //Retrofit2
+    implementation(Dependencies.Retrofit2.retrofit)
+    implementation(Dependencies.Retrofit2.gson)
+
     //Other
     implementation(Dependencies.coreKtx)
     implementation(Dependencies.appCompat)

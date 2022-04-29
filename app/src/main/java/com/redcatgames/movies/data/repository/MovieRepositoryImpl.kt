@@ -10,6 +10,7 @@ import com.redcatgames.movies.data.source.remote.adapter.NetworkResponse
 import com.redcatgames.movies.data.source.remote.mapper.mapFrom
 import com.redcatgames.movies.domain.model.Movie
 import com.redcatgames.movies.domain.repository.MovieRepository
+import com.redcatgames.movies.domain.util.UseCaseResult
 import timber.log.Timber
 
 class MovieRepositoryImpl(
@@ -17,52 +18,64 @@ class MovieRepositoryImpl(
     private val networkService: NetworkService
 ) : MovieRepository {
 
-    override suspend fun loadPopularMovieList(): List<Movie> {
+    override suspend fun deleteAllMovies() {
+        movieDao.deleteAll()
+    }
 
-        val response = networkService.getPopularMovies()
+    override suspend fun putMovie(movie: Movie) {
+        movieDao.insert(movie.mapTo())
+    }
 
-        response.onSuccess {
-            Timber.d("onSuccess: loaded movie count: ${it.movies.size}")
-        }
+    override suspend fun putMovieList(movies: List<Movie>) {
+        movieDao.insertAll(movies.map { it.mapTo() })
+    }
 
-        response.onApiError { error, code ->
-            Timber.d("onApiError (code: $code): [#${error.statusCode}] ${error.statusMessage}")
-        }
+    override suspend fun loadPopularMovieList(): UseCaseResult<Unit> {
 
-        response.onNetworkError {
-            Timber.d("onNetworkError: $it")
-        }
-
-        response.onUnknownError {
-            Timber.d("onUnknownError: $it")
-        }
-
-        when (response) {
+        return when (val response = networkService.getPopularMovies()) {
             is NetworkResponse.Success -> {
-                val body = response.body
-
-                movieDao.deleteAll()
-
-                body.movies.forEach {
-                    val movie = it.mapFrom()
-                    movieDao.insert(movie.mapTo())
-                }
+                Timber.d("onSuccess: loaded movie count: ${response.body.movies.size}")
+                deleteAllMovies()
+                val movieList = response.body.movies.map { it.mapFrom() }
+                putMovieList(movieList)
+                UseCaseResult.Success(Unit)
             }
             is NetworkResponse.ApiError -> {
                 val message = response.body.statusMessage
                 Timber.d("ApiError: $message")
+                UseCaseResult.Failure(response.body.statusMessage)
             }
             is NetworkResponse.NetworkError -> {
                 val message = response.error.localizedMessage
                 Timber.d("NetworkError: $message")
+                UseCaseResult.Failure(response.error.localizedMessage)
             }
             is NetworkResponse.UnknownError -> {
                 val message = response.error?.localizedMessage
                 Timber.d("UnknownError: $message")
+                UseCaseResult.Failure(response.error?.localizedMessage)
             }
         }
 
-        return listOf()
+//        response.onSuccess { result ->
+//            Timber.d("onSuccess: loaded movie count: ${result.movies.size}")
+//            deleteAllMovies()
+//            val movieList = result.movies.map { it.mapFrom() }
+//            putMovieList(movieList)
+//            return UseCaseResult.Success(Unit)
+//        }
+//
+//        response.onApiError { error, _ ->
+//            return UseCaseResult.Failure(error.statusMessage)
+//        }
+//
+//        response.onNetworkError {
+//            return UseCaseResult.Failure(it.localizedMessage ?: "Network error")
+//        }
+//
+//        response.onUnknownError {
+//            return UseCaseResult.Failure(it?.localizedMessage ?: "Unknown error")
+//        }
     }
 
     override fun popularMovieList(): LiveData<List<Movie>> {

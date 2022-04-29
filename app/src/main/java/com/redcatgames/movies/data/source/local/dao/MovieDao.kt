@@ -7,16 +7,19 @@ import com.redcatgames.movies.data.source.local.entity.MovieEntity
 @Dao
 interface MovieDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(movie: MovieEntity): Long
+    suspend fun insert(movie: MovieEntity): Long
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(movies: List<MovieEntity>)
 
     @Delete
-    fun delete(movie: MovieEntity)
+    suspend fun delete(movie: MovieEntity)
 
     @Query("DELETE FROM movies")
-    fun deleteAll()
+    suspend fun deleteAll()
 
     @Update
-    fun update(movie: MovieEntity)
+    suspend fun update(movie: MovieEntity)
 
     @Query("SELECT * FROM movies where id = :movieId")
     fun loadById(movieId: Long): LiveData<MovieEntity?>

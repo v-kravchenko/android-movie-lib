@@ -10,33 +10,27 @@ import com.redcatgames.movies.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     @ApplicationContext appContext: Context,
-    private val deleteAllArtistUseCase: DeleteAllArtistUseCase,
-    private val putArtistUseCase: PutArtistUseCase,
-    private val getArtistListUseCase: GetArtistListUseCase,
-    private val getArtistUseCase: GetArtistUseCase,
-    private val getArtistByNameUseCase: GetArtistByNameUseCase,
     private val getPopularMovieListUseCase: GetPopularMovieListUseCase,
     private val loadPopularMovieListUseCase: LoadPopularMovieListUseCase
 ) : BaseViewModel(appContext) {
 
-    val artistList = getArtistListUseCase()
-    val artistIvanov = getArtistByNameUseCase("Ivanov")
-    val movieList = getPopularMovieListUseCase()
+    val popularMovieList = getPopularMovieListUseCase()
 
     init {
         viewModelScope.launch {
-            deleteAllArtistUseCase()
-            putArtistUseCase(Artist(name = "Ivanov"))
-            putArtistUseCase(Artist(name = "Petrov"))
-            putArtistUseCase(Artist(name = "Sidorov"))
-            putArtistUseCase(Artist(name = "Cherkasov"))
-
-            loadPopularMovieListUseCase()
+            val result = loadPopularMovieListUseCase()
+            result.onSuccess {
+                Timber.d("loadPopularMovieListUseCase onSuccess")
+            }
+            result.onFailure {
+                Timber.d("loadPopularMovieListUseCase onFailure: $it")
+            }
         }
     }
 }

@@ -11,6 +11,7 @@ import com.redcatgames.movies.domain.model.Artist
 import com.redcatgames.movies.domain.model.Movie
 import com.redcatgames.movies.domain.repository.ArtistRepository
 import com.redcatgames.movies.domain.repository.MovieRepository
+import timber.log.Timber
 
 class MovieRepositoryImpl(
     private val movieDao: MovieDao,
@@ -19,7 +20,8 @@ class MovieRepositoryImpl(
 
     override fun getPopularMovieList(): LiveData<List<Movie>> {
 
-        //val test = networkService.getAlbums()
+        val test = networkService.getPopularMovies()
+        Timber.d("Movie count: ${test.isSuccessful}")
 
         return Transformations.map(movieDao.loadAll()) {
             it.map { movieEntity -> movieEntity.mapFrom() }

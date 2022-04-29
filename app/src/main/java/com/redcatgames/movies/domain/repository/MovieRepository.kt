@@ -4,5 +4,6 @@ import androidx.lifecycle.LiveData
 import com.redcatgames.movies.domain.model.Movie
 
 interface MovieRepository {
+    suspend fun loadPopularMovieList(): List<Movie>
     fun getPopularMovieList(): LiveData<List<Movie>>
 }

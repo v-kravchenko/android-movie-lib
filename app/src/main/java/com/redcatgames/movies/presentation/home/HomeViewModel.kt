@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.redcatgames.movies.domain.model.Artist
 import com.redcatgames.movies.domain.usecase.*
 import com.redcatgames.movies.domain.usecase.movie.GetPopularMovieListUseCase
+import com.redcatgames.movies.domain.usecase.movie.LoadPopularMovieListUseCase
 import com.redcatgames.movies.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -19,7 +20,8 @@ class HomeViewModel @Inject constructor(
     private val getArtistListUseCase: GetArtistListUseCase,
     private val getArtistUseCase: GetArtistUseCase,
     private val getArtistByNameUseCase: GetArtistByNameUseCase,
-    private val getPopularMovieListUseCase: GetPopularMovieListUseCase
+    private val getPopularMovieListUseCase: GetPopularMovieListUseCase,
+    private val loadPopularMovieListUseCase: LoadPopularMovieListUseCase
 ) : BaseViewModel(appContext) {
 
     val artistList = getArtistListUseCase()
@@ -33,6 +35,8 @@ class HomeViewModel @Inject constructor(
             putArtistUseCase(Artist(name = "Petrov"))
             putArtistUseCase(Artist(name = "Sidorov"))
             putArtistUseCase(Artist(name = "Cherkasov"))
+
+            loadPopularMovieListUseCase()
         }
     }
 }

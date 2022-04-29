@@ -3,6 +3,8 @@ package com.redcatgames.movies.di
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.redcatgames.movies.data.source.remote.NetworkService
+import com.redcatgames.movies.data.source.remote.adapter.NetworkResponseAdapterFactory
+import com.redcatgames.movies.data.source.remote.interceptor.BearerLoginInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -32,12 +34,14 @@ class NetworkModule {
     fun provideRetrofit(gson: Gson): Retrofit {
 
         val client = OkHttpClient.Builder()
+            .addInterceptor(BearerLoginInterceptor(NetworkService.TOKEN))
             .build()
 
         return Retrofit.Builder()
             .baseUrl(NetworkService.BASE_URL)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create(gson))
+            .addCallAdapterFactory(NetworkResponseAdapterFactory())
             .build()
     }
 

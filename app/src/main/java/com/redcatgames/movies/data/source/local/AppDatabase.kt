@@ -5,14 +5,17 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.redcatgames.movies.data.source.local.converter.DateConverter
 import com.redcatgames.movies.data.source.local.dao.ArtistDao
+import com.redcatgames.movies.data.source.local.dao.MovieDao
 import com.redcatgames.movies.data.source.local.entity.ArtistEntity
+import com.redcatgames.movies.data.source.local.entity.MovieEntity
 
-@Database(entities = [ArtistEntity::class], version = 1, exportSchema = false)
+@Database(entities = [ArtistEntity::class, MovieEntity::class], version = 1, exportSchema = false)
 @TypeConverters(DateConverter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract val artistDao: ArtistDao
+    abstract val movieDao: MovieDao
 
     companion object {
-        const val DB_NAME = "Movies.db"
+        const val DB_NAME = "MoviesDatabase.db"
     }
 }

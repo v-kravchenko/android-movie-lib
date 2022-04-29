@@ -15,12 +15,25 @@ import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
-class RepositoryModule {
+class DatabaseModule {
 
-    @Singleton
     @Provides
-    fun provideArtistRepository(artistDao: ArtistDao): ArtistRepository {
-        return ArtistRepositoryImpl(artistDao)
+    @Singleton
+    internal fun provideAppDatabase(application: Application): AppDatabase {
+        return Room.databaseBuilder(
+            application,
+            AppDatabase::class.java,
+            AppDatabase.DB_NAME
+        )
+            .fallbackToDestructiveMigration()
+            //.allowMainThreadQueries()
+            .setJournalMode(RoomDatabase.JournalMode.TRUNCATE)
+            .build()
+    }
+
+    @Provides
+    internal fun provideArtistDao(appDatabase: AppDatabase): ArtistDao {
+        return appDatabase.artistDao
     }
 
 }

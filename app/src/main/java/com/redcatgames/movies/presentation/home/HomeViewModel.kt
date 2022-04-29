@@ -16,7 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     @ApplicationContext appContext: Context,
-    private val getPopularMovieListUseCase: GetPopularMovieListUseCase,
+    getPopularMovieListUseCase: GetPopularMovieListUseCase,
     private val loadPopularMovieListUseCase: LoadPopularMovieListUseCase
 ) : BaseViewModel(appContext) {
 
@@ -24,12 +24,13 @@ class HomeViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            val result = loadPopularMovieListUseCase()
-            result.onSuccess {
-                Timber.d("loadPopularMovieListUseCase onSuccess")
-            }
-            result.onFailure {
-                Timber.d("loadPopularMovieListUseCase onFailure: $it")
+            with(loadPopularMovieListUseCase()) {
+                onSuccess {
+                    Timber.d("loadPopularMovieListUseCase onSuccess")
+                }
+                onFailure {
+                    Timber.d("loadPopularMovieListUseCase onFailure: $it")
+                }
             }
         }
     }

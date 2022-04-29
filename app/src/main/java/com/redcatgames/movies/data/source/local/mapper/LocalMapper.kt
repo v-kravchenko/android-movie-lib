@@ -17,5 +17,5 @@ fun ArtistEntity.mapFrom() = Artist(
     created = created
 )
 
-fun Movie.mapTo() = MovieEntity(id, title, overview, created)
-fun MovieEntity.mapFrom() = Movie(id, title, overview, created)
+fun Movie.mapTo() = MovieEntity(id, isAdult, backdropPath, originalLanguage, originalTitle, overview, popularity, posterPath, releaseDate, title, video, voteAverage, voteCount, created)
+fun MovieEntity.mapFrom() = Movie(id, isAdult, backdropPath, originalLanguage, originalTitle, overview, popularity, posterPath, releaseDate, title, video, voteAverage, voteCount, created)

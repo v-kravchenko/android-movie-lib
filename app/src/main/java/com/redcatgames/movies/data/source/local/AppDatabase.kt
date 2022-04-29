@@ -9,7 +9,7 @@ import com.redcatgames.movies.data.source.local.dao.MovieDao
 import com.redcatgames.movies.data.source.local.entity.ArtistEntity
 import com.redcatgames.movies.data.source.local.entity.MovieEntity
 
-@Database(entities = [ArtistEntity::class, MovieEntity::class], version = 1, exportSchema = false)
+@Database(entities = [ArtistEntity::class, MovieEntity::class], version = 2, exportSchema = false)
 @TypeConverters(DateConverter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract val artistDao: ArtistDao

@@ -4,6 +4,8 @@ import java.io.IOException
 
 sealed class NetworkResponse<out T : Any, out U : Any> {
 
+    fun isSuccess(): Boolean = this is Success
+
     /**
      * Represents success response with body.
      */

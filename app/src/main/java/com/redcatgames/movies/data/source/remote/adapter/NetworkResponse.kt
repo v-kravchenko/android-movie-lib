@@ -4,7 +4,17 @@ import java.io.IOException
 
 sealed class NetworkResponse<out T : Any, out U : Any> {
 
-    fun isSuccess(): Boolean = this is Success
+    inline fun onSuccess(callback: (value: T) -> Unit) {
+        if (this is Success) {
+            callback(this.body)
+        }
+    }
+
+    inline fun onApiError(callback: (error: U, code: Int) -> Unit) {
+        if (this is ApiError) {
+            callback(this.body, code)
+        }
+    }
 
     /**
      * Represents success response with body.

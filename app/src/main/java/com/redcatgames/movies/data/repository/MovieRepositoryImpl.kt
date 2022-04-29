@@ -22,11 +22,19 @@ class MovieRepositoryImpl(
         val response = networkService.getPopularMovies()
 
         response.onSuccess {
-            Timber.d("Loaded movie count: ${it.movies.size}")
+            Timber.d("onSuccess: loaded movie count: ${it.movies.size}")
         }
 
         response.onApiError { error, code ->
-            Timber.d("Api error (code: $code): [#${error.statusCode}] ${error.statusMessage}")
+            Timber.d("onApiError (code: $code): [#${error.statusCode}] ${error.statusMessage}")
+        }
+
+        response.onNetworkError {
+            Timber.d("onNetworkError: $it")
+        }
+
+        response.onUnknownError {
+            Timber.d("onUnknownError: $it")
         }
 
         when (response) {
@@ -57,7 +65,7 @@ class MovieRepositoryImpl(
         return listOf()
     }
 
-    override fun getPopularMovieList(): LiveData<List<Movie>> {
+    override fun popularMovieList(): LiveData<List<Movie>> {
         return Transformations.map(movieDao.loadAll()) {
             it.map { movieEntity -> movieEntity.mapFrom() }
         }

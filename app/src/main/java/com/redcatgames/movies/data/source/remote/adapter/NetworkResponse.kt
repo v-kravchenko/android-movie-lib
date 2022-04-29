@@ -16,6 +16,18 @@ sealed class NetworkResponse<out T : Any, out U : Any> {
         }
     }
 
+    inline fun onNetworkError(callback: (error: IOException) -> Unit) {
+        if (this is NetworkError) {
+            callback(this.error)
+        }
+    }
+
+    inline fun onUnknownError(callback: (error: Throwable?) -> Unit) {
+        if (this is UnknownError) {
+            callback(this.error)
+        }
+    }
+
     /**
      * Represents success response with body.
      */

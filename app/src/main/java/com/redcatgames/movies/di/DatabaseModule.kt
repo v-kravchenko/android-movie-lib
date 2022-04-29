@@ -6,6 +6,7 @@ import androidx.room.RoomDatabase
 import com.redcatgames.movies.data.repository.ArtistRepositoryImpl
 import com.redcatgames.movies.data.source.local.AppDatabase
 import com.redcatgames.movies.data.source.local.dao.ArtistDao
+import com.redcatgames.movies.data.source.local.dao.MovieDao
 import com.redcatgames.movies.domain.repository.ArtistRepository
 import dagger.Module
 import dagger.Provides
@@ -34,6 +35,12 @@ class DatabaseModule {
     @Provides
     internal fun provideArtistDao(appDatabase: AppDatabase): ArtistDao {
         return appDatabase.artistDao
+    }
+
+    @Provides
+    @Singleton
+    fun provideMovieDao(appDatabase: AppDatabase): MovieDao {
+        return appDatabase.movieDao
     }
 
 }

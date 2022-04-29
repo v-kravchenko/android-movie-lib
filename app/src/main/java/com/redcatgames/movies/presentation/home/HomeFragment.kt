@@ -47,5 +47,9 @@ class HomeFragment : Fragment() {
         viewModel.artistIvanov.observe(viewLifecycleOwner) {
             Timber.d("Artist by name: $it")
         }
+
+        viewModel.movieList.observe(viewLifecycleOwner) {
+            Timber.d("Movies: $it")
+        }
     }
 }

@@ -1,12 +1,12 @@
 package com.redcatgames.movies.di
 
-import android.app.Application
-import androidx.room.Room
-import androidx.room.RoomDatabase
 import com.redcatgames.movies.data.repository.ArtistRepositoryImpl
-import com.redcatgames.movies.data.source.local.AppDatabase
+import com.redcatgames.movies.data.repository.MovieRepositoryImpl
 import com.redcatgames.movies.data.source.local.dao.ArtistDao
+import com.redcatgames.movies.data.source.local.dao.MovieDao
+import com.redcatgames.movies.data.source.remote.NetworkService
 import com.redcatgames.movies.domain.repository.ArtistRepository
+import com.redcatgames.movies.domain.repository.MovieRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,6 +21,12 @@ class RepositoryModule {
     @Provides
     fun provideArtistRepository(artistDao: ArtistDao): ArtistRepository {
         return ArtistRepositoryImpl(artistDao)
+    }
+
+    @Singleton
+    @Provides
+    fun provideMovieRepository(movieDao: MovieDao, networkService: NetworkService): MovieRepository {
+        return MovieRepositoryImpl(movieDao, networkService)
     }
 
 }

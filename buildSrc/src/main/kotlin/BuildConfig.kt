@@ -26,7 +26,7 @@ object BuildPlugins {
 }
 
 object AppConfig {
-    const val id = "com.redcatgames.musiclib"
+    const val id = "com.redcatgames.movies"
     const val compileSdkVersion = 32
     const val buildToolsVersion = "32.0.0"
     const val minSdkVersion = 22

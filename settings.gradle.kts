@@ -1,2 +1,2 @@
-rootProject.name = "android-music-lib"
+rootProject.name = "android-movie-lib"
 include(":app")

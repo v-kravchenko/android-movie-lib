@@ -17,6 +17,7 @@ class HomeFragment : BaseFragment() {
 
     private val viewModel: HomeViewModel by viewModels()
     private var binding: HomeFragmentBinding by autoCleared()
+    private val adapter by lazy { MovieAdapter() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,17 +30,14 @@ class HomeFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.text1.text = this.javaClass.simpleName
+        binding.listRv.adapter = adapter
         setupObserver()
     }
 
     private fun setupObserver() {
 
         observe(viewModel.popularMovies) {
-            Timber.d("Popular movie count: ${it.size}")
-        }
-
-        observe(viewModel.movie) {
-            Timber.d("Movie: $it")
+            adapter.setItems(it)
         }
 
         observe(viewModel.loadPopularMoviesEvent) {

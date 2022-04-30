@@ -20,15 +20,10 @@ class HomeViewModel @Inject constructor(
     @ApplicationContext appContext: Context,
     getPopularMoviesUseCase: GetPopularMoviesUseCase,
     getMovieUserCase: GetMovieUseCase,
-    private val loadPopularMoviesUseCase: LoadPopularMoviesUseCase,
-    private val loadMovieUseCase: LoadMovieUseCase
+    private val loadPopularMoviesUseCase: LoadPopularMoviesUseCase
 ) : BaseViewModel(appContext) {
 
-    private val moveId = 294793L
-
     val popularMovies = getPopularMoviesUseCase()
-    val movie = getMovieUserCase(moveId)
-
     val loadPopularMoviesEvent = SingleLiveEvent<UseCaseResult<Int>>()
 
     init {

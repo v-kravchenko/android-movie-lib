@@ -6,7 +6,9 @@ import com.redcatgames.movies.domain.model.Artist
 import com.redcatgames.movies.domain.usecase.*
 import com.redcatgames.movies.domain.usecase.movie.GetPopularMovieListUseCase
 import com.redcatgames.movies.domain.usecase.movie.LoadPopularMovieListUseCase
+import com.redcatgames.movies.domain.util.UseCaseResult
 import com.redcatgames.movies.presentation.base.BaseViewModel
+import com.redcatgames.movies.presentation.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
@@ -21,16 +23,12 @@ class HomeViewModel @Inject constructor(
 ) : BaseViewModel(appContext) {
 
     val popularMovieList = getPopularMovieListUseCase()
+    val loadPopularMovieListEvent = SingleLiveEvent<UseCaseResult<Unit>>()
 
     init {
         viewModelScope.launch {
-            with(loadPopularMovieListUseCase()) {
-                onSuccess {
-                    Timber.d("loadPopularMovieListUseCase onSuccess")
-                }
-                onFailure {
-                    Timber.d("loadPopularMovieListUseCase onFailure: $it")
-                }
+            loadPopularMovieListUseCase().run {
+                loadPopularMovieListEvent.postValue(this)
             }
         }
     }

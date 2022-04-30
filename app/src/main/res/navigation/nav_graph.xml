@@ -9,5 +9,18 @@
         android:id="@+id/homeFragment"
         android:name="com.redcatgames.movies.presentation.home.HomeFragment"
         android:label="home_fragment"
-        tools:layout="@layout/home_fragment" />
+        tools:layout="@layout/home_fragment" >
+        <action
+            android:id="@+id/action_homeFragment_to_movieFragment"
+            app:destination="@id/movieFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/movieFragment"
+        android:name="com.redcatgames.movies.presentation.movie.MovieFragment"
+        android:label="movie_fragment"
+        tools:layout="@layout/movie_fragment" >
+        <argument
+            android:name="movieId"
+            app:argType="long" />
+    </fragment>
 </navigation>

@@ -85,13 +85,13 @@ class MovieRepositoryImpl(
     }
 
     override fun popularMovies(): LiveData<List<Movie>> {
-        return Transformations.map(movieDao.loadAll()) {
+        return Transformations.map(movieDao.getPopular()) {
             it.map { movieEntity -> movieEntity.mapFrom() }
         }
     }
 
     override fun movie(movieId: Long): LiveData<Movie?> {
-        return Transformations.map(movieDao.loadById(movieId)) {
+        return Transformations.map(movieDao.getById(movieId)) {
             it?.mapFrom()
         }
     }

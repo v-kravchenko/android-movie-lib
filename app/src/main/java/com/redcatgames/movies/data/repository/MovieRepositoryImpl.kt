@@ -26,8 +26,35 @@ class MovieRepositoryImpl(
         movieDao.insert(movie.mapTo())
     }
 
-    override suspend fun putMovieList(movies: List<Movie>) {
+    override suspend fun putMovies(movies: List<Movie>) {
         movieDao.insertAll(movies.map { it.mapTo() })
+    }
+
+    override suspend fun loadMovie(movieId: Long): UseCaseResult<Unit> {
+
+        return when (val response = networkService.getMovie(movieId)) {
+            is NetworkResponse.Success -> {
+                Timber.d("onSuccess: load movie #$movieId")
+                val movie = response.body.mapFrom()
+                putMovie(movie)
+                UseCaseResult.Success(Unit)
+            }
+            is NetworkResponse.ApiError -> {
+                val message = response.body.statusMessage
+                Timber.e("ApiError: $message")
+                UseCaseResult.Failure(response.body.statusMessage)
+            }
+            is NetworkResponse.NetworkError -> {
+                val message = response.error.localizedMessage
+                Timber.e("NetworkError: $message")
+                UseCaseResult.Failure(response.error.localizedMessage)
+            }
+            is NetworkResponse.UnknownError -> {
+                val message = response.error?.localizedMessage
+                Timber.e("UnknownError: $message")
+                UseCaseResult.Failure(response.error?.localizedMessage)
+            }
+        }
     }
 
     override suspend fun loadPopularMovies(): UseCaseResult<Int> {
@@ -35,9 +62,8 @@ class MovieRepositoryImpl(
         return when (val response = networkService.getPopularMovies()) {
             is NetworkResponse.Success -> {
                 Timber.d("onSuccess: loaded movie count: ${response.body.movies.size}")
-                deleteAllMovies()
                 val movieList = response.body.movies.map { it.mapFrom() }
-                putMovieList(movieList)
+                putMovies(movieList)
                 UseCaseResult.Success(movieList.size)
             }
             is NetworkResponse.ApiError -> {
@@ -56,31 +82,17 @@ class MovieRepositoryImpl(
                 UseCaseResult.Failure(response.error?.localizedMessage)
             }
         }
-
-//        response.onSuccess { result ->
-//            Timber.d("onSuccess: loaded movie count: ${result.movies.size}")
-//            deleteAllMovies()
-//            val movieList = result.movies.map { it.mapFrom() }
-//            putMovieList(movieList)
-//            return UseCaseResult.Success(Unit)
-//        }
-//
-//        response.onApiError { error, _ ->
-//            return UseCaseResult.Failure(error.statusMessage)
-//        }
-//
-//        response.onNetworkError {
-//            return UseCaseResult.Failure(it.localizedMessage ?: "Network error")
-//        }
-//
-//        response.onUnknownError {
-//            return UseCaseResult.Failure(it?.localizedMessage ?: "Unknown error")
-//        }
     }
 
-    override fun popularMovieList(): LiveData<List<Movie>> {
+    override fun popularMovies(): LiveData<List<Movie>> {
         return Transformations.map(movieDao.loadAll()) {
             it.map { movieEntity -> movieEntity.mapFrom() }
+        }
+    }
+
+    override fun movie(movieId: Long): LiveData<Movie?> {
+        return Transformations.map(movieDao.loadById(movieId)) {
+            it?.mapFrom()
         }
     }
 }

@@ -7,7 +7,9 @@ import com.redcatgames.movies.domain.util.UseCaseResult
 interface MovieRepository {
     suspend fun deleteAllMovies()
     suspend fun putMovie(movie: Movie)
-    suspend fun putMovieList(movies: List<Movie>)
+    suspend fun putMovies(movies: List<Movie>)
     suspend fun loadPopularMovies(): UseCaseResult<Int>
-    fun popularMovieList(): LiveData<List<Movie>>
+    suspend fun loadMovie(movieId: Long): UseCaseResult<Unit>
+    fun popularMovies(): LiveData<List<Movie>>
+    fun movie(movieId: Long): LiveData<Movie?>
 }

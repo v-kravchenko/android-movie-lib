@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.redcatgames.movies.databinding.HomeFragmentBinding
 import com.redcatgames.movies.presentation.base.BaseFragment
@@ -35,11 +34,15 @@ class HomeFragment : BaseFragment() {
 
     private fun setupObserver() {
 
-        observe(viewModel.popularMovieList) {
+        observe(viewModel.popularMovies) {
             Timber.d("Popular movie count: ${it.size}")
         }
 
-        observe(viewModel.loadPopularMovieListEvent) {
+        observe(viewModel.movie) {
+            Timber.d("Movie: $it")
+        }
+
+        observe(viewModel.loadPopularMoviesEvent) {
             it.onSuccess { movieCount ->
                 Toast.makeText(requireContext(), "Loaded $movieCount movies!", Toast.LENGTH_SHORT).show()
             }

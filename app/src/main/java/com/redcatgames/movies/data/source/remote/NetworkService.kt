@@ -2,8 +2,10 @@ package com.redcatgames.movies.data.source.remote
 
 import com.redcatgames.movies.data.source.remote.adapter.NetworkResponse
 import com.redcatgames.movies.data.source.remote.json.BaseError
-import com.redcatgames.movies.data.source.remote.json.discover.movie.Result
+import com.redcatgames.movies.data.source.remote.json.discover.movie.DiscoverMovieResult
+import com.redcatgames.movies.data.source.remote.json.movie.MovieResult
 import retrofit2.http.GET
+import retrofit2.http.Path
 
 interface NetworkService {
 
@@ -13,5 +15,8 @@ interface NetworkService {
     }
 
     @GET("discover/movie?sort_by=popularity.desc")
-    suspend fun getPopularMovies(): NetworkResponse<Result, BaseError>
+    suspend fun getPopularMovies(): NetworkResponse<DiscoverMovieResult, BaseError>
+
+    @GET("movie/{movieId}")
+    suspend fun getMovie(@Path("movieId") movieId: Long): NetworkResponse<MovieResult, BaseError>
 }

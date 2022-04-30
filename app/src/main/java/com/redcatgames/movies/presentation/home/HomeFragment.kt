@@ -8,12 +8,13 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.redcatgames.movies.databinding.HomeFragmentBinding
+import com.redcatgames.movies.presentation.base.BaseFragment
 import com.redcatgames.movies.presentation.util.autoCleared
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
 @AndroidEntryPoint
-class HomeFragment : Fragment() {
+class HomeFragment : BaseFragment() {
 
     private val viewModel: HomeViewModel by viewModels()
     private var binding: HomeFragmentBinding by autoCleared()
@@ -33,11 +34,12 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupObserver() {
-        viewModel.popularMovieList.observe(viewLifecycleOwner) {
+
+        observe(viewModel.popularMovieList) {
             Timber.d("Popular movie count: ${it.size}")
         }
 
-        viewModel.loadPopularMovieListEvent.observe(viewLifecycleOwner) {
+        observe(viewModel.loadPopularMovieListEvent) {
             it.onSuccess {
                 Toast.makeText(requireContext(), "Loading success", Toast.LENGTH_SHORT).show()
             }

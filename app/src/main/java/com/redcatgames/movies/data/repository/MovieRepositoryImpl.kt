@@ -42,17 +42,17 @@ class MovieRepositoryImpl(
             }
             is NetworkResponse.ApiError -> {
                 val message = response.body.statusMessage
-                Timber.d("ApiError: $message")
+                Timber.e("ApiError: $message")
                 UseCaseResult.Failure(response.body.statusMessage)
             }
             is NetworkResponse.NetworkError -> {
                 val message = response.error.localizedMessage
-                Timber.d("NetworkError: $message")
+                Timber.e("NetworkError: $message")
                 UseCaseResult.Failure(response.error.localizedMessage)
             }
             is NetworkResponse.UnknownError -> {
                 val message = response.error?.localizedMessage
-                Timber.d("UnknownError: $message")
+                Timber.e("UnknownError: $message")
                 UseCaseResult.Failure(response.error?.localizedMessage)
             }
         }

@@ -8,6 +8,6 @@ interface MovieRepository {
     suspend fun deleteAllMovies()
     suspend fun putMovie(movie: Movie)
     suspend fun putMovieList(movies: List<Movie>)
-    suspend fun loadPopularMovieList(): UseCaseResult<Int>
+    suspend fun loadPopularMovies(): UseCaseResult<Int>
     fun popularMovieList(): LiveData<List<Movie>>
 }

@@ -30,7 +30,7 @@ class MovieRepositoryImpl(
         movieDao.insertAll(movies.map { it.mapTo() })
     }
 
-    override suspend fun loadPopularMovieList(): UseCaseResult<Int> {
+    override suspend fun loadPopularMovies(): UseCaseResult<Int> {
 
         return when (val response = networkService.getPopularMovies()) {
             is NetworkResponse.Success -> {

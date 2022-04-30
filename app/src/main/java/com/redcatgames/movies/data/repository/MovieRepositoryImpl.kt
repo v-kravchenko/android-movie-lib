@@ -30,7 +30,7 @@ class MovieRepositoryImpl(
         movieDao.insertAll(movies.map { it.mapTo() })
     }
 
-    override suspend fun loadPopularMovieList(): UseCaseResult<Unit> {
+    override suspend fun loadPopularMovieList(): UseCaseResult<Int> {
 
         return when (val response = networkService.getPopularMovies()) {
             is NetworkResponse.Success -> {
@@ -38,7 +38,7 @@ class MovieRepositoryImpl(
                 deleteAllMovies()
                 val movieList = response.body.movies.map { it.mapFrom() }
                 putMovieList(movieList)
-                UseCaseResult.Success(Unit)
+                UseCaseResult.Success(movieList.size)
             }
             is NetworkResponse.ApiError -> {
                 val message = response.body.statusMessage

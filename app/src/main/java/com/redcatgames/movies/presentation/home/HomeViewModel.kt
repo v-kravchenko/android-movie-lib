@@ -23,7 +23,7 @@ class HomeViewModel @Inject constructor(
 ) : BaseViewModel(appContext) {
 
     val popularMovieList = getPopularMovieListUseCase()
-    val loadPopularMovieListEvent = SingleLiveEvent<UseCaseResult<Unit>>()
+    val loadPopularMovieListEvent = SingleLiveEvent<UseCaseResult<Int>>()
 
     init {
         viewModelScope.launch {

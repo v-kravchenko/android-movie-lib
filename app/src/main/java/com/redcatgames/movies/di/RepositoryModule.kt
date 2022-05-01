@@ -1,6 +1,7 @@
 package com.redcatgames.movies.di
 
 import com.redcatgames.movies.data.repository.MovieRepositoryImpl
+import com.redcatgames.movies.data.source.local.dao.ImageConfigDao
 import com.redcatgames.movies.data.source.local.dao.MovieDao
 import com.redcatgames.movies.data.source.remote.NetworkService
 import com.redcatgames.movies.domain.repository.MovieRepository
@@ -16,8 +17,12 @@ class RepositoryModule {
 
     @Singleton
     @Provides
-    fun provideMovieRepository(movieDao: MovieDao, networkService: NetworkService): MovieRepository {
-        return MovieRepositoryImpl(movieDao, networkService)
+    fun provideMovieRepository(
+        imageConfigDao: ImageConfigDao,
+        movieDao: MovieDao,
+        networkService: NetworkService
+    ): MovieRepository {
+        return MovieRepositoryImpl(imageConfigDao, movieDao, networkService)
     }
 
 }

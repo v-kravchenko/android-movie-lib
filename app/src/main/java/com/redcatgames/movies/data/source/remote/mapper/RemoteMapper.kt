@@ -1,9 +1,23 @@
 package com.redcatgames.movies.data.source.remote.mapper
 
+import com.redcatgames.movies.data.source.remote.json.configuration.ConfigurationResult
 import com.redcatgames.movies.data.source.remote.json.discover.movie.DiscoverMovieResult
 import com.redcatgames.movies.data.source.remote.json.movie.MovieResult
+import com.redcatgames.movies.domain.model.ImageConfig
 import com.redcatgames.movies.domain.model.Movie
 import com.redcatgames.movies.util.now
+
+fun ConfigurationResult.Images.mapFrom() = ImageConfig(
+    id = 0,
+    baseUrl = baseUrl,
+    secureBaseUrl = secureBaseUrl,
+    backdropSizes = backdropSizes,
+    logoSizes = logoSizes,
+    posterSizes = posterSizes,
+    profileSizes = profileSizes,
+    stillSizes = stillSizes,
+    created = now()
+)
 
 fun DiscoverMovieResult.Movie.mapFrom() = Movie(
     id = id,

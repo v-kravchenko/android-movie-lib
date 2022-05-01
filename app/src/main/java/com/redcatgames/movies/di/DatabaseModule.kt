@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.redcatgames.movies.data.source.local.AppDatabase
+import com.redcatgames.movies.data.source.local.dao.ImageConfigDao
 import com.redcatgames.movies.data.source.local.dao.MovieDao
 import dagger.Module
 import dagger.Provides
@@ -27,6 +28,12 @@ class DatabaseModule {
             //.allowMainThreadQueries()
             .setJournalMode(RoomDatabase.JournalMode.TRUNCATE)
             .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideImageConfigDao(appDatabase: AppDatabase): ImageConfigDao {
+        return appDatabase.imageConfigDao
     }
 
     @Provides

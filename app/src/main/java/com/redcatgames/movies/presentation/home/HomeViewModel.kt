@@ -2,6 +2,7 @@ package com.redcatgames.movies.presentation.home
 
 import android.content.Context
 import androidx.lifecycle.viewModelScope
+import com.redcatgames.movies.domain.usecase.config.LoadConfigUseCase
 import com.redcatgames.movies.domain.usecase.movie.DeleteAllMoviesUseCase
 import com.redcatgames.movies.domain.util.UseCaseResult
 import com.redcatgames.movies.presentation.base.BaseViewModel
@@ -14,10 +15,17 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     @ApplicationContext appContext: Context,
+    private val loadConfigUseCase: LoadConfigUseCase,
     private val deleteAllMoviesUseCase: DeleteAllMoviesUseCase
 ) : BaseViewModel(appContext) {
 
     val deleteAllMoviesEvent = SingleLiveEvent<UseCaseResult<Int>>()
+
+    init {
+        viewModelScope.launch {
+            loadConfigUseCase()
+        }
+    }
 
     fun deleteAllMovies() {
         viewModelScope.launch {

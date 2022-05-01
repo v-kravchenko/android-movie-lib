@@ -2,21 +2,64 @@ package com.redcatgames.movies.data.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
+import com.redcatgames.movies.data.source.local.dao.ImageConfigDao
 import com.redcatgames.movies.data.source.local.dao.MovieDao
 import com.redcatgames.movies.data.source.local.mapper.mapFrom
 import com.redcatgames.movies.data.source.local.mapper.mapTo
 import com.redcatgames.movies.data.source.remote.NetworkService
 import com.redcatgames.movies.data.source.remote.adapter.NetworkResponse
 import com.redcatgames.movies.data.source.remote.mapper.mapFrom
+import com.redcatgames.movies.domain.model.ImageConfig
 import com.redcatgames.movies.domain.model.Movie
 import com.redcatgames.movies.domain.repository.MovieRepository
 import com.redcatgames.movies.domain.util.UseCaseResult
 import timber.log.Timber
 
 class MovieRepositoryImpl(
+    private val imageConfigDao: ImageConfigDao,
     private val movieDao: MovieDao,
     private val networkService: NetworkService
 ) : MovieRepository {
+
+    override suspend fun putImageConfig(imageConfig: ImageConfig) {
+        imageConfigDao.insert(imageConfig.mapTo())
+    }
+
+    override suspend fun deleteImageConfig() {
+        imageConfigDao.delete()
+    }
+
+    override fun imageConfig(): LiveData<ImageConfig?> {
+        return Transformations.map(imageConfigDao.get()) {
+            it?.mapFrom()
+        }
+    }
+
+    override suspend fun loadConfig(): UseCaseResult<Unit> {
+        return when (val response = networkService.getConfiguration()) {
+            is NetworkResponse.Success -> {
+                val imageConfig = response.body.images.mapFrom()
+                deleteImageConfig()
+                putImageConfig(imageConfig)
+                UseCaseResult.Success(Unit)
+            }
+            is NetworkResponse.ApiError -> {
+                val message = response.body.statusMessage
+                Timber.e("ApiError: $message")
+                UseCaseResult.Failure(response.body.statusMessage)
+            }
+            is NetworkResponse.NetworkError -> {
+                val message = response.error.localizedMessage
+                Timber.e("NetworkError: $message")
+                UseCaseResult.Failure(response.error.localizedMessage)
+            }
+            is NetworkResponse.UnknownError -> {
+                val message = response.error?.localizedMessage
+                Timber.e("UnknownError: $message")
+                UseCaseResult.Failure(response.error?.localizedMessage)
+            }
+        }
+    }
 
     override suspend fun deleteAllMovies(): UseCaseResult<Int> {
         val movieCount = movieDao.getCount()

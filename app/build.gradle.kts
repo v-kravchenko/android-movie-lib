@@ -68,6 +68,9 @@ dependencies {
     implementation(Dependencies.Retrofit2.retrofit)
     implementation(Dependencies.Retrofit2.gson)
 
+    //Jetpack paging 3
+    implementation(Dependencies.paging)
+
     //Other
     implementation(Dependencies.coreKtx)
     implementation(Dependencies.appCompat)

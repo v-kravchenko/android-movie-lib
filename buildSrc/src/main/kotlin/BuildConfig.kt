@@ -15,6 +15,7 @@ object Versions {
     const val timber = "5.0.1"
     const val leakCanary = "2.9.1"
     const val retrofit2 = "2.9.0"
+    const val paging = "3.1.1"
 }
 
 object BuildPlugins {
@@ -76,4 +77,5 @@ object Dependencies {
     val material by lazy { "com.google.android.material:material:${Versions.material}" }
     val constraint by lazy { "androidx.constraintlayout:constraintlayout:${Versions.constraint}" }
     val timber by lazy { "com.jakewharton.timber:timber:${Versions.timber}" }
+    val paging by lazy { "androidx.paging:paging-runtime:${Versions.paging}" }
 }

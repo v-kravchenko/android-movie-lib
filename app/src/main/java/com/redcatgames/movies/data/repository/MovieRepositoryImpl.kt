@@ -59,7 +59,7 @@ class MovieRepositoryImpl(
         }
     }
 
-    override suspend fun loadPopularMovies(page: Int): UseCaseResult<Int> {
+    override suspend fun loadPopularMovies(page: Int): UseCaseResult<List<Movie>> {
 
         return when (val response = networkService.getPopularMovies(page)) {
             is NetworkResponse.Success -> {
@@ -67,7 +67,7 @@ class MovieRepositoryImpl(
                 val movieList = response.body.movies.map { it.mapFrom() }
                 deleteAllMovies()
                 putMovies(movieList)
-                UseCaseResult.Success(movieList.size)
+                UseCaseResult.Success(movieList)
             }
             is NetworkResponse.ApiError -> {
                 val message = response.body.statusMessage

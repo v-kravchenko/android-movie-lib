@@ -2,6 +2,7 @@ package com.redcatgames.movies.presentation.popular
 
 import android.content.Context
 import androidx.lifecycle.viewModelScope
+import com.redcatgames.movies.domain.model.Movie
 import com.redcatgames.movies.domain.usecase.movie.GetPopularMoviesUseCase
 import com.redcatgames.movies.domain.usecase.movie.LoadPopularMoviesUseCase
 import com.redcatgames.movies.domain.util.UseCaseResult
@@ -21,7 +22,7 @@ class PopularViewModel @Inject constructor(
 
     private var page = 0
     val popularMovies = getPopularMoviesUseCase()
-    val loadPopularMoviesEvent = SingleLiveEvent<UseCaseResult<Int>>()
+    val loadPopularMoviesEvent = SingleLiveEvent<UseCaseResult<List<Movie>>>()
 
     init {
         loadNextPage()

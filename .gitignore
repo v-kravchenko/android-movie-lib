@@ -95,6 +95,7 @@ obj/
 .idea/sonarlint.xml
 .idea/sonarlint-state.xml
 .idea/kotlinScripting.xml
+.idea/codeStyles/
 
 # Legacy Eclipse project files
 .classpath

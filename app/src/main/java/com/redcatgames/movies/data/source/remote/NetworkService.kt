@@ -6,6 +6,7 @@ import com.redcatgames.movies.data.source.remote.json.discover.movie.DiscoverMov
 import com.redcatgames.movies.data.source.remote.json.movie.MovieResult
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface NetworkService {
 
@@ -15,8 +16,10 @@ interface NetworkService {
     }
 
     @GET("discover/movie?sort_by=popularity.desc")
-    suspend fun getPopularMovies(): NetworkResponse<DiscoverMovieResult, BaseError>
+    suspend fun getPopularMovies(@Query("page") page: Int):
+            NetworkResponse<DiscoverMovieResult, BaseError>
 
     @GET("movie/{movieId}")
-    suspend fun getMovie(@Path("movieId") movieId: Long): NetworkResponse<MovieResult, BaseError>
+    suspend fun getMovie(@Path("movieId") movieId: Long):
+            NetworkResponse<MovieResult, BaseError>
 }

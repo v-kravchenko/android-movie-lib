@@ -6,10 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.redcatgames.movies.databinding.PopularFragmentBinding
 import com.redcatgames.movies.presentation.base.BaseFragment
 import com.redcatgames.movies.presentation.util.autoCleared
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class PopularFragment : BaseFragment() {
@@ -30,6 +33,22 @@ class PopularFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.text1.text = this.javaClass.simpleName
         binding.listRv.adapter = adapter
+
+        binding.listRv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                when (val layoutManager = recyclerView.layoutManager) {
+                    is LinearLayoutManager -> {
+                        val totalItemCount = layoutManager.itemCount
+                        val lastVisible = layoutManager.findLastVisibleItemPosition()
+                        val endHasBeenReached = lastVisible + 5 >= totalItemCount
+                        if (totalItemCount > 0 && endHasBeenReached) {
+                            viewModel.loadNextPage()
+                        }
+                    }
+                }
+            }
+        })
+
         setupObserver()
     }
 

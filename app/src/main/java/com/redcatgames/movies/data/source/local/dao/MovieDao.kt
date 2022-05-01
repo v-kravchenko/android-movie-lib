@@ -32,4 +32,7 @@ interface MovieDao {
 
     @Query("SELECT * FROM movies ORDER BY popularity DESC")
     fun getPopular(): LiveData<List<MovieEntity>>
+
+    @Query("SELECT COUNT(1) FROM movies")
+    suspend fun getCount(): Int
 }

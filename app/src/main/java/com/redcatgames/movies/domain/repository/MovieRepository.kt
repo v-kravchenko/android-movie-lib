@@ -5,10 +5,10 @@ import com.redcatgames.movies.domain.model.Movie
 import com.redcatgames.movies.domain.util.UseCaseResult
 
 interface MovieRepository {
-    suspend fun deleteAllMovies()
+    suspend fun deleteAllMovies(): UseCaseResult<Int>
     suspend fun putMovie(movie: Movie)
     suspend fun putMovies(movies: List<Movie>)
-    suspend fun loadPopularMovies(): UseCaseResult<Int>
+    suspend fun loadPopularMovies(page: Int): UseCaseResult<Int>
     suspend fun loadMovie(movieId: Long): UseCaseResult<Unit>
     fun popularMovies(): LiveData<List<Movie>>
     fun movie(movieId: Long): LiveData<Movie?>

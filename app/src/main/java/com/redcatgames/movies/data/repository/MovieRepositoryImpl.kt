@@ -18,8 +18,10 @@ class MovieRepositoryImpl(
     private val networkService: NetworkService
 ) : MovieRepository {
 
-    override suspend fun deleteAllMovies() {
+    override suspend fun deleteAllMovies(): UseCaseResult<Int> {
+        val movieCount = movieDao.getCount()
         movieDao.deleteAll()
+        return UseCaseResult.Success(movieCount)
     }
 
     override suspend fun putMovie(movie: Movie) {
@@ -57,9 +59,9 @@ class MovieRepositoryImpl(
         }
     }
 
-    override suspend fun loadPopularMovies(): UseCaseResult<Int> {
+    override suspend fun loadPopularMovies(page: Int): UseCaseResult<Int> {
 
-        return when (val response = networkService.getPopularMovies()) {
+        return when (val response = networkService.getPopularMovies(page)) {
             is NetworkResponse.Success -> {
                 Timber.d("onSuccess: loaded movie count: ${response.body.movies.size}")
                 val movieList = response.body.movies.map { it.mapFrom() }

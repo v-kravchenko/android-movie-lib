@@ -21,4 +21,10 @@
         android:layout_height="wrap_content"
         android:text="Popular movies"/>
 
+    <Button
+        android:id="@+id/button_delete_movies"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete all movies"/>
+
 </LinearLayout>

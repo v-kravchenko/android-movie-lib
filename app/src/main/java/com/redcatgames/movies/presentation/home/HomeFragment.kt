@@ -4,20 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.redcatgames.movies.databinding.HomeFragmentBinding
 import com.redcatgames.movies.presentation.base.BaseFragment
 import com.redcatgames.movies.presentation.util.autoCleared
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment() {
 
     private val viewModel: HomeViewModel by viewModels()
     private var binding: HomeFragmentBinding by autoCleared()
-    private val adapter by lazy { MovieAdapter() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,27 +27,13 @@ class HomeFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.text1.text = this.javaClass.simpleName
-        binding.listRv.adapter = adapter
+        binding.buttonPopular.setOnClickListener {
+            navigate(HomeFragmentDirections.actionHomeFragmentToPopularFragment())
+        }
         setupObserver()
     }
 
     private fun setupObserver() {
 
-        observe(viewModel.popularMovies) {
-            adapter.setItems(it)
-        }
-
-        observe(adapter.eventClickItem) {
-            navigate(HomeFragmentDirections.actionHomeFragmentToMovieFragment(it.id))
-        }
-
-        observe(viewModel.loadPopularMoviesEvent) {
-            it.onSuccess { movieCount ->
-                Toast.makeText(requireContext(), "Loaded $movieCount movies!", Toast.LENGTH_SHORT).show()
-            }
-            it.onFailure { errorMessage ->
-                Toast.makeText(requireContext(), "Error loading: $errorMessage", Toast.LENGTH_SHORT).show()
-            }
-        }
     }
 }

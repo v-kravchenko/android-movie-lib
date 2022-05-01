@@ -11,9 +11,20 @@
         android:label="home_fragment"
         tools:layout="@layout/home_fragment" >
         <action
-            android:id="@+id/action_homeFragment_to_movieFragment"
+            android:id="@+id/action_homeFragment_to_popularFragment"
+            app:destination="@id/popularFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/popularFragment"
+        android:name="com.redcatgames.movies.presentation.popular.PopularFragment"
+        android:label="popular_fragment"
+        tools:layout="@layout/popular_fragment">
+        <action
+            android:id="@+id/action_popularFragment_to_movieFragment"
             app:destination="@id/movieFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/movieFragment"
         android:name="com.redcatgames.movies.presentation.movie.MovieFragment"

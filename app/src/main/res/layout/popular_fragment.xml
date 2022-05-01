@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.home.HomeFragment">
+    tools:context=".presentation.popular.PopularFragment">
 
     <TextView
         android:id="@+id/text1"
@@ -15,10 +15,11 @@
         android:gravity="center"
         android:text="@string/app_name"/>
 
-    <Button
-        android:id="@+id/button_popular"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Popular movies"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list_rv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/row_movie" />
 
 </LinearLayout>

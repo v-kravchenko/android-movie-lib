@@ -17,20 +17,5 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    @ApplicationContext appContext: Context,
-    getPopularMoviesUseCase: GetPopularMoviesUseCase,
-    getMovieUserCase: GetMovieUseCase,
-    private val loadPopularMoviesUseCase: LoadPopularMoviesUseCase
-) : BaseViewModel(appContext) {
-
-    val popularMovies = getPopularMoviesUseCase()
-    val loadPopularMoviesEvent = SingleLiveEvent<UseCaseResult<Int>>()
-
-    init {
-        viewModelScope.launch {
-            loadPopularMoviesUseCase().run {
-                loadPopularMoviesEvent.postValue(this)
-            }
-        }
-    }
-}
+    @ApplicationContext appContext: Context
+) : BaseViewModel(appContext)

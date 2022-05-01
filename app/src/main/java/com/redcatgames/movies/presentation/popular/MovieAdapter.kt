@@ -1,4 +1,4 @@
-package com.redcatgames.movies.presentation.home
+package com.redcatgames.movies.presentation.popular
 
 import android.view.LayoutInflater
 import android.view.View

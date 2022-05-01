@@ -33,22 +33,6 @@ class PopularFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.text1.text = this.javaClass.simpleName
         binding.listRv.adapter = adapter
-
-        binding.listRv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                when (val layoutManager = recyclerView.layoutManager) {
-                    is LinearLayoutManager -> {
-                        val totalItemCount = layoutManager.itemCount
-                        val lastVisible = layoutManager.findLastVisibleItemPosition()
-                        val endHasBeenReached = lastVisible + 5 >= totalItemCount
-                        if (totalItemCount > 0 && endHasBeenReached) {
-                            viewModel.loadNextPage()
-                        }
-                    }
-                }
-            }
-        })
-
         setupObserver()
     }
 

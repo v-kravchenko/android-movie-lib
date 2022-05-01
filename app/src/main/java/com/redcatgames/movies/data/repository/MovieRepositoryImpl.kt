@@ -65,6 +65,7 @@ class MovieRepositoryImpl(
             is NetworkResponse.Success -> {
                 Timber.d("onSuccess: loaded movie count: ${response.body.movies.size}")
                 val movieList = response.body.movies.map { it.mapFrom() }
+                deleteAllMovies()
                 putMovies(movieList)
                 UseCaseResult.Success(movieList.size)
             }

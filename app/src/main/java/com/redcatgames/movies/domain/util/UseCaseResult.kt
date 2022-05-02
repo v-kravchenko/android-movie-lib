@@ -2,17 +2,18 @@ package com.redcatgames.movies.domain.util
 
 sealed class UseCaseResult<out T> {
 
-    inline fun onSuccess(callback: (value: T) -> Unit) {
+    inline fun onSuccess(action: (value: T) -> Unit) : UseCaseResult<T> {
         if (this is Success) {
-            callback(value)
-            Result
+            action(value)
         }
+        return this
     }
 
-    inline fun onFailure(callback: (errorMessage: String?) -> Unit) {
+    inline fun onFailure(action: (errorMessage: String?) -> Unit): UseCaseResult<T> {
         if (this is Failure) {
-            callback(errorMessage)
+            action(errorMessage)
         }
+        return this
     }
 
     data class Success<T>(val value: T) : UseCaseResult<T>()

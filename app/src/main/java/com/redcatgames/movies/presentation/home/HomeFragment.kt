@@ -29,7 +29,7 @@ class HomeFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.text1.text = this.javaClass.simpleName
         binding.buttonPopular.setOnClickListener {
-            navigate(HomeFragmentDirections.actionHomeFragmentToPopularFragment())
+            navigateTo(HomeFragmentDirections.actionHomeFragmentToPopularFragment())
         }
         binding.buttonDeleteMovies.setOnClickListener {
             viewModel.deleteAllMovies()
@@ -40,9 +40,9 @@ class HomeFragment : BaseFragment() {
     private fun setupObserver() {
         observe(viewModel.deleteAllMoviesEvent) {
             it.onSuccess { movieCount ->
-                Toast.makeText(requireContext(), "Removed $movieCount movies", Toast.LENGTH_SHORT).show()
-            }
-            it.onFailure { errorMessage ->
+                Toast.makeText(requireContext(), "Removed $movieCount movies", Toast.LENGTH_SHORT)
+                    .show()
+            }.onFailure { errorMessage ->
                 Toast.makeText(requireContext(), "Error: $errorMessage", Toast.LENGTH_SHORT).show()
             }
         }

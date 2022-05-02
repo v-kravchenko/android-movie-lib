@@ -35,7 +35,7 @@ class MovieRepositoryImpl(
         }
     }
 
-    override suspend fun loadConfig(): UseCaseResult<Unit> {
+    override suspend fun loadConfig(): UseCaseResult<Unit, String?> {
         return when (val response = networkService.getConfiguration()) {
             is NetworkResponse.Success -> {
                 val imageConfig = response.body.images.mapFrom()
@@ -61,7 +61,7 @@ class MovieRepositoryImpl(
         }
     }
 
-    override suspend fun deleteAllMovies(): UseCaseResult<Int> {
+    override suspend fun deleteAllMovies(): UseCaseResult<Int, Unit> {
         val movieCount = movieDao.getCount()
         movieDao.deleteAll()
         return UseCaseResult.Success(movieCount)
@@ -75,7 +75,7 @@ class MovieRepositoryImpl(
         movieDao.insertAll(movies.map { it.mapTo() })
     }
 
-    override suspend fun loadMovie(movieId: Long): UseCaseResult<Unit> {
+    override suspend fun loadMovie(movieId: Long): UseCaseResult<Unit, String?> {
 
         return when (val response = networkService.getMovie(movieId)) {
             is NetworkResponse.Success -> {
@@ -102,7 +102,7 @@ class MovieRepositoryImpl(
         }
     }
 
-    override suspend fun loadPopularMovies(page: Int): UseCaseResult<List<Movie>> {
+    override suspend fun loadPopularMovies(page: Int): UseCaseResult<List<Movie>, String?> {
 
         return when (val response = networkService.getPopularMovies(page)) {
             is NetworkResponse.Success -> {

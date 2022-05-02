@@ -1,22 +1,22 @@
 package com.redcatgames.movies.domain.util
 
-sealed class UseCaseResult<out T> {
+sealed class UseCaseResult<out T, out U> {
 
-    inline fun onSuccess(action: (value: T) -> Unit) : UseCaseResult<T> {
+    inline fun onSuccess(action: (value: T) -> Unit) : UseCaseResult<T, U> {
         if (this is Success) {
             action(value)
         }
         return this
     }
 
-    inline fun onFailure(action: (errorMessage: String?) -> Unit): UseCaseResult<T> {
+    inline fun onFailure(action: (error: U) -> Unit): UseCaseResult<T, U> {
         if (this is Failure) {
-            action(errorMessage)
+            action(error)
         }
         return this
     }
 
-    data class Success<T>(val value: T) : UseCaseResult<T>()
-    data class Failure<T>(val errorMessage: String?) : UseCaseResult<T>()
+    data class Success<T, U>(val value: T) : UseCaseResult<T, U>()
+    data class Failure<T, U>(val error: U) : UseCaseResult<T, U>()
 
 }

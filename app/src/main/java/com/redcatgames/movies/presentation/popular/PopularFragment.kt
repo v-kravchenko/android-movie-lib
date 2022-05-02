@@ -6,8 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.redcatgames.movies.databinding.PopularFragmentBinding
 import com.redcatgames.movies.presentation.base.BaseFragment
 import com.redcatgames.movies.presentation.util.autoCleared
@@ -43,15 +41,20 @@ class PopularFragment : BaseFragment() {
         }
 
         observe(adapter.eventClickItem) {
-            navigate(PopularFragmentDirections.actionPopularFragmentToMovieFragment(it.id))
+            navigateTo(PopularFragmentDirections.actionPopularFragmentToMovieFragment(it.id))
         }
 
         observe(viewModel.loadPopularMoviesEvent) {
             it.onSuccess { movies ->
-                Toast.makeText(requireContext(), "Loaded ${movies.size} movies!", Toast.LENGTH_SHORT).show()
-            }
-            it.onFailure { errorMessage ->
-                Toast.makeText(requireContext(), "Error loading: $errorMessage", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    "Loaded ${movies.size} movies!",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }.onFailure { errorMessage ->
+                Toast.makeText(requireContext(), "Error loading: $errorMessage",
+                    Toast.LENGTH_SHORT)
+                    .show()
             }
         }
     }

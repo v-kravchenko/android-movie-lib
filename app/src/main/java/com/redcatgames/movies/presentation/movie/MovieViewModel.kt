@@ -26,7 +26,7 @@ class MovieViewModel @Inject constructor(
 
     private val args = MovieFragmentArgs.fromSavedStateHandle(savedStateHandle)
     val movie = getMovieUserCase(args.movieId)
-    val loadMovieEvent = SingleLiveEvent<UseCaseResult<Unit>>()
+    val loadMovieEvent = SingleLiveEvent<UseCaseResult<Unit, String?>>()
 
     init {
         viewModelScope.launch {

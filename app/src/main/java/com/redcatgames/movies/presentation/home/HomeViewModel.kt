@@ -19,7 +19,7 @@ class HomeViewModel @Inject constructor(
     private val deleteAllMoviesUseCase: DeleteAllMoviesUseCase
 ) : BaseViewModel(appContext) {
 
-    val deleteAllMoviesEvent = SingleLiveEvent<UseCaseResult<Int>>()
+    val deleteAllMoviesEvent = SingleLiveEvent<UseCaseResult<Int, Unit>>()
 
     init {
         viewModelScope.launch {

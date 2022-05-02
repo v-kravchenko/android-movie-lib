@@ -22,7 +22,7 @@ class PopularViewModel @Inject constructor(
 
     private var page = 0
     val popularMovies = getPopularMoviesUseCase()
-    val loadPopularMoviesEvent = SingleLiveEvent<UseCaseResult<List<Movie>>>()
+    val loadPopularMoviesEvent = SingleLiveEvent<UseCaseResult<List<Movie>, String?>>()
 
     init {
         loadNextPage()

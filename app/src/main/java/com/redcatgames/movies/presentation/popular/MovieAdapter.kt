@@ -1,5 +1,6 @@
 package com.redcatgames.movies.presentation.popular
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -59,9 +60,10 @@ class MovieAdapter : ListAdapter<Movie, MovieAdapter.VH>(MovieDiffCallback()) {
             itemBinding.root.setOnClickListener(this)
         }
 
+        @SuppressLint("SetTextI18n")
         fun bind(item: Movie) {
             this.item = item
-            itemBinding.text1.text = item.title
+            itemBinding.text1.text = "[${item.popularity}] ${item.title}"
         }
 
         override fun onClick(v: View?) {

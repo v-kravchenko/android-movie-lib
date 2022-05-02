@@ -9,13 +9,13 @@ interface MovieRepository {
     suspend fun deleteImageConfig()
     suspend fun putImageConfig(imageConfig: ImageConfig)
     fun imageConfig(): LiveData<ImageConfig?>
-    suspend fun loadConfig(): UseCaseResult<Unit>
+    suspend fun loadConfig(): UseCaseResult<Unit, String?>
 
-    suspend fun deleteAllMovies(): UseCaseResult<Int>
+    suspend fun deleteAllMovies(): UseCaseResult<Int, Unit>
     suspend fun putMovie(movie: Movie)
     suspend fun putMovies(movies: List<Movie>)
-    suspend fun loadPopularMovies(page: Int): UseCaseResult<List<Movie>>
-    suspend fun loadMovie(movieId: Long): UseCaseResult<Unit>
+    suspend fun loadPopularMovies(page: Int): UseCaseResult<List<Movie>, String?>
+    suspend fun loadMovie(movieId: Long): UseCaseResult<Unit, String?>
     fun popularMovies(): LiveData<List<Movie>>
     fun movie(movieId: Long): LiveData<Movie?>
 }

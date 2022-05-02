@@ -12,11 +12,11 @@ open class BaseFragment: Fragment() {
         liveData.observe(viewLifecycleOwner, observer)
     }
 
-    protected fun goBack() {
+    protected fun navigateBack() {
         findNavController().popBackStack()
     }
 
-    protected fun navigate(navDirections: NavDirections) {
+    protected fun navigateTo(navDirections: NavDirections) {
         findNavController().navigate(navDirections)
     }
 

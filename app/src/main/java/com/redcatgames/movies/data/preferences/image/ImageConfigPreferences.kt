@@ -1,5 +1,7 @@
 package com.redcatgames.movies.data.preferences.image
 
+import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.lifecycle.map
 import com.redcatgames.movies.data.preferences.Preferences
 import com.redcatgames.movies.domain.model.ImageConfig
 import com.redcatgames.movies.util.now
@@ -14,15 +16,12 @@ class ImageConfigPreferences(private val preferences: Preferences) {
         private const val DEFAULT_SECURE_BASE_URL_VALUE = ""
     }
 
-    suspend fun putConfig(imageConfig: ImageConfig) {
-        preferences.putString(BASE_URL_KEY, imageConfig.baseUrl)
-        preferences.putString(SECURE_BASE_URL_KEY, imageConfig.secureBaseUrl)
-    }
-
-    suspend fun getConfig() : ImageConfig {
-        return ImageConfig(
-            preferences.getString(BASE_URL_KEY) ?: DEFAULT_BASE_URL_VALUE,
-            preferences.getString(SECURE_BASE_URL_KEY) ?: DEFAULT_SECURE_BASE_URL_VALUE,
+    val imageConfig = preferences.data.map {
+        val keyBaseUrl = stringPreferencesKey(BASE_URL_KEY)
+        val keySecureBaseUrl = stringPreferencesKey(SECURE_BASE_URL_KEY)
+        ImageConfig(
+            it[keyBaseUrl] ?: DEFAULT_BASE_URL_VALUE,
+            it[keySecureBaseUrl] ?: DEFAULT_SECURE_BASE_URL_VALUE,
             listOf(),
             listOf(),
             listOf(),
@@ -30,6 +29,11 @@ class ImageConfigPreferences(private val preferences: Preferences) {
             listOf(),
             now()
         )
+    }
+
+    suspend fun putConfig(imageConfig: ImageConfig) {
+        preferences.putString(BASE_URL_KEY, imageConfig.baseUrl)
+        preferences.putString(SECURE_BASE_URL_KEY, imageConfig.secureBaseUrl)
     }
 
 }

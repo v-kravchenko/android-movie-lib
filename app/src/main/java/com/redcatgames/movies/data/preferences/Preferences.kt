@@ -5,7 +5,11 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.*
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.asLiveData
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 private const val PREFERENCES_NAME = "preferences"
@@ -15,6 +19,9 @@ private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(na
 class Preferences @Inject constructor(
     private val context: Context
 ) {
+
+    val data: LiveData<Preferences> =
+        context.dataStore.data.distinctUntilChanged().asLiveData()
 
     suspend fun putInt(key: String, value: Int) {
         val preferencesKey = intPreferencesKey(key)
@@ -29,6 +36,7 @@ class Preferences @Inject constructor(
             preferences[preferencesKey] = value
         }
     }
+
 
     suspend fun getString(key: String): String? {
         val preferencesKey = stringPreferencesKey(key)

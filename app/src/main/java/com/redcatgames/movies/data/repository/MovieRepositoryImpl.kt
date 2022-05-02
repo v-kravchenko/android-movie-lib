@@ -25,12 +25,7 @@ class MovieRepositoryImpl(
         imageConfigPreferences.putConfig(imageConfig)
     }
 
-    override fun imageConfig(): LiveData<ImageConfig?> {
-        TODO()
-//        return Transformations.map(imageConfigDao.get()) {
-//            it?.mapFrom()
-//        }
-    }
+    override fun imageConfig(): LiveData<ImageConfig> = imageConfigPreferences.imageConfig
 
     override suspend fun loadConfig(): UseCaseResult<Unit, String?> {
         return when (val response = networkService.getConfiguration()) {

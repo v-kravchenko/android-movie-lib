@@ -10,6 +10,7 @@ import com.redcatgames.movies.databinding.HomeFragmentBinding
 import com.redcatgames.movies.presentation.base.BaseFragment
 import com.redcatgames.movies.presentation.util.autoCleared
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment() {
@@ -38,12 +39,25 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun setupObserver() {
+
+        observe(viewModel.imageConfig) {
+            Timber.w("ImageConfig: $it")
+        }
+
+        observe(viewModel.loadConfigEvent) {
+            it.onSuccess {
+                Timber.d("Config loaded")
+            }.onFailure { errorMessage ->
+                Timber.d("Error loading config: $errorMessage")
+            }
+        }
+
         observe(viewModel.deleteAllMoviesEvent) {
             it.onSuccess { movieCount ->
                 Toast.makeText(requireContext(), "Removed $movieCount movies", Toast.LENGTH_SHORT)
                     .show()
             }.onFailure { errorMessage ->
-                Toast.makeText(requireContext(), "Error: $errorMessage", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Error $errorMessage", Toast.LENGTH_SHORT).show()
             }
         }
     }

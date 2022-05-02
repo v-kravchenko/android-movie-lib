@@ -6,7 +6,6 @@ import java.util.*
 
 @Parcelize
 data class ImageConfig(
-    val id : Long,
     val baseUrl : String,
     val secureBaseUrl : String,
     val backdropSizes : List<String>,

@@ -2,8 +2,7 @@ package com.redcatgames.movies.data.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
-import com.redcatgames.movies.data.preferences.Preferences
-import com.redcatgames.movies.data.source.local.dao.ImageConfigDao
+import com.redcatgames.movies.data.preferences.image.ImageConfigPreferences
 import com.redcatgames.movies.data.source.local.dao.MovieDao
 import com.redcatgames.movies.data.source.local.mapper.mapFrom
 import com.redcatgames.movies.data.source.local.mapper.mapTo
@@ -17,31 +16,26 @@ import com.redcatgames.movies.domain.util.UseCaseResult
 import timber.log.Timber
 
 class MovieRepositoryImpl(
-    private val preferences: Preferences,
-    private val imageConfigDao: ImageConfigDao,
+    private val imageConfigPreferences: ImageConfigPreferences,
     private val movieDao: MovieDao,
     private val networkService: NetworkService
 ) : MovieRepository {
 
     override suspend fun putImageConfig(imageConfig: ImageConfig) {
-        imageConfigDao.insert(imageConfig.mapTo())
-    }
-
-    override suspend fun deleteImageConfig() {
-        imageConfigDao.delete()
+        imageConfigPreferences.putConfig(imageConfig)
     }
 
     override fun imageConfig(): LiveData<ImageConfig?> {
-        return Transformations.map(imageConfigDao.get()) {
-            it?.mapFrom()
-        }
+        TODO()
+//        return Transformations.map(imageConfigDao.get()) {
+//            it?.mapFrom()
+//        }
     }
 
     override suspend fun loadConfig(): UseCaseResult<Unit, String?> {
         return when (val response = networkService.getConfiguration()) {
             is NetworkResponse.Success -> {
                 val imageConfig = response.body.images.mapFrom()
-                deleteImageConfig()
                 putImageConfig(imageConfig)
                 UseCaseResult.Success(Unit)
             }

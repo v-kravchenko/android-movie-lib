@@ -6,7 +6,6 @@ import com.redcatgames.movies.domain.model.Movie
 import com.redcatgames.movies.domain.util.UseCaseResult
 
 interface MovieRepository {
-    suspend fun deleteImageConfig()
     suspend fun putImageConfig(imageConfig: ImageConfig)
     fun imageConfig(): LiveData<ImageConfig?>
     suspend fun loadConfig(): UseCaseResult<Unit, String?>

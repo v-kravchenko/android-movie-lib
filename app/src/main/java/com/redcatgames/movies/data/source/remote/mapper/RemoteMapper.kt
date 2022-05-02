@@ -8,7 +8,6 @@ import com.redcatgames.movies.domain.model.Movie
 import com.redcatgames.movies.util.now
 
 fun ConfigurationResult.Images.mapFrom() = ImageConfig(
-    id = 0,
     baseUrl = baseUrl,
     secureBaseUrl = secureBaseUrl,
     backdropSizes = backdropSizes,

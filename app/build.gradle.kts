@@ -71,6 +71,9 @@ dependencies {
     //Jetpack paging 3
     implementation(Dependencies.paging)
 
+    //Datastore
+    implementation(Dependencies.dataStore)
+
     //Other
     implementation(Dependencies.coreKtx)
     implementation(Dependencies.appCompat)

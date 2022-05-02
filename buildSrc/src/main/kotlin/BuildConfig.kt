@@ -4,8 +4,8 @@ object Versions {
     const val hiltVersion = "2.38.1"
     const val roomVersion = "2.4.2"
     const val kspVersion = "1.6.20-1.0.5"
-
     const val coroutines = "1.6.1"
+
     const val coreKtx = "1.7.0"
     const val appCompat = "1.4.1"
     const val material = "1.5.0"
@@ -16,6 +16,7 @@ object Versions {
     const val leakCanary = "2.9.1"
     const val retrofit2 = "2.9.0"
     const val paging = "3.1.1"
+    const val dataStore = "1.0.0"
 }
 
 object BuildPlugins {
@@ -78,4 +79,5 @@ object Dependencies {
     val constraint by lazy { "androidx.constraintlayout:constraintlayout:${Versions.constraint}" }
     val timber by lazy { "com.jakewharton.timber:timber:${Versions.timber}" }
     val paging by lazy { "androidx.paging:paging-runtime:${Versions.paging}" }
+    val dataStore by lazy { "androidx.datastore:datastore-preferences:${Versions.dataStore}" }
 }

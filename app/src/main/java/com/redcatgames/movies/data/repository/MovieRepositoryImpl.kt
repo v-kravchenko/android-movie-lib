@@ -2,6 +2,7 @@ package com.redcatgames.movies.data.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
+import com.redcatgames.movies.data.preferences.Preferences
 import com.redcatgames.movies.data.source.local.dao.ImageConfigDao
 import com.redcatgames.movies.data.source.local.dao.MovieDao
 import com.redcatgames.movies.data.source.local.mapper.mapFrom
@@ -16,6 +17,7 @@ import com.redcatgames.movies.domain.util.UseCaseResult
 import timber.log.Timber
 
 class MovieRepositoryImpl(
+    private val preferences: Preferences,
     private val imageConfigDao: ImageConfigDao,
     private val movieDao: MovieDao,
     private val networkService: NetworkService

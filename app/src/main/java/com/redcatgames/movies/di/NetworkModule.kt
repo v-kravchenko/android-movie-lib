@@ -24,25 +24,30 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun provideNetworkService(@Named("TMDB") retrofit: Retrofit): NetworkService {
-        return retrofit.create(NetworkService::class.java)
+    @Named("TMDBHttp")
+    fun provideHttpClient(): OkHttpClient {
+        return OkHttpClient.Builder()
+            .addInterceptor(BearerLoginInterceptor(NetworkService.TOKEN))
+            .build()
     }
 
     @Singleton
     @Provides
     @Named("TMDB")
-    fun provideRetrofit(gson: Gson): Retrofit {
-
-        val client = OkHttpClient.Builder()
-            .addInterceptor(BearerLoginInterceptor(NetworkService.TOKEN))
-            .build()
+    fun provideRetrofit(@Named("TMDBHttp") httpClient: OkHttpClient, gson: Gson): Retrofit {
 
         return Retrofit.Builder()
             .baseUrl(NetworkService.BASE_URL)
-            .client(client)
+            .client(httpClient)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .addCallAdapterFactory(NetworkResponseAdapterFactory())
             .build()
+    }
+
+    @Singleton
+    @Provides
+    fun provideNetworkService(@Named("TMDB") retrofit: Retrofit): NetworkService {
+        return retrofit.create(NetworkService::class.java)
     }
 
 }

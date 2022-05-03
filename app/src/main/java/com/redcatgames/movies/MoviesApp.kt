@@ -2,14 +2,23 @@ package com.redcatgames.movies
 
 import android.app.Application
 import android.os.Build
+import coil.ImageLoader
+import coil.ImageLoaderFactory
 import dagger.hilt.android.HiltAndroidApp
+import kotlinx.coroutines.Dispatchers
 import timber.log.Timber
 
 @HiltAndroidApp
-class MoviesApp : Application() {
+class MoviesApp : Application(), ImageLoaderFactory {
     override fun onCreate() {
         super.onCreate()
         loadTimber()
+    }
+
+    override fun newImageLoader(): ImageLoader {
+        return ImageLoader.Builder(this)
+            .crossfade(true)
+            .build()
     }
 
     private fun loadTimber() {

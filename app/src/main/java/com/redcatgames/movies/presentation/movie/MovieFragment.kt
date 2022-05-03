@@ -39,27 +39,6 @@ class MovieFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupObserver()
-
-        val imageUrl = "https://image.tmdb.org/t/p/w500/g4tMniKxol1TBJrHlAtiDjjlx4Q.jpg"
-
-        val imageLoader = binding.posterImage.context.imageLoader
-        val request = ImageRequest.Builder(binding.posterImage.context)
-            .data(imageUrl)
-            .target(binding.posterImage)
-            .build()
-
-        binding.posterImage.load(imageUrl)
-
-//        lifecycleScope.launch {
-//            when (val res = imageLoader.execute(request)) {
-//                is ErrorResult -> {
-//                    Timber.e(res.throwable)
-//                }
-//                is SuccessResult -> {
-//
-//                }
-//            }
-//        }
     }
 
     private fun setupObserver() {

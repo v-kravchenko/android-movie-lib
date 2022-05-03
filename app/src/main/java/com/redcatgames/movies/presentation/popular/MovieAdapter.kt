@@ -2,22 +2,17 @@ package com.redcatgames.movies.presentation.popular
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.redcatgames.movies.databinding.RowMovieBinding
 import com.redcatgames.movies.domain.model.Movie
-import com.redcatgames.movies.presentation.util.SingleLiveEvent
-import java.text.SimpleDateFormat
-import java.util.*
 
-class MovieAdapter : ListAdapter<Movie, MovieAdapter.VH>(MovieDiffCallback()) {
+class MovieAdapter : ListAdapter<Movie, VH>(MovieDiffCallback()) {
 
     private var list = listOf<Movie>()
-    private val dateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.getDefault())
-    var eventClickItem = SingleLiveEvent<Movie>()
+    var onItemClick: ((Movie) -> Unit)? = null
 
     fun setItems(list: List<Movie>) {
         this.list = list
@@ -27,47 +22,37 @@ class MovieAdapter : ListAdapter<Movie, MovieAdapter.VH>(MovieDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
         val binding: RowMovieBinding =
             RowMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return VH(binding, dateFormat)
+        return VH(binding, onItemClick)
     }
 
     override fun onBindViewHolder(holder: VH, position: Int) = holder.bind(getItem(position))
+}
 
-    private class MovieDiffCallback : DiffUtil.ItemCallback<Movie>() {
-        override fun areItemsTheSame(
-            oldItem: Movie,
-            newItem: Movie
-        ): Boolean {
-            return oldItem.id == newItem.id
-        }
+class VH(
+    private val itemBinding: RowMovieBinding,
+    private val eventClickItem: ((Movie) -> Unit)?
+) : RecyclerView.ViewHolder(itemBinding.root) {
 
-        override fun areContentsTheSame(
-            oldItem: Movie,
-            newItem: Movie
-        ): Boolean {
-            return oldItem == newItem
-        }
+    @SuppressLint("SetTextI18n")
+    fun bind(item: Movie) {
+        this.itemView.setOnClickListener { eventClickItem?.invoke(item) }
+        itemBinding.text1.text = "[${item.popularity}] ${item.title}"
     }
 
-    inner class VH(
-        private val itemBinding: RowMovieBinding,
-        private val dateFormat: SimpleDateFormat
-    ) : RecyclerView.ViewHolder(itemBinding.root),
-        View.OnClickListener {
+}
 
-        private lateinit var item: Movie
+private class MovieDiffCallback : DiffUtil.ItemCallback<Movie>() {
+    override fun areItemsTheSame(
+        oldItem: Movie,
+        newItem: Movie
+    ): Boolean {
+        return oldItem.id == newItem.id
+    }
 
-        init {
-            itemBinding.root.setOnClickListener(this)
-        }
-
-        @SuppressLint("SetTextI18n")
-        fun bind(item: Movie) {
-            this.item = item
-            itemBinding.text1.text = "[${item.popularity}] ${item.title}"
-        }
-
-        override fun onClick(v: View?) {
-            eventClickItem.postValue(item)
-        }
+    override fun areContentsTheSame(
+        oldItem: Movie,
+        newItem: Movie
+    ): Boolean {
+        return oldItem == newItem
     }
 }

@@ -40,7 +40,7 @@ class PopularFragment : BaseFragment() {
             adapter.setItems(it)
         }
 
-        observe(adapter.eventClickItem) {
+        adapter.onItemClick = {
             navigateTo(PopularFragmentDirections.actionPopularFragmentToMovieFragment(it.id))
         }
 

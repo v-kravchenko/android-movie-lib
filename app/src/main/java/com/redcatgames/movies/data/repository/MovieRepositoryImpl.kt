@@ -21,11 +21,18 @@ class MovieRepositoryImpl(
     private val networkService: NetworkService
 ) : MovieRepository {
 
+    override suspend fun loadDictionary(): UseCaseResult<Unit, String?> {
+        val countriesResult = networkService.getCountries()
+        Timber.d("$countriesResult")
+        return UseCaseResult.Success(Unit)
+    }
+
     override suspend fun putImageConfig(imageConfig: ImageConfig) {
         imageConfigPreferences.putConfig(imageConfig)
     }
 
-    override fun imageConfig(): LiveData<ImageConfig> = imageConfigPreferences.imageConfig
+    override fun imageConfig(): LiveData<ImageConfig> =
+        imageConfigPreferences.imageConfig
 
     override suspend fun loadConfig(): UseCaseResult<Unit, String?> {
         return when (val response = networkService.getConfiguration()) {

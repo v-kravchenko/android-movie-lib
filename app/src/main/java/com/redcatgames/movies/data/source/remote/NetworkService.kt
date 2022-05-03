@@ -2,6 +2,7 @@ package com.redcatgames.movies.data.source.remote
 
 import com.redcatgames.movies.data.source.remote.adapter.NetworkResponse
 import com.redcatgames.movies.data.source.remote.json.BaseError
+import com.redcatgames.movies.data.source.remote.json.configuration.ConfigurationCountriesResult
 import com.redcatgames.movies.data.source.remote.json.configuration.ConfigurationResult
 import com.redcatgames.movies.data.source.remote.json.discover.movie.DiscoverMovieResult
 import com.redcatgames.movies.data.source.remote.json.movie.MovieResult
@@ -19,6 +20,9 @@ interface NetworkService {
     @GET("configuration")
     suspend fun getConfiguration():
             NetworkResponse<ConfigurationResult, BaseError>
+
+    @GET("configuration/countries")
+    suspend fun getCountries(): NetworkResponse<List<ConfigurationCountriesResult>, BaseError>
 
     @GET("discover/movie?sort_by=popularity.desc")
     suspend fun getPopularMovies(@Query("page") page: Int):

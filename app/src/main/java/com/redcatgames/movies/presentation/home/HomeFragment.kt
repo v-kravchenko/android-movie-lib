@@ -42,6 +42,8 @@ class HomeFragment : BaseFragment() {
 
         observe(viewModel.imageConfig) {
             Timber.w("ImageConfig: $it")
+            binding.textImageBaseUrl.setText(it.baseUrl)
+            binding.textImageSecureBaseUrl.setText(it.secureBaseUrl)
         }
 
         observe(viewModel.loadConfigEvent) {

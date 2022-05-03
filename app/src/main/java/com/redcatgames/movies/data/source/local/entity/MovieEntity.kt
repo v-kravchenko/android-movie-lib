@@ -12,7 +12,7 @@ data class MovieEntity(
 
     val isAdult : Boolean,
     val backdropPath : String,
-    val genreIds : List<Int>,
+    val genreIds : List<Long>,
     val originalLanguage : String,
     val originalTitle : String,
     val overview : String,

@@ -46,9 +46,9 @@ class HomeFragment : BaseFragment() {
             binding.textImageSecureBaseUrl.setText(it.secureBaseUrl)
         }
 
-        observe(viewModel.loadConfigEvent) {
+        observe(viewModel.loadDictionaryEvent) {
             it.onSuccess {
-                Timber.d("Config loaded")
+                Timber.d("Dictionary loaded")
             }.onFailure { errorMessage ->
                 Timber.d("Error loading config: $errorMessage")
             }

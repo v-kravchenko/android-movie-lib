@@ -6,7 +6,7 @@ data class GenreMovieResult(
     @SerializedName("genres") val genres : List<Genre>,
 ) {
     data class Genre(
-        @SerializedName("id") val id : Int,
+        @SerializedName("id") val id : Long,
         @SerializedName("name") val name: String
     )
 }

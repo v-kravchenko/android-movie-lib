@@ -16,6 +16,12 @@ sealed class UseCaseResult<out T, out U> {
         return this
     }
 
+    val isSuccess: Boolean
+        get() = this is Success
+
+    val isFailure: Boolean
+        get() = this !is Success
+
     data class Success<T, U>(val value: T) : UseCaseResult<T, U>()
     data class Failure<T, U>(val error: U) : UseCaseResult<T, U>()
 

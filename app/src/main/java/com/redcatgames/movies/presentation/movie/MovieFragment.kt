@@ -43,8 +43,6 @@ class MovieFragment : BaseFragment() {
 
     private fun setupObserver() {
 
-        val b = ImageRequest.Builder(requireContext())
-
         observe(viewModel.movie) { movie ->
             movie?.let {
                 binding.text1.text = it.title

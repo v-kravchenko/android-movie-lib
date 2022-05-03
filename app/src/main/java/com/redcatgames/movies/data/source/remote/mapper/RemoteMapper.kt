@@ -1,16 +1,33 @@
 package com.redcatgames.movies.data.source.remote.mapper
 
 import com.redcatgames.movies.data.source.remote.response.configuration.ConfigurationCountriesResult
+import com.redcatgames.movies.data.source.remote.response.configuration.ConfigurationLanguagesResult
 import com.redcatgames.movies.data.source.remote.response.configuration.ConfigurationResult
+import com.redcatgames.movies.data.source.remote.response.configuration.ConfigurationTimezonesResult
 import com.redcatgames.movies.data.source.remote.response.discover.movie.DiscoverMovieResult
+import com.redcatgames.movies.data.source.remote.response.movie.GenreMovieResult
 import com.redcatgames.movies.data.source.remote.response.movie.MovieResult
-import com.redcatgames.movies.domain.model.Country
-import com.redcatgames.movies.domain.model.ImageConfig
-import com.redcatgames.movies.domain.model.Movie
+import com.redcatgames.movies.domain.model.*
 import com.redcatgames.movies.util.now
 
 fun ConfigurationCountriesResult.mapFrom() = Country(
     iso, englishName, nativeName, now()
+)
+
+fun ConfigurationLanguagesResult.mapFrom() = Language(
+    iso, englishName, name, now()
+)
+
+fun ConfigurationTimezonesResult.mapFrom(): List<Timezone> {
+    val timezones = mutableListOf<Timezone>()
+    this.zones.forEach {
+        timezones.add(Timezone(this.iso, it, now()))
+    }
+    return timezones.toList()
+}
+
+fun GenreMovieResult.Genre.mapFrom() = GenreMovie(
+    id, name, now()
 )
 
 fun ConfigurationResult.Images.mapFrom() = ImageConfig(

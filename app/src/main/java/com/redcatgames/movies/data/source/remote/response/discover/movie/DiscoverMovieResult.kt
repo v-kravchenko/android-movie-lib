@@ -11,7 +11,7 @@ data class DiscoverMovieResult(
     data class Movie(
         @SerializedName("adult") val isAdult : Boolean,
         @SerializedName("backdrop_path") val backdropPath : String,
-        @SerializedName("genre_ids") val genreIds : List<Int>,
+        @SerializedName("genre_ids") val genreIds : List<Long>,
         @SerializedName("id") val id : Long,
         @SerializedName("original_language") val originalLanguage : String,
         @SerializedName("original_title") val originalTitle : String,

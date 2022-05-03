@@ -2,8 +2,8 @@ package com.redcatgames.movies.di
 
 import android.content.Context
 import coil.ImageLoader
-import com.redcatgames.movies.data.source.remote.NetworkService
-import com.redcatgames.movies.data.source.remote.interceptor.BearerLoginInterceptor
+import com.redcatgames.movies.data.preferences.image.ImageConfigPreferences
+import com.redcatgames.movies.data.source.remote.interceptor.ImageHostSelectionInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,9 +20,9 @@ class ImageLoaderModule {
     @Singleton
     @Provides
     @Named("CoilHttp")
-    fun provideHttpClient(): OkHttpClient {
+    fun provideHttpClient(imageConfigPreferences: ImageConfigPreferences): OkHttpClient {
         return OkHttpClient.Builder()
-            .addInterceptor(BearerLoginInterceptor(NetworkService.TOKEN))
+            .addInterceptor(ImageHostSelectionInterceptor(imageConfigPreferences))
             .build()
     }
 

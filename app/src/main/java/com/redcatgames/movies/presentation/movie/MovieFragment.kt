@@ -43,12 +43,14 @@ class MovieFragment : BaseFragment() {
 
     private fun setupObserver() {
 
+        val b = ImageRequest.Builder(requireContext())
+
         observe(viewModel.movie) { movie ->
             movie?.let {
                 binding.text1.text = it.title
                 binding.text2.text = it.overview
                 binding.posterImage.load(
-                    "https://image.tmdb.org/t/p/w500/${it.posterPath}",
+                    "https://localhost/w500/${it.posterPath}",
                     imageLoader
                 )
             }

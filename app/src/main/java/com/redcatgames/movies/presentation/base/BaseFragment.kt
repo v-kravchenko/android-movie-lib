@@ -5,8 +5,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
+import coil.ImageLoader
+import javax.inject.Inject
 
 open class BaseFragment: Fragment() {
+
+    @Inject
+    protected lateinit var imageLoader: ImageLoader
 
     protected fun <T> observe(liveData: LiveData<T>, observer: Observer<in T>) {
         liveData.observe(viewLifecycleOwner, observer)

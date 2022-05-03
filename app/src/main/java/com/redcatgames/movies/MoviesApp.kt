@@ -9,16 +9,10 @@ import kotlinx.coroutines.Dispatchers
 import timber.log.Timber
 
 @HiltAndroidApp
-class MoviesApp : Application(), ImageLoaderFactory {
+class MoviesApp : Application() {
     override fun onCreate() {
         super.onCreate()
         loadTimber()
-    }
-
-    override fun newImageLoader(): ImageLoader {
-        return ImageLoader.Builder(this)
-            .crossfade(true)
-            .build()
     }
 
     private fun loadTimber() {

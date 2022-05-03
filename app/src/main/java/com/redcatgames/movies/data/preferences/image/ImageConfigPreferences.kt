@@ -1,6 +1,7 @@
 package com.redcatgames.movies.data.preferences.image
 
 import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import com.redcatgames.movies.data.preferences.Preferences
 import com.redcatgames.movies.domain.model.ImageConfig
@@ -16,12 +17,25 @@ class ImageConfigPreferences(private val preferences: Preferences) {
         private const val DEFAULT_SECURE_BASE_URL_VALUE = ""
     }
 
-    val imageConfig = preferences.data.map {
+    val imageConfig: LiveData<ImageConfig> = preferences.data.map {
         val keyBaseUrl = stringPreferencesKey(BASE_URL_KEY)
         val keySecureBaseUrl = stringPreferencesKey(SECURE_BASE_URL_KEY)
         ImageConfig(
             it[keyBaseUrl] ?: DEFAULT_BASE_URL_VALUE,
             it[keySecureBaseUrl] ?: DEFAULT_SECURE_BASE_URL_VALUE,
+            listOf(),
+            listOf(),
+            listOf(),
+            listOf(),
+            listOf(),
+            now()
+        )
+    }
+    
+    suspend fun readConfig(): ImageConfig {
+        return ImageConfig(
+            preferences.getString(BASE_URL_KEY) ?: DEFAULT_BASE_URL_VALUE,
+            preferences.getString(SECURE_BASE_URL_KEY) ?: DEFAULT_SECURE_BASE_URL_VALUE,
             listOf(),
             listOf(),
             listOf(),

@@ -47,7 +47,10 @@ class MovieFragment : BaseFragment() {
             movie?.let {
                 binding.text1.text = it.title
                 binding.text2.text = it.overview
-                binding.posterImage.load("https://image.tmdb.org/t/p/w500/${it.posterPath}")
+                binding.posterImage.load(
+                    "https://image.tmdb.org/t/p/w500/${it.posterPath}",
+                    imageLoader
+                )
             }
         }
 

@@ -74,6 +74,9 @@ dependencies {
     //Datastore
     implementation(Dependencies.dataStore)
 
+    //Coil
+    implementation(Dependencies.coil)
+
     //Other
     implementation(Dependencies.coreKtx)
     implementation(Dependencies.appCompat)

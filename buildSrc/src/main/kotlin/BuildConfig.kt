@@ -17,6 +17,7 @@ object Versions {
     const val retrofit2 = "2.9.0"
     const val paging = "3.1.1"
     const val dataStore = "1.0.0"
+    const val coil = "2.0.0-rc03"
 }
 
 object BuildPlugins {
@@ -72,7 +73,6 @@ object Dependencies {
     }
 
     val leakCanary by lazy { "com.squareup.leakcanary:leakcanary-android:${Versions.leakCanary}" }
-
     val coreKtx by lazy { "androidx.core:core-ktx:${Versions.coreKtx}" }
     val appCompat by lazy { "androidx.appcompat:appcompat:${Versions.appCompat}" }
     val material by lazy { "com.google.android.material:material:${Versions.material}" }
@@ -80,4 +80,5 @@ object Dependencies {
     val timber by lazy { "com.jakewharton.timber:timber:${Versions.timber}" }
     val paging by lazy { "androidx.paging:paging-runtime:${Versions.paging}" }
     val dataStore by lazy { "androidx.datastore:datastore-preferences:${Versions.dataStore}" }
+    val coil by lazy { "io.coil-kt:coil:${Versions.coil}" }
 }

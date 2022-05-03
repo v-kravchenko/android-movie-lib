@@ -28,6 +28,12 @@ sealed class NetworkResponse<out T : Any, out U : Any> {
         }
     }
 
+    val isSuccess: Boolean
+        get() = this is Success
+
+    val isFailure: Boolean
+        get() = this !is Success
+
     /**
      * Represents success response with body.
      */

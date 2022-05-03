@@ -13,6 +13,9 @@ import com.redcatgames.movies.domain.model.ImageConfig
 import com.redcatgames.movies.domain.model.Movie
 import com.redcatgames.movies.domain.repository.MovieRepository
 import com.redcatgames.movies.domain.util.UseCaseResult
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import timber.log.Timber
 
 class MovieRepositoryImpl(
@@ -22,13 +25,28 @@ class MovieRepositoryImpl(
 ) : MovieRepository {
 
     override suspend fun loadDictionary(): UseCaseResult<Unit, String?> {
-        val countriesResult = networkService.getCountries()
-        val languagesResult = networkService.getLanguages()
-        val primaryTranslationsResult = networkService.getPrimaryTranslations()
-        val timezonesResult = networkService.getTimezones()
-        val genreMovieResult = networkService.getMovieGenres()
-        Timber.d("$countriesResult $languagesResult $primaryTranslationsResult $timezonesResult $genreMovieResult")
-        return UseCaseResult.Success(Unit)
+        val res = coroutineScope {
+            val countriesResult = async { networkService.getCountries() }
+            val languagesResult = async { networkService.getLanguages() }
+            val primaryTranslationsResult = async { networkService.getPrimaryTranslations() }
+            val timezonesResult = async { networkService.getTimezones() }
+            val genreMovieResult = async { networkService.getMovieGenres() }
+            val jobList = awaitAll(countriesResult, languagesResult, primaryTranslationsResult, timezonesResult, genreMovieResult)
+
+            when (val failedJob = jobList.find { it.isFailure }) {
+                is NetworkResponse.ApiError ->
+                    return@coroutineScope UseCaseResult.Failure(failedJob.body.statusMessage)
+                is NetworkResponse.NetworkError ->
+                    return@coroutineScope UseCaseResult.Failure(failedJob.error.localizedMessage)
+                is NetworkResponse.UnknownError ->
+                    return@coroutineScope UseCaseResult.Failure(failedJob.error?.localizedMessage)
+                else -> {}
+            }
+
+            return@coroutineScope UseCaseResult.Success<Unit, String?>(Unit)
+        }
+
+        return res
     }
 
     override suspend fun putImageConfig(imageConfig: ImageConfig) {

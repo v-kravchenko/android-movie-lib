@@ -6,12 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
+import coil.imageLoader
+import coil.load
+import coil.request.ErrorResult
+import coil.request.ImageRequest
+import coil.request.SuccessResult
 import com.redcatgames.movies.databinding.HomeFragmentBinding
 import com.redcatgames.movies.databinding.MovieFragmentBinding
 import com.redcatgames.movies.presentation.base.BaseFragment
 import com.redcatgames.movies.presentation.util.autoCleared
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 @AndroidEntryPoint
@@ -32,13 +39,37 @@ class MovieFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupObserver()
+
+        val imageUrl = "https://image.tmdb.org/t/p/w500/g4tMniKxol1TBJrHlAtiDjjlx4Q.jpg"
+
+        val imageLoader = binding.posterImage.context.imageLoader
+        val request = ImageRequest.Builder(binding.posterImage.context)
+            .data(imageUrl)
+            .target(binding.posterImage)
+            .build()
+
+        binding.posterImage.load(imageUrl)
+
+//        lifecycleScope.launch {
+//            when (val res = imageLoader.execute(request)) {
+//                is ErrorResult -> {
+//                    Timber.e(res.throwable)
+//                }
+//                is SuccessResult -> {
+//
+//                }
+//            }
+//        }
     }
 
     private fun setupObserver() {
 
-        observe(viewModel.movie) {
-            binding.text1.text = it?.title
-            binding.text2.text = it?.overview
+        observe(viewModel.movie) { movie ->
+            movie?.let {
+                binding.text1.text = it.title
+                binding.text2.text = it.overview
+                binding.posterImage.load("https://image.tmdb.org/t/p/w500/${it.posterPath}")
+            }
         }
 
         observe(viewModel.loadMovieEvent) {

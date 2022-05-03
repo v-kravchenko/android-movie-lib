@@ -1,4 +1,4 @@
-package com.redcatgames.movies.data.source.remote.json.discover.movie
+package com.redcatgames.movies.data.source.remote.response.discover.movie
 
 import com.google.gson.annotations.SerializedName
 

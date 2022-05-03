@@ -1,11 +1,14 @@
 package com.redcatgames.movies.data.source.remote
 
 import com.redcatgames.movies.data.source.remote.adapter.NetworkResponse
-import com.redcatgames.movies.data.source.remote.json.BaseError
-import com.redcatgames.movies.data.source.remote.json.configuration.ConfigurationCountriesResult
-import com.redcatgames.movies.data.source.remote.json.configuration.ConfigurationResult
-import com.redcatgames.movies.data.source.remote.json.discover.movie.DiscoverMovieResult
-import com.redcatgames.movies.data.source.remote.json.movie.MovieResult
+import com.redcatgames.movies.data.source.remote.response.BaseError
+import com.redcatgames.movies.data.source.remote.response.configuration.ConfigurationCountriesResult
+import com.redcatgames.movies.data.source.remote.response.configuration.ConfigurationLanguagesResult
+import com.redcatgames.movies.data.source.remote.response.configuration.ConfigurationResult
+import com.redcatgames.movies.data.source.remote.response.configuration.ConfigurationTimezonesResult
+import com.redcatgames.movies.data.source.remote.response.discover.movie.DiscoverMovieResult
+import com.redcatgames.movies.data.source.remote.response.movie.GenreMovieResult
+import com.redcatgames.movies.data.source.remote.response.movie.MovieResult
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -22,7 +25,24 @@ interface NetworkService {
             NetworkResponse<ConfigurationResult, BaseError>
 
     @GET("configuration/countries")
-    suspend fun getCountries(): NetworkResponse<List<ConfigurationCountriesResult>, BaseError>
+    suspend fun getCountries():
+            NetworkResponse<List<ConfigurationCountriesResult>, BaseError>
+
+    @GET("configuration/languages")
+    suspend fun getLanguages():
+            NetworkResponse<List<ConfigurationLanguagesResult>, BaseError>
+
+    @GET("configuration/primary_translations")
+    suspend fun getPrimaryTranslations():
+            NetworkResponse<List<String>, BaseError>
+
+    @GET("configuration/timezones")
+    suspend fun getTimezones():
+            NetworkResponse<List<ConfigurationTimezonesResult>, BaseError>
+
+    @GET("genre/movie/list")
+    suspend fun getMovieGenres():
+            NetworkResponse<GenreMovieResult, BaseError>
 
     @GET("discover/movie?sort_by=popularity.desc")
     suspend fun getPopularMovies(@Query("page") page: Int):

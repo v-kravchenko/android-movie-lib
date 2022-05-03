@@ -23,7 +23,11 @@ class MovieRepositoryImpl(
 
     override suspend fun loadDictionary(): UseCaseResult<Unit, String?> {
         val countriesResult = networkService.getCountries()
-        Timber.d("$countriesResult")
+        val languagesResult = networkService.getLanguages()
+        val primaryTranslationsResult = networkService.getPrimaryTranslations()
+        val timezonesResult = networkService.getTimezones()
+        val genreMovieResult = networkService.getMovieGenres()
+        Timber.d("$countriesResult $languagesResult $primaryTranslationsResult $timezonesResult $genreMovieResult")
         return UseCaseResult.Success(Unit)
     }
 

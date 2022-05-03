@@ -9,7 +9,7 @@ data class Movie(
     val id: Long,
     val isAdult : Boolean,
     val backdropPath : String,
-    //TODO val genreIds : List<Int>,
+    val genreIds : List<Int>,
     val originalLanguage : String,
     val originalTitle : String,
     val overview : String,

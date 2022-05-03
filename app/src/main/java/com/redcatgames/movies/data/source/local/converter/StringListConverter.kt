@@ -2,7 +2,7 @@ package com.redcatgames.movies.data.source.local.converter
 
 import androidx.room.TypeConverter
 
-object ListConverter {
+object StringListConverter {
 
     private const val SEPARATOR = ","
 

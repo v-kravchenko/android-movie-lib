@@ -50,8 +50,7 @@ class MovieFragment : BaseFragment() {
                 binding.text1.text = it.title
                 binding.text2.text = it.overview
                 binding.posterImage.load(
-                    "https://localhost/w500/${it.posterPath}",
-                    imageLoader
+                    "https://localhost/w500/${it.posterPath}"
                 )
             }
         }

@@ -7,12 +7,21 @@ import coil.ImageLoaderFactory
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.Dispatchers
 import timber.log.Timber
+import javax.inject.Inject
 
 @HiltAndroidApp
-class MoviesApp : Application() {
+class MoviesApp : Application(), ImageLoaderFactory {
+
+    @Inject
+    lateinit var imageLoader: ImageLoader
+
     override fun onCreate() {
         super.onCreate()
         loadTimber()
+    }
+
+    override fun newImageLoader(): ImageLoader {
+        return imageLoader
     }
 
     private fun loadTimber() {

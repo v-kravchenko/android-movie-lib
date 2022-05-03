@@ -9,26 +9,24 @@ import androidx.recyclerview.widget.RecyclerView
 import com.redcatgames.movies.databinding.RowMovieBinding
 import com.redcatgames.movies.domain.model.Movie
 
-class MovieAdapter : ListAdapter<Movie, VH>(MovieDiffCallback()) {
+class MovieAdapter : ListAdapter<Movie, Holder>(ItemDiffCallback()) {
 
-    private var list = listOf<Movie>()
     var onItemClick: ((Movie) -> Unit)? = null
 
     fun setItems(list: List<Movie>) {
-        this.list = list
         submitList(list)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val binding: RowMovieBinding =
             RowMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return VH(binding, onItemClick)
+        return Holder(binding, onItemClick)
     }
 
-    override fun onBindViewHolder(holder: VH, position: Int) = holder.bind(getItem(position))
+    override fun onBindViewHolder(holder: Holder, position: Int) = holder.bind(getItem(position))
 }
 
-class VH(
+class Holder(
     private val itemBinding: RowMovieBinding,
     private val eventClickItem: ((Movie) -> Unit)?
 ) : RecyclerView.ViewHolder(itemBinding.root) {
@@ -41,7 +39,7 @@ class VH(
 
 }
 
-private class MovieDiffCallback : DiffUtil.ItemCallback<Movie>() {
+private class ItemDiffCallback : DiffUtil.ItemCallback<Movie>() {
     override fun areItemsTheSame(
         oldItem: Movie,
         newItem: Movie

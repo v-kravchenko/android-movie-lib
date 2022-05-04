@@ -3,6 +3,7 @@ package com.redcatgames.movies.data.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import com.redcatgames.movies.data.preferences.image.ImageConfigPreferences
+import com.redcatgames.movies.data.preferences.image.UserConfigPreferences
 import com.redcatgames.movies.data.source.local.dao.*
 import com.redcatgames.movies.data.source.local.mapper.mapFrom
 import com.redcatgames.movies.data.source.local.mapper.mapTo
@@ -19,6 +20,7 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 
 class DictionaryRepositoryImpl(
+    private val userConfigPreferences: UserConfigPreferences,
     private val imageConfigPreferences: ImageConfigPreferences,
     private val countryDao: CountryDao,
     private val languageDao: LanguageDao,
@@ -206,7 +208,21 @@ class DictionaryRepositoryImpl(
         return UseCaseResult.Success(rowCount)
     }
 
+    override fun userConfig(): LiveData<UserConfig> =
+        userConfigPreferences.userConfig
+
     override fun imageConfig(): LiveData<ImageConfig> =
         imageConfigPreferences.imageConfig
 
+    override fun languages(): LiveData<List<Language>> {
+        return Transformations.map(languageDao.getAll()) {
+            it.map { languageEntity -> languageEntity.mapFrom() }
+        }
+    }
+
+    override fun getLanguage(iso: String): LiveData<Language?> {
+        return Transformations.map(languageDao.getByIso(iso)) {
+            it?.mapFrom()
+        }
+    }
 }

@@ -1,6 +1,7 @@
 package com.redcatgames.movies.di
 
 import com.redcatgames.movies.data.preferences.image.ImageConfigPreferences
+import com.redcatgames.movies.data.preferences.image.UserConfigPreferences
 import com.redcatgames.movies.data.repository.DictionaryRepositoryImpl
 import com.redcatgames.movies.data.repository.MovieRepositoryImpl
 import com.redcatgames.movies.data.source.local.dao.*
@@ -20,6 +21,7 @@ class RepositoryModule {
     @Singleton
     @Provides
     fun provideDictionaryRepository(
+        userConfigPreferences: UserConfigPreferences,
         imageConfigPreferences: ImageConfigPreferences,
         countryDao: CountryDao,
         languageDao: LanguageDao,
@@ -29,6 +31,7 @@ class RepositoryModule {
         networkService: NetworkService
     ): DictionaryRepository {
         return DictionaryRepositoryImpl(
+            userConfigPreferences,
             imageConfigPreferences,
             countryDao,
             languageDao,

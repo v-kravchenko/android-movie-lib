@@ -20,11 +20,15 @@ interface DictionaryRepository {
     suspend fun putTimezones(timezones: List<Timezone>)
     suspend fun putGenres(genres: List<Genre>)
 
-    fun imageConfig(): LiveData<ImageConfig>
-
     suspend fun deleteAllCountries(): UseCaseResult<Int, Unit>
     suspend fun deleteAllLanguages(): UseCaseResult<Int, Unit>
     suspend fun deleteAllPrimaryTranslations(): UseCaseResult<Int, Unit>
     suspend fun deleteAllTimezones(): UseCaseResult<Int, Unit>
     suspend fun deleteAllGenres(): UseCaseResult<Int, Unit>
+
+    fun userConfig(): LiveData<UserConfig>
+    fun imageConfig(): LiveData<ImageConfig>
+    fun languages(): LiveData<List<Language>>
+
+    fun getLanguage(iso: String): LiveData<Language?>
 }

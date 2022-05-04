@@ -7,6 +7,6 @@ data class GenreResult(
 ) {
     data class Genre(
         @SerializedName("id") val id : Long,
-        @SerializedName("name") val name: String
+        @SerializedName("name") val name: String?
     )
 }

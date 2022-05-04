@@ -24,7 +24,7 @@ class HomeFragment : BaseFragment() {
     private val viewModel: HomeViewModel by viewModels()
     private var binding: HomeFragmentBinding by autoCleared()
     private val languageAdapter by lazy {
-        ArrayAdapter<Language>(requireContext(), R.layout.list_item)
+        LanguageAdapter(requireContext())
     }
 
     override fun onCreateView(
@@ -67,7 +67,7 @@ class HomeFragment : BaseFragment() {
         }
 
         observe(viewModel.language) {
-            binding.textLanguage.setText(it?.toString(), false)
+            binding.textLanguage.setText(it?.englishName, false)
         }
 
         observe(viewModel.imageConfig) {

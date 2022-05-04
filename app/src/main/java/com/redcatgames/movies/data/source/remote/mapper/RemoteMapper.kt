@@ -10,6 +10,7 @@ import com.redcatgames.movies.data.source.remote.response.discover.movie.Discove
 import com.redcatgames.movies.data.source.remote.response.movie.GenreResult
 import com.redcatgames.movies.data.source.remote.response.movie.MovieResult
 import com.redcatgames.movies.domain.model.*
+import com.redcatgames.movies.util.empty
 import com.redcatgames.movies.util.now
 
 fun ConfigurationCountriesResult.mapFrom() = Country(
@@ -29,7 +30,7 @@ fun ConfigurationTimezonesResult.mapFrom(): List<Timezone> {
 }
 
 fun GenreResult.Genre.mapFrom() = Genre(
-    id, name, now()
+    id, name ?: String.empty, now()
 )
 
 fun ConfigurationResult.Images.mapFrom() = ImageConfig(

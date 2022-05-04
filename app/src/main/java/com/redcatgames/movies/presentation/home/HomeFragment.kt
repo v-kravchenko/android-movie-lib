@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.ListAdapter
 import android.widget.Toast
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import com.redcatgames.movies.R
 import com.redcatgames.movies.databinding.HomeFragmentBinding
@@ -46,7 +47,14 @@ class HomeFragment : BaseFragment() {
         binding.buttonDeleteMovies.setOnClickListener {
             viewModel.deleteAllMovies()
         }
-        (binding.spinnerLanguage.editText as? AutoCompleteTextView)?.setAdapter(languageAdapter)
+        (binding.spinnerLanguage.editText as? AutoCompleteTextView)?.let {
+            it.setAdapter(languageAdapter)
+            it.setOnItemClickListener { _, _, position, _ ->
+                languageAdapter.getItem(position)?.let { language ->
+                    viewModel.putLanguage(language)
+                }
+            }
+        }
 
         setupObserver()
     }

@@ -13,7 +13,7 @@ class UserConfigPreferences(private val preferences: Preferences) {
     companion object {
         private const val API_LANGUAGE = "user_api_language"
 
-        private const val DEFAULT_API_LANGUAGE = "ru-RU"
+        private const val DEFAULT_API_LANGUAGE = "ru"
     }
 
     val userConfig: LiveData<UserConfig> = preferences.data.map {

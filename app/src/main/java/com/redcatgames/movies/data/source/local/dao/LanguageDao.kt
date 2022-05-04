@@ -21,7 +21,7 @@ interface LanguageDao {
     @Update
     suspend fun update(language: LanguageEntity)
 
-    @Query("SELECT * FROM languages")
+    @Query("SELECT * FROM languages ORDER BY englishName")
     fun getAll(): LiveData<List<LanguageEntity>>
 
     @Query("SELECT * FROM languages WHERE iso = :iso")

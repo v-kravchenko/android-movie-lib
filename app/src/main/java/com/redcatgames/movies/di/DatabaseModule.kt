@@ -65,4 +65,10 @@ class DatabaseModule {
         return appDatabase.movieDao
     }
 
+    @Provides
+    @Singleton
+    fun provideMovieGenreDao(appDatabase: AppDatabase): MovieGenreDao {
+        return appDatabase.movieGenreDao
+    }
+
 }

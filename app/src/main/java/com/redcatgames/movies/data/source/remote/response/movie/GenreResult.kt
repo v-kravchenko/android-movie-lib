@@ -2,7 +2,7 @@ package com.redcatgames.movies.data.source.remote.response.movie
 
 import com.google.gson.annotations.SerializedName
 
-data class GenreMovieResult(
+data class GenreResult(
     @SerializedName("genres") val genres : List<Genre>,
 ) {
     data class Genre(

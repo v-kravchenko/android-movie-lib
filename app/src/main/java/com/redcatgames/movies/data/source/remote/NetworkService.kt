@@ -7,7 +7,7 @@ import com.redcatgames.movies.data.source.remote.response.configuration.Configur
 import com.redcatgames.movies.data.source.remote.response.configuration.ConfigurationResult
 import com.redcatgames.movies.data.source.remote.response.configuration.ConfigurationTimezonesResult
 import com.redcatgames.movies.data.source.remote.response.discover.movie.DiscoverMovieResult
-import com.redcatgames.movies.data.source.remote.response.movie.GenreMovieResult
+import com.redcatgames.movies.data.source.remote.response.movie.GenreResult
 import com.redcatgames.movies.data.source.remote.response.movie.MovieResult
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -41,8 +41,8 @@ interface NetworkService {
             NetworkResponse<List<ConfigurationTimezonesResult>, BaseError>
 
     @GET("genre/movie/list")
-    suspend fun getMovieGenres():
-            NetworkResponse<GenreMovieResult, BaseError>
+    suspend fun getGenres():
+            NetworkResponse<GenreResult, BaseError>
 
     @GET("discover/movie?sort_by=popularity.desc")
     suspend fun getPopularMovies(@Query("page") page: Int):

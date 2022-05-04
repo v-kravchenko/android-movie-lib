@@ -4,8 +4,7 @@ import android.app.Application
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.redcatgames.movies.data.source.local.AppDatabase
-import com.redcatgames.movies.data.source.local.dao.CountryDao
-import com.redcatgames.movies.data.source.local.dao.MovieDao
+import com.redcatgames.movies.data.source.local.dao.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -34,6 +33,30 @@ class DatabaseModule {
     @Singleton
     fun provideCountryDao(appDatabase: AppDatabase): CountryDao {
         return appDatabase.countryDao
+    }
+
+    @Provides
+    @Singleton
+    fun provideLanguageDao(appDatabase: AppDatabase): LanguageDao {
+        return appDatabase.languageDao
+    }
+
+    @Provides
+    @Singleton
+    fun providePrimaryTranslationDao(appDatabase: AppDatabase): PrimaryTranslationDao {
+        return appDatabase.primaryTranslationDao
+    }
+
+    @Provides
+    @Singleton
+    fun provideTimeZoneDao(appDatabase: AppDatabase): TimezoneDao {
+        return appDatabase.timezoneDao
+    }
+
+    @Provides
+    @Singleton
+    fun provideGenreDao(appDatabase: AppDatabase): GenreDao {
+        return appDatabase.genreDao
     }
 
     @Provides

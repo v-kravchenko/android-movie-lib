@@ -5,8 +5,8 @@ import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import java.util.*
 
-@Entity(tableName = "countries")
-data class GenreMovieEntity(
+@Entity(tableName = "genres")
+data class GenreEntity(
     @PrimaryKey
     val id : Long,
     val name : String,

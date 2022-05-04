@@ -7,16 +7,19 @@ import com.redcatgames.movies.data.source.local.converter.DateConverter
 import com.redcatgames.movies.data.source.local.converter.IntListConverter
 import com.redcatgames.movies.data.source.local.converter.LongListConverter
 import com.redcatgames.movies.data.source.local.converter.StringListConverter
-import com.redcatgames.movies.data.source.local.dao.CountryDao
-import com.redcatgames.movies.data.source.local.dao.MovieDao
-import com.redcatgames.movies.data.source.local.entity.CountryEntity
-import com.redcatgames.movies.data.source.local.entity.MovieEntity
+import com.redcatgames.movies.data.source.local.dao.*
+import com.redcatgames.movies.data.source.local.entity.*
 
-@Database(entities = [CountryEntity::class, MovieEntity::class],
-    version = 4, exportSchema = false)
+@Database(entities = [CountryEntity::class, LanguageEntity::class, PrimaryTranslationEntity::class,
+    TimezoneEntity::class, GenreEntity::class, MovieEntity::class],
+    version = 5, exportSchema = false)
 @TypeConverters(DateConverter::class, StringListConverter::class, IntListConverter::class, LongListConverter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract val countryDao: CountryDao
+    abstract val languageDao: LanguageDao
+    abstract val primaryTranslationDao: PrimaryTranslationDao
+    abstract val timezoneDao: TimezoneDao
+    abstract val genreDao: GenreDao
     abstract val movieDao: MovieDao
 
     companion object {

@@ -5,7 +5,7 @@ import com.redcatgames.movies.data.source.remote.response.configuration.Configur
 import com.redcatgames.movies.data.source.remote.response.configuration.ConfigurationResult
 import com.redcatgames.movies.data.source.remote.response.configuration.ConfigurationTimezonesResult
 import com.redcatgames.movies.data.source.remote.response.discover.movie.DiscoverMovieResult
-import com.redcatgames.movies.data.source.remote.response.movie.GenreMovieResult
+import com.redcatgames.movies.data.source.remote.response.movie.GenreResult
 import com.redcatgames.movies.data.source.remote.response.movie.MovieResult
 import com.redcatgames.movies.domain.model.*
 import com.redcatgames.movies.util.now
@@ -26,7 +26,7 @@ fun ConfigurationTimezonesResult.mapFrom(): List<Timezone> {
     return timezones.toList()
 }
 
-fun GenreMovieResult.Genre.mapFrom() = GenreMovie(
+fun GenreResult.Genre.mapFrom() = Genre(
     id, name, now()
 )
 

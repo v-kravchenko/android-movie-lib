@@ -3,18 +3,16 @@ package com.redcatgames.movies.data.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import com.redcatgames.movies.data.preferences.image.ImageConfigPreferences
-import com.redcatgames.movies.data.source.local.dao.CountryDao
-import com.redcatgames.movies.data.source.local.dao.MovieDao
+import com.redcatgames.movies.data.source.local.dao.*
 import com.redcatgames.movies.data.source.local.mapper.mapFrom
 import com.redcatgames.movies.data.source.local.mapper.mapTo
 import com.redcatgames.movies.data.source.remote.NetworkService
 import com.redcatgames.movies.data.source.remote.adapter.NetworkResponse
 import com.redcatgames.movies.data.source.remote.mapper.mapFrom
-import com.redcatgames.movies.domain.model.Country
-import com.redcatgames.movies.domain.model.ImageConfig
-import com.redcatgames.movies.domain.model.Movie
+import com.redcatgames.movies.domain.model.*
 import com.redcatgames.movies.domain.repository.MovieRepository
 import com.redcatgames.movies.domain.util.UseCaseResult
+import com.redcatgames.movies.util.now
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
@@ -22,6 +20,10 @@ import kotlinx.coroutines.coroutineScope
 class MovieRepositoryImpl(
     private val imageConfigPreferences: ImageConfigPreferences,
     private val countryDao: CountryDao,
+    private val languageDao: LanguageDao,
+    private val primaryTranslationDao: PrimaryTranslationDao,
+    private val timezoneDao: TimezoneDao,
+    private val genreDao: GenreDao,
     private val movieDao: MovieDao,
     private val networkService: NetworkService
 ) : MovieRepository {
@@ -60,7 +62,8 @@ class MovieRepositoryImpl(
     override suspend fun loadLanguages(): UseCaseResult<Unit, String?> {
         return when (val response = networkService.getLanguages()) {
             is NetworkResponse.Success -> {
-                //TODO Save data to database
+                deleteAllLanguages()
+                putLanguages(response.body.map { it.mapFrom() })
                 UseCaseResult.Success(Unit)
             }
             is NetworkResponse.ApiError ->
@@ -75,7 +78,8 @@ class MovieRepositoryImpl(
     override suspend fun loadPrimaryTranslations(): UseCaseResult<Unit, String?> {
         return when (val response = networkService.getPrimaryTranslations()) {
             is NetworkResponse.Success -> {
-                //TODO Save data to database
+                deleteAllPrimaryTranslations()
+                putPrimaryTranslations(response.body.map { PrimaryTranslation(it, now()) })
                 UseCaseResult.Success(Unit)
             }
             is NetworkResponse.ApiError ->
@@ -90,7 +94,12 @@ class MovieRepositoryImpl(
     override suspend fun loadTimezones(): UseCaseResult<Unit, String?> {
         return when (val response = networkService.getTimezones()) {
             is NetworkResponse.Success -> {
-                //TODO Save data to database
+                deleteAllTimezones()
+                val timezones = mutableListOf<Timezone>()
+                response.body.forEach { row ->
+                    timezones.addAll(row.zones.map { Timezone(row.iso, it, now()) })
+                }
+                putTimezones(timezones.toList())
                 UseCaseResult.Success(Unit)
             }
             is NetworkResponse.ApiError ->
@@ -102,10 +111,11 @@ class MovieRepositoryImpl(
         }
     }
 
-    override suspend fun loadMovieGenres(): UseCaseResult<Unit, String?> {
-        return when (val response = networkService.getMovieGenres()) {
+    override suspend fun loadGenres(): UseCaseResult<Unit, String?> {
+        return when (val response = networkService.getGenres()) {
             is NetworkResponse.Success -> {
-                //TODO Save data to database
+                deleteAllGenres()
+                putGenres(response.body.genres.map { it.mapFrom() })
                 UseCaseResult.Success(Unit)
             }
             is NetworkResponse.ApiError ->
@@ -124,7 +134,7 @@ class MovieRepositoryImpl(
             val languagesResult = async { loadLanguages() }
             val primaryTranslationsResult = async { loadPrimaryTranslations() }
             val timezonesResult = async { loadTimezones() }
-            val genreMovieResult = async { loadMovieGenres() }
+            val genreMovieResult = async { loadGenres() }
             val jobList = awaitAll(
                 configResult,
                 countriesResult,
@@ -150,6 +160,22 @@ class MovieRepositoryImpl(
         countryDao.insertAll(countries.map { it.mapTo() })
     }
 
+    override suspend fun putLanguages(languages: List<Language>) {
+        languageDao.insertAll(languages.map { it.mapTo() })
+    }
+
+    override suspend fun putPrimaryTranslations(primaryTranslations: List<PrimaryTranslation>) {
+        primaryTranslationDao.insertAll(primaryTranslations.map { it.mapTo() })
+    }
+
+    override suspend fun putTimezones(timezones: List<Timezone>) {
+        timezoneDao.insertAll(timezones.map { it.mapTo() })
+    }
+
+    override suspend fun putGenres(genres: List<Genre>) {
+        genreDao.insertAll(genres.map { it.mapTo() })
+    }
+
     override suspend fun putMovies(movies: List<Movie>) {
         movieDao.insertAll(movies.map { it.mapTo() })
     }
@@ -157,6 +183,30 @@ class MovieRepositoryImpl(
     override suspend fun deleteAllCountries(): UseCaseResult<Int, Unit> {
         val rowCount = countryDao.getCount()
         countryDao.deleteAll()
+        return UseCaseResult.Success(rowCount)
+    }
+
+    override suspend fun deleteAllLanguages(): UseCaseResult<Int, Unit> {
+        val rowCount = languageDao.getCount()
+        languageDao.deleteAll()
+        return UseCaseResult.Success(rowCount)
+    }
+
+    override suspend fun deleteAllPrimaryTranslations(): UseCaseResult<Int, Unit> {
+        val rowCount = primaryTranslationDao.getCount()
+        primaryTranslationDao.deleteAll()
+        return UseCaseResult.Success(rowCount)
+    }
+
+    override suspend fun deleteAllTimezones(): UseCaseResult<Int, Unit> {
+        val rowCount = timezoneDao.getCount()
+        timezoneDao.deleteAll()
+        return UseCaseResult.Success(rowCount)
+    }
+
+    override suspend fun deleteAllGenres(): UseCaseResult<Int, Unit> {
+        val rowCount = genreDao.getCount()
+        genreDao.deleteAll()
         return UseCaseResult.Success(rowCount)
     }
 

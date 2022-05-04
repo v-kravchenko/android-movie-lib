@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import java.util.*
 
-@Entity(tableName = "languages")
+@Entity(tableName = "timezones")
 data class TimezoneEntity(
     @PrimaryKey
     val iso : String,

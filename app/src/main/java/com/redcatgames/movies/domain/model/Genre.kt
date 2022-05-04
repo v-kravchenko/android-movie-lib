@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 import java.util.*
 
 @Parcelize
-data class GenreMovie(
+data class Genre(
     val id : Long,
     val name : String,
     val created: Date

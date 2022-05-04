@@ -15,8 +15,8 @@ fun PrimaryTranslationEntity.mapFrom() = PrimaryTranslation(name, created)
 fun Timezone.mapTo() = TimezoneEntity(iso, zoneName, created)
 fun TimezoneEntity.mapFrom() = Timezone(iso, zoneName, created)
 
-fun GenreMovie.mapTo() = GenreMovieEntity(id, name, created)
-fun GenreMovieEntity.mapFrom() = GenreMovie(id, name, created)
+fun Genre.mapTo() = GenreEntity(id, name, created)
+fun GenreEntity.mapFrom() = Genre(id, name, created)
 
 fun Movie.mapTo() = MovieEntity(id, isAdult, backdropPath, genreIds, originalLanguage, originalTitle, overview, popularity, posterPath, releaseDate, title, video, voteAverage, voteCount, created)
 fun MovieEntity.mapFrom() = Movie(id, isAdult, backdropPath, genreIds, originalLanguage, originalTitle, overview, popularity, posterPath, releaseDate, title, video, voteAverage, voteCount, created)

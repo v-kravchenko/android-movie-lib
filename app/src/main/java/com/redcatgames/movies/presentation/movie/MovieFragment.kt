@@ -17,6 +17,7 @@ import com.redcatgames.movies.databinding.HomeFragmentBinding
 import com.redcatgames.movies.databinding.MovieFragmentBinding
 import com.redcatgames.movies.presentation.base.BaseFragment
 import com.redcatgames.movies.presentation.util.autoCleared
+import com.redcatgames.movies.presentation.util.loadByUrl
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -47,9 +48,7 @@ class MovieFragment : BaseFragment() {
             movie?.let {
                 binding.text1.text = it.title
                 binding.text2.text = it.overview
-                binding.posterImage.load(
-                    "https://localhost/w500/${it.posterPath}"
-                )
+                binding.posterImage.loadByUrl("w500/${it.posterPath}")
             }
         }
 

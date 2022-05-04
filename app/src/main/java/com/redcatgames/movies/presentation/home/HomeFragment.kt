@@ -40,6 +40,9 @@ class HomeFragment : BaseFragment() {
         binding.buttonPopular.setOnClickListener {
             navigateTo(HomeFragmentDirections.actionHomeFragmentToPopularFragment())
         }
+        binding.buttonDeleteDictionary.setOnClickListener {
+            viewModel.deleteDictionary()
+        }
         binding.buttonDeleteMovies.setOnClickListener {
             viewModel.deleteAllMovies()
         }

@@ -25,6 +25,7 @@ interface DictionaryRepository {
     suspend fun deleteAllPrimaryTranslations(): UseCaseResult<Int, Unit>
     suspend fun deleteAllTimezones(): UseCaseResult<Int, Unit>
     suspend fun deleteAllGenres(): UseCaseResult<Int, Unit>
+    suspend fun deleteAll()
 
     fun userConfig(): LiveData<UserConfig>
     fun imageConfig(): LiveData<ImageConfig>

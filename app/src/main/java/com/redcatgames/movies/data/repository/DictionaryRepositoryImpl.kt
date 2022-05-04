@@ -208,6 +208,17 @@ class DictionaryRepositoryImpl(
         return UseCaseResult.Success(rowCount)
     }
 
+    override suspend fun deleteAll() {
+        coroutineScope {
+            val countries = async { deleteAllCountries() }
+            val languages = async { deleteAllLanguages() }
+            val primaryTranslations = async { deleteAllPrimaryTranslations() }
+            val timezones = async { deleteAllTimezones() }
+            val genres = async { deleteAllGenres() }
+            awaitAll(countries, languages, primaryTranslations, timezones, genres)
+        }
+    }
+
     override fun userConfig(): LiveData<UserConfig> =
         userConfigPreferences.userConfig
 

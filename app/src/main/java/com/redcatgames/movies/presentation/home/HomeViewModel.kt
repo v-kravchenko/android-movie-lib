@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.lifecycle.viewModelScope
 import com.redcatgames.movies.domain.usecase.config.GetImageConfigUseCase
 import com.redcatgames.movies.domain.usecase.config.GetUserConfigUseCase
+import com.redcatgames.movies.domain.usecase.dictionary.DeleteDictionaryUseCase
 import com.redcatgames.movies.domain.usecase.dictionary.GetLanguageUseCase
 import com.redcatgames.movies.domain.usecase.dictionary.GetLanguagesUseCase
 import com.redcatgames.movies.domain.usecase.dictionary.LoadDictionaryUseCase
@@ -24,6 +25,7 @@ class HomeViewModel @Inject constructor(
     languagesUseCase: GetLanguagesUseCase,
     languageUseCase: GetLanguageUseCase,
     private val loadDictionaryUseCase: LoadDictionaryUseCase,
+    private val deleteDictionaryUseCase: DeleteDictionaryUseCase,
     private val deleteAllMoviesUseCase: DeleteAllMoviesUseCase
 ) : BaseViewModel(appContext) {
 
@@ -35,18 +37,23 @@ class HomeViewModel @Inject constructor(
     val deleteAllMoviesEvent = SingleLiveEvent<UseCaseResult<Int, Unit>>()
 
     init {
-        viewModelScope.launch {
-            loadDictionaryUseCase().run {
-                loadDictionaryEvent.postValue(this)
-            }
+        loadDictionary()
+    }
+
+    private fun loadDictionary() = viewModelScope.launch {
+        loadDictionaryUseCase().run {
+            loadDictionaryEvent.postValue(this)
         }
     }
 
-    fun deleteAllMovies() {
-        viewModelScope.launch {
-            deleteAllMoviesUseCase().run {
-                deleteAllMoviesEvent.postValue(this)
-            }
+    fun deleteDictionary() = viewModelScope.launch {
+        deleteDictionaryUseCase()
+        loadDictionary()
+    }
+
+    fun deleteAllMovies() = viewModelScope.launch {
+        deleteAllMoviesUseCase().run {
+            deleteAllMoviesEvent.postValue(this)
         }
     }
 }

@@ -2,6 +2,7 @@ package com.redcatgames.movies.data.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
+import androidx.lifecycle.switchMap
 import com.redcatgames.movies.data.preferences.image.ImageConfigPreferences
 import com.redcatgames.movies.data.source.local.dao.*
 import com.redcatgames.movies.data.source.local.entity.MovieGenreEntity
@@ -13,6 +14,9 @@ import com.redcatgames.movies.data.source.remote.mapper.mapFrom
 import com.redcatgames.movies.domain.model.*
 import com.redcatgames.movies.domain.repository.MovieRepository
 import com.redcatgames.movies.domain.util.UseCaseResult
+import com.redcatgames.movies.util.PairLiveData
+import com.redcatgames.movies.util.combine
+import com.redcatgames.movies.util.combineWith
 import com.redcatgames.movies.util.now
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -96,6 +100,18 @@ class MovieRepositoryImpl(
     override fun movie(movieId: Long): LiveData<Movie?> {
         return Transformations.map(movieDao.getById(movieId)) {
             it?.mapFrom()
+        }
+    }
+
+    override fun movieInfo(movieId: Long): LiveData<MovieInfo?> {
+        val l1 = movieDao.getById(movieId)
+        val l2 = movieGenreDao.getByMovie(movieId)
+        return l1.combineWith(l2) {
+            a,b ->
+            a?.let {
+                return@combineWith MovieInfo(a.mapFrom(), b?.map { it.genreId } ?: listOf())
+            }
+            return@combineWith null
         }
     }
 }

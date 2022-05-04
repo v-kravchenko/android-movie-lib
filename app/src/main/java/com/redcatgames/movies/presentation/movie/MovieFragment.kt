@@ -53,6 +53,10 @@ class MovieFragment : BaseFragment() {
             }
         }
 
+        observe(viewModel.movieInfo) { movieInfo ->
+            Timber.d(movieInfo?.toString())
+        }
+
         observe(viewModel.loadMovieEvent) {
             it.onSuccess {
                 Toast.makeText(requireContext(), "Loaded movie!", Toast.LENGTH_SHORT).show()

@@ -27,6 +27,9 @@ interface MovieGenreDao {
     @Query("SELECT * FROM movie_genres")
     fun getAll(): LiveData<List<MovieGenreEntity>>
 
+    @Query("SELECT * FROM movie_genres WHERE movieId = :movieId")
+    fun getByMovie(movieId: Long): LiveData<List<MovieGenreEntity>>
+
     @Query("SELECT COUNT(1) FROM movie_genres")
     suspend fun getCount(): Int
 }

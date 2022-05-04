@@ -21,10 +21,19 @@ import timber.log.Timber
 @AndroidEntryPoint
 class HomeFragment : BaseFragment() {
 
+    companion object {
+        private const val KEY_SAVE_LANGUAGE = "language"
+    }
+
     private val viewModel: HomeViewModel by viewModels()
     private var binding: HomeFragmentBinding by autoCleared()
     private val languageAdapter by lazy {
         LanguageAdapter(requireContext())
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(KEY_SAVE_LANGUAGE, binding.textLanguage.text.toString())
     }
 
     override fun onCreateView(
@@ -32,6 +41,9 @@ class HomeFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = HomeFragmentBinding.inflate(inflater, container, false)
+        savedInstanceState?.getString(KEY_SAVE_LANGUAGE)?.let {
+            binding.textLanguage.setText(it, false)
+        }
         return binding.root
     }
 

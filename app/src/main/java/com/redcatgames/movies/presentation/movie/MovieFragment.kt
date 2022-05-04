@@ -53,7 +53,9 @@ class MovieFragment : BaseFragment() {
         }
 
         observe(viewModel.movieInfo) { movieInfo ->
-            Timber.d(movieInfo?.toString())
+            movieInfo?.let {
+                binding.text3.text = it.genres.joinToString { genre -> genre.genreName }
+            }
         }
 
         observe(viewModel.loadMovieEvent) {

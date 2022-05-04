@@ -31,9 +31,24 @@ class HomeFragment : BaseFragment() {
         LanguageAdapter(requireContext())
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Timber.w("onDestroyView()")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Timber.w("onDestroy()")
+    }
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putString(KEY_SAVE_LANGUAGE, binding.textLanguage.text.toString())
+        Timber.w("onSaveInstanceState()")
+        try {
+            outState.putString(KEY_SAVE_LANGUAGE, binding.textLanguage.text.toString())
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+        }
     }
 
     override fun onCreateView(

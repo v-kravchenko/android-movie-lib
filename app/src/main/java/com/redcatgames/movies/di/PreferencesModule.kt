@@ -3,6 +3,7 @@ package com.redcatgames.movies.di
 import android.content.Context
 import com.redcatgames.movies.data.preferences.image.ImageConfigPreferences
 import com.redcatgames.movies.data.preferences.Preferences
+import com.redcatgames.movies.data.preferences.image.UserConfigPreferences
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,18 +17,20 @@ class PreferencesModule {
 
     @Singleton
     @Provides
-    fun providePreferences(
-        @ApplicationContext appContext: Context
-    ): Preferences {
+    fun providePreferences(@ApplicationContext appContext: Context): Preferences {
         return Preferences(context = appContext)
     }
 
     @Singleton
     @Provides
-    fun provideImageConfigPreferences(
-        preferences: Preferences
-    ): ImageConfigPreferences {
+    fun provideImageConfigPreferences(preferences: Preferences): ImageConfigPreferences {
         return ImageConfigPreferences(preferences)
+    }
+
+    @Singleton
+    @Provides
+    fun provideUserConfigPreferences(preferences: Preferences): UserConfigPreferences {
+        return UserConfigPreferences(preferences)
     }
 
 }

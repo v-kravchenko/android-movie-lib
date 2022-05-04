@@ -111,14 +111,8 @@ class MovieRepositoryImpl(
     }
 
     override fun movieInfo(movieId: Long): LiveData<MovieInfo?> {
-        val l1 = movieDao.getById(movieId)
-        val l2 = movieGenreDao.getByMovie(movieId)
-        return l1.combineWith(l2) {
-            a,b ->
-            a?.let {
-                return@combineWith MovieInfo(a.mapFrom(), b?.map { it.mapFrom() } ?: listOf())
-            }
-            return@combineWith null
+        return Transformations.map(movieDao.getInfoById(movieId)) {
+            it?.mapFrom()
         }
     }
 }

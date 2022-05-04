@@ -1,5 +1,6 @@
 package com.redcatgames.movies.data.source.local.mapper
 
+import com.redcatgames.movies.data.source.local.embedded.MovieInfoEntity
 import com.redcatgames.movies.data.source.local.entity.*
 import com.redcatgames.movies.domain.model.*
 
@@ -23,3 +24,5 @@ fun MovieEntity.mapFrom() = Movie(id, isAdult, backdropPath, genreIds, originalL
 
 fun MovieGenre.mapTo() = MovieGenreEntity(movieId, genreId, genreName, created)
 fun MovieGenreEntity.mapFrom() = MovieGenre(movieId, genreId, genreName, created)
+
+fun MovieInfoEntity.mapFrom() = MovieInfo(movie.mapFrom(), genres.map { it.mapFrom() })

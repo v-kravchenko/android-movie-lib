@@ -2,6 +2,7 @@ package com.redcatgames.movies.data.source.local.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.redcatgames.movies.data.source.local.embedded.MovieInfoEntity
 import com.redcatgames.movies.data.source.local.entity.MovieEntity
 
 @Dao
@@ -23,6 +24,10 @@ interface MovieDao {
 
     @Query("SELECT * FROM movies where id = :movieId")
     fun getById(movieId: Long): LiveData<MovieEntity?>
+
+    @Transaction
+    @Query("SELECT * FROM movies where id = :movieId")
+    fun getInfoById(movieId: Long): LiveData<MovieInfoEntity?>
 
     @Query("SELECT * FROM movies where title = :movieTitle")
     fun getByTitle(movieTitle: String): LiveData<MovieEntity?>

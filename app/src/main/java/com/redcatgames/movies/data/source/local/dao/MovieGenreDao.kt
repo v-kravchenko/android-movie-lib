@@ -18,6 +18,9 @@ interface MovieGenreDao {
     @Query("DELETE FROM movie_genres")
     suspend fun deleteAll()
 
+    @Query("DELETE FROM movie_genres WHERE movieId = :movieId")
+    suspend fun deleteByMovie(movieId: Long)
+
     @Update
     suspend fun update(movieGenre: MovieGenreEntity)
 

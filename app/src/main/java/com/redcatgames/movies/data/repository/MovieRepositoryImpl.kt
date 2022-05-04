@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import com.redcatgames.movies.data.preferences.image.ImageConfigPreferences
 import com.redcatgames.movies.data.source.local.dao.*
+import com.redcatgames.movies.data.source.local.entity.MovieGenreEntity
 import com.redcatgames.movies.data.source.local.mapper.mapFrom
 import com.redcatgames.movies.data.source.local.mapper.mapTo
 import com.redcatgames.movies.data.source.remote.NetworkService
@@ -19,6 +20,7 @@ import kotlinx.coroutines.coroutineScope
 
 class MovieRepositoryImpl(
     private val movieDao: MovieDao,
+    private val movieGenreDao: MovieGenreDao,
     private val networkService: NetworkService
 ) : MovieRepository {
 
@@ -30,10 +32,25 @@ class MovieRepositoryImpl(
 
     override suspend fun putMovies(movies: List<Movie>) {
         movieDao.insertAll(movies.map { it.mapTo() })
+        putMoviesGenres(movies)
+    }
+
+    private suspend fun putMovieGenres(movie: Movie) {
+        movieGenreDao.deleteByMovie(movie.id)
+        movieGenreDao.insertAll(movie.genreIds.map { MovieGenreEntity(movie.id, it, now()) })
+    }
+
+    private suspend fun putMoviesGenres(movies: List<Movie>) {
+        val movieGenres = mutableListOf<MovieGenreEntity>()
+        movies.forEach { movie ->
+            movieGenres.addAll(movie.genreIds.map { MovieGenreEntity(movie.id, it, now()) })
+        }
+        movieGenreDao.insertAll(movieGenres)
     }
 
     override suspend fun putMovie(movie: Movie) {
         movieDao.insert(movie.mapTo())
+        putMovieGenres(movie)
     }
 
     override suspend fun loadMovie(movieId: Long): UseCaseResult<Unit, String?> {

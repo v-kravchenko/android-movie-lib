@@ -43,10 +43,12 @@ class RepositoryModule {
     @Provides
     fun provideMovieRepository(
         movieDao: MovieDao,
+        movieGenreDao: MovieGenreDao,
         networkService: NetworkService
     ): MovieRepository {
         return MovieRepositoryImpl(
             movieDao,
+            movieGenreDao,
             networkService
         )
     }

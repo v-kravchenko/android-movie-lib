@@ -25,22 +25,17 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     @ApplicationContext appContext: Context,
     userConfigUseCase: GetUserConfigUseCase,
-    imageConfigUseCase: GetImageConfigUseCase,
     languagesUseCase: GetLanguagesUseCase,
     languageUseCase: GetLanguageUseCase,
     private val setUserConfigApiLanguageUseCase: SetUserConfigApiLanguageUseCase,
     private val loadDictionaryUseCase: LoadDictionaryUseCase,
-    private val deleteDictionaryUseCase: DeleteDictionaryUseCase,
-    private val deleteAllMoviesUseCase: DeleteAllMoviesUseCase
 ) : BaseViewModel(appContext) {
 
     val languages = languagesUseCase()
-    val imageConfig = imageConfigUseCase()
     val loadDictionaryEvent = SingleLiveEvent<UseCaseResult<Unit, String?>>()
     val deleteAllMoviesEvent = SingleLiveEvent<UseCaseResult<Int, Unit>>()
 
     val language = Transformations.switchMap(userConfigUseCase()) {
-        Timber.d("Current language is ${it.apiLanguage}")
         languageUseCase(it.apiLanguage)
     }
 
@@ -54,18 +49,8 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun deleteDictionary() = viewModelScope.launch {
-        deleteDictionaryUseCase()
-        loadDictionary()
-    }
-
-    fun deleteAllMovies() = viewModelScope.launch {
-        deleteAllMoviesUseCase().run {
-            deleteAllMoviesEvent.postValue(this)
-        }
-    }
-
     fun putLanguage(language: Language) = viewModelScope.launch {
-        setUserConfigApiLanguageUseCase(language.iso)
+        setUserConfigApiLanguageUseCase(language)
+        loadDictionary()
     }
 }

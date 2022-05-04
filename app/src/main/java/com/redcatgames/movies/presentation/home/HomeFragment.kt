@@ -53,12 +53,7 @@ class HomeFragment : BaseFragment() {
         binding.buttonPopular.setOnClickListener {
             navigateTo(HomeFragmentDirections.actionHomeFragmentToPopularFragment())
         }
-        binding.buttonDeleteDictionary.setOnClickListener {
-            viewModel.deleteDictionary()
-        }
-        binding.buttonDeleteMovies.setOnClickListener {
-            viewModel.deleteAllMovies()
-        }
+
         (binding.spinnerLanguage.editText as? AutoCompleteTextView)?.let {
             it.setAdapter(languageAdapter)
             it.setOnItemClickListener { _, _, position, _ ->
@@ -80,12 +75,6 @@ class HomeFragment : BaseFragment() {
 
         observe(viewModel.language) {
             binding.textLanguage.setText(it?.englishName, false)
-        }
-
-        observe(viewModel.imageConfig) {
-            Timber.w("ImageConfig: $it")
-            binding.textImageBaseUrl.setText(it.baseUrl)
-            binding.textImageSecureBaseUrl.setText(it.secureBaseUrl)
         }
 
         observe(viewModel.loadDictionaryEvent) {

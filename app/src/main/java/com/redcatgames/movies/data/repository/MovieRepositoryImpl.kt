@@ -37,11 +37,9 @@ class MovieRepositoryImpl(
         movieGenreDao.insertAll(genres.map { it.mapTo() })
     }
 
-    private suspend fun putMoviesGenres(movies: MutableList<MovieGenre>) {
-        movies.forEach {
-            movieGenreDao.deleteByMovie(it.movieId)
-        }
-        movieGenreDao.insertAll(movies.map { it.mapTo() })
+    private suspend fun putMoviesGenres(movies: List<Movie>, moviesGenres: MutableList<MovieGenre>) {
+        movieGenreDao.deleteByMovieList(movies.map { it.id })
+        movieGenreDao.insertAll(moviesGenres.map { it.mapTo() })
     }
 
     override suspend fun putMovie(movie: Movie) {
@@ -72,9 +70,9 @@ class MovieRepositoryImpl(
         return when (val response = networkService.getPopularMovies(page)) {
             is NetworkResponse.Success -> {
 
-                val movieList = response.body.movies.map { it.mapFrom() }
+                val movies = response.body.movies.map { it.mapFrom() }
                 deleteAllMovies()
-                putMovies(movieList)
+                putMovies(movies)
 
                 val genreList = genreDao.loadAll()
                 val moveGenreList = mutableListOf<MovieGenre>()
@@ -87,9 +85,9 @@ class MovieRepositoryImpl(
                             created = now()
                         ) })
                 }
-                putMoviesGenres(moveGenreList)
+                putMoviesGenres(movies, moveGenreList)
 
-                UseCaseResult.Success(movieList)
+                UseCaseResult.Success(movies)
             }
             is NetworkResponse.ApiError ->
                 UseCaseResult.Failure(response.body.statusMessage)

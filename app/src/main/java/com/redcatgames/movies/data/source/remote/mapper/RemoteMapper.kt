@@ -1,5 +1,7 @@
 package com.redcatgames.movies.data.source.remote.mapper
 
+import com.redcatgames.movies.data.source.local.dao.MovieGenreDao
+import com.redcatgames.movies.data.source.local.entity.MovieGenreEntity
 import com.redcatgames.movies.data.source.remote.response.configuration.ConfigurationCountriesResult
 import com.redcatgames.movies.data.source.remote.response.configuration.ConfigurationLanguagesResult
 import com.redcatgames.movies.data.source.remote.response.configuration.ConfigurationResult
@@ -74,5 +76,12 @@ fun MovieResult.mapFrom() = Movie(
     video = video,
     voteAverage = voteAverage,
     voteCount = voteCount,
+    created = now()
+)
+
+fun MovieResult.Genre.mapFrom(movie: Movie) = MovieGenre(
+    movieId = movie.id,
+    genreId = id,
+    genreName = name,
     created = now()
 )

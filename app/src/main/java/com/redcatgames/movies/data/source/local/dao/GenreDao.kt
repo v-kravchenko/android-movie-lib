@@ -24,6 +24,9 @@ interface GenreDao {
     @Query("SELECT * FROM genres")
     fun getAll(): LiveData<List<GenreEntity>>
 
+    @Query("SELECT * FROM genres")
+    suspend fun loadAll(): List<GenreEntity>
+
     @Query("SELECT COUNT(1) FROM genres")
     suspend fun getCount(): Int
 }

@@ -7,5 +7,6 @@ import java.util.*
 data class MovieGenreEntity (
     val movieId: Long,
     val genreId: Long,
+    val genreName: String,
     val created: Date
 )

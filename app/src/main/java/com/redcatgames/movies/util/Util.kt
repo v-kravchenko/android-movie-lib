@@ -3,6 +3,10 @@ package com.redcatgames.movies.util
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 
+val String.Companion.empty: String
+    get() = ""
+
+
 fun <T, K, R> LiveData<T>.combineWith(
     liveData: LiveData<K>,
     block: (T?, K?) -> R

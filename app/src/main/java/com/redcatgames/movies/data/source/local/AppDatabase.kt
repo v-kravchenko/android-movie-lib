@@ -12,7 +12,7 @@ import com.redcatgames.movies.data.source.local.entity.*
 
 @Database(entities = [CountryEntity::class, LanguageEntity::class, PrimaryTranslationEntity::class,
     TimezoneEntity::class, GenreEntity::class, MovieEntity::class, MovieGenreEntity::class],
-    version = 6, exportSchema = false)
+    version = 1, exportSchema = false)
 @TypeConverters(DateConverter::class, StringListConverter::class, IntListConverter::class, LongListConverter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract val countryDao: CountryDao

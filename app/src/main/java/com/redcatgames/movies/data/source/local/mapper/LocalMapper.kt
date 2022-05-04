@@ -20,3 +20,6 @@ fun GenreEntity.mapFrom() = Genre(id, name, created)
 
 fun Movie.mapTo() = MovieEntity(id, isAdult, backdropPath, genreIds, originalLanguage, originalTitle, overview, popularity, posterPath, releaseDate, title, video, voteAverage, voteCount, created)
 fun MovieEntity.mapFrom() = Movie(id, isAdult, backdropPath, genreIds, originalLanguage, originalTitle, overview, popularity, posterPath, releaseDate, title, video, voteAverage, voteCount, created)
+
+fun MovieGenre.mapTo() = MovieGenreEntity(movieId, genreId, genreName, created)
+fun MovieGenreEntity.mapFrom() = MovieGenre(movieId, genreId, genreName, created)

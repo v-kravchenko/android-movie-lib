@@ -2,10 +2,7 @@ package com.redcatgames.movies.data.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
-import androidx.lifecycle.switchMap
-import com.redcatgames.movies.data.preferences.image.ImageConfigPreferences
 import com.redcatgames.movies.data.source.local.dao.*
-import com.redcatgames.movies.data.source.local.entity.MovieGenreEntity
 import com.redcatgames.movies.data.source.local.mapper.mapFrom
 import com.redcatgames.movies.data.source.local.mapper.mapTo
 import com.redcatgames.movies.data.source.remote.NetworkService
@@ -14,17 +11,14 @@ import com.redcatgames.movies.data.source.remote.mapper.mapFrom
 import com.redcatgames.movies.domain.model.*
 import com.redcatgames.movies.domain.repository.MovieRepository
 import com.redcatgames.movies.domain.util.UseCaseResult
-import com.redcatgames.movies.util.PairLiveData
-import com.redcatgames.movies.util.combine
+import com.redcatgames.movies.util.empty
 import com.redcatgames.movies.util.combineWith
 import com.redcatgames.movies.util.now
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.coroutineScope
 
 class MovieRepositoryImpl(
     private val movieDao: MovieDao,
     private val movieGenreDao: MovieGenreDao,
+    private val genreDao: GenreDao,
     private val networkService: NetworkService
 ) : MovieRepository {
 
@@ -36,32 +30,32 @@ class MovieRepositoryImpl(
 
     override suspend fun putMovies(movies: List<Movie>) {
         movieDao.insertAll(movies.map { it.mapTo() })
-        putMoviesGenres(movies)
     }
 
-    private suspend fun putMovieGenres(movie: Movie) {
+    private suspend fun putMovieGenres(movie: Movie, genres: List<MovieGenre>) {
         movieGenreDao.deleteByMovie(movie.id)
-        movieGenreDao.insertAll(movie.genreIds.map { MovieGenreEntity(movie.id, it, now()) })
+        movieGenreDao.insertAll(genres.map { it.mapTo() })
     }
 
-    private suspend fun putMoviesGenres(movies: List<Movie>) {
-        val movieGenres = mutableListOf<MovieGenreEntity>()
-        movies.forEach { movie ->
-            movieGenres.addAll(movie.genreIds.map { MovieGenreEntity(movie.id, it, now()) })
+    private suspend fun putMoviesGenres(movies: MutableList<MovieGenre>) {
+        movies.forEach {
+            movieGenreDao.deleteByMovie(it.movieId)
         }
-        movieGenreDao.insertAll(movieGenres)
+        movieGenreDao.insertAll(movies.map { it.mapTo() })
     }
 
     override suspend fun putMovie(movie: Movie) {
         movieDao.insert(movie.mapTo())
-        putMovieGenres(movie)
     }
 
     override suspend fun loadMovie(movieId: Long): UseCaseResult<Unit, String?> {
 
         return when (val response = networkService.getMovie(movieId)) {
             is NetworkResponse.Success -> {
-                putMovie(response.body.mapFrom())
+                val movie = response.body.mapFrom()
+                val genres = response.body.genres.map { it.mapFrom(movie) }
+                putMovie(movie)
+                putMovieGenres(movie, genres)
                 UseCaseResult.Success(Unit)
             }
             is NetworkResponse.ApiError ->
@@ -77,9 +71,24 @@ class MovieRepositoryImpl(
 
         return when (val response = networkService.getPopularMovies(page)) {
             is NetworkResponse.Success -> {
+
                 val movieList = response.body.movies.map { it.mapFrom() }
                 deleteAllMovies()
                 putMovies(movieList)
+
+                val genreList = genreDao.loadAll()
+                val moveGenreList = mutableListOf<MovieGenre>()
+                response.body.movies.forEach { movie ->
+                    moveGenreList.addAll(movie.genreIds.map {
+                        MovieGenre(
+                            movieId = movie.id,
+                            genreId = it,
+                            genreName = genreList.find { genre -> genre.id == it }?.name ?: String.empty,
+                            created = now()
+                        ) })
+                }
+                putMoviesGenres(moveGenreList)
+
                 UseCaseResult.Success(movieList)
             }
             is NetworkResponse.ApiError ->
@@ -109,7 +118,7 @@ class MovieRepositoryImpl(
         return l1.combineWith(l2) {
             a,b ->
             a?.let {
-                return@combineWith MovieInfo(a.mapFrom(), b?.map { it.genreId } ?: listOf())
+                return@combineWith MovieInfo(a.mapFrom(), b?.map { it.mapFrom() } ?: listOf())
             }
             return@combineWith null
         }

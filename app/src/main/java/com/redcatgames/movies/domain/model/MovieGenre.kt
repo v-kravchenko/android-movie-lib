@@ -10,4 +10,24 @@ data class MovieGenre(
     val genreId: Long,
     val genreName: String,
     val created: Date
-) : Parcelable
+) : Parcelable {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as MovieGenre
+
+        if (movieId != other.movieId) return false
+        if (genreId != other.genreId) return false
+        if (genreName != other.genreName) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = movieId.hashCode()
+        result = 31 * result + genreId.hashCode()
+        result = 31 * result + genreName.hashCode()
+        return result
+    }
+}

@@ -59,9 +59,7 @@ class MovieFragment : BaseFragment() {
         }
 
         observe(viewModel.loadMovieEvent) {
-            it.onSuccess {
-                Toast.makeText(requireContext(), "Loaded movie!", Toast.LENGTH_SHORT).show()
-            }.onFailure { errorMessage ->
+            it.onFailure { errorMessage ->
                 Toast.makeText(requireContext(), "Error loading: $errorMessage", Toast.LENGTH_SHORT)
                     .show()
             }

@@ -15,4 +15,5 @@ interface MovieRepository {
     fun popularMovies(): LiveData<List<Movie>>
     fun movie(movieId: Long): LiveData<Movie?>
     fun movieInfo(movieId: Long): LiveData<MovieInfo?>
+    fun movieGenres(movieId: Long): LiveData<List<MovieGenre>>
 }

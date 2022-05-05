@@ -33,7 +33,6 @@ class HomeViewModel @Inject constructor(
 
     val languages = languagesUseCase()
     val loadDictionaryEvent = SingleLiveEvent<UseCaseResult<Unit, String?>>()
-    val deleteAllMoviesEvent = SingleLiveEvent<UseCaseResult<Int, Unit>>()
 
     val language = Transformations.switchMap(userConfigUseCase()) {
         languageUseCase(it.apiLanguage)

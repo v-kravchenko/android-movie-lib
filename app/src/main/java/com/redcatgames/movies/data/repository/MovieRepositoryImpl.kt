@@ -2,18 +2,24 @@ package com.redcatgames.movies.data.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
-import com.redcatgames.movies.data.source.local.dao.*
+import androidx.lifecycle.asFlow
+import com.redcatgames.movies.data.source.local.dao.GenreDao
+import com.redcatgames.movies.data.source.local.dao.MovieDao
+import com.redcatgames.movies.data.source.local.dao.MovieGenreDao
 import com.redcatgames.movies.data.source.local.mapper.mapFrom
 import com.redcatgames.movies.data.source.local.mapper.mapTo
 import com.redcatgames.movies.data.source.remote.NetworkService
 import com.redcatgames.movies.data.source.remote.adapter.NetworkResponse
 import com.redcatgames.movies.data.source.remote.mapper.mapFrom
-import com.redcatgames.movies.domain.model.*
+import com.redcatgames.movies.domain.model.Movie
+import com.redcatgames.movies.domain.model.MovieGenre
+import com.redcatgames.movies.domain.model.MovieInfo
 import com.redcatgames.movies.domain.repository.MovieRepository
 import com.redcatgames.movies.domain.util.UseCaseResult
 import com.redcatgames.movies.util.empty
-import com.redcatgames.movies.util.combineWith
 import com.redcatgames.movies.util.now
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 
 class MovieRepositoryImpl(
     private val movieDao: MovieDao,
@@ -33,8 +39,11 @@ class MovieRepositoryImpl(
     }
 
     private suspend fun putMovieGenres(movie: Movie, genres: List<MovieGenre>) {
-        movieGenreDao.deleteByMovie(movie.id)
-        movieGenreDao.insertAll(genres.map { it.mapTo() })
+        val localGenres = movieGenres(movie.id).asFlow().first()
+        if (localGenres.sortedBy { it.genreId } != genres.sortedBy { it.genreId }) {
+            movieGenreDao.deleteByMovie(movie.id)
+            movieGenreDao.insertAll(genres.map { it.mapTo() })
+        }
     }
 
     private suspend fun putMoviesGenres(movies: List<Movie>, moviesGenres: MutableList<MovieGenre>) {
@@ -43,7 +52,9 @@ class MovieRepositoryImpl(
     }
 
     override suspend fun putMovie(movie: Movie) {
-        movieDao.insert(movie.mapTo())
+        if (movie != movie(movie.id).asFlow().firstOrNull()) {
+            movieDao.insert(movie.mapTo())
+        }
     }
 
     override suspend fun loadMovie(movieId: Long): UseCaseResult<Unit, String?> {
@@ -113,6 +124,12 @@ class MovieRepositoryImpl(
     override fun movieInfo(movieId: Long): LiveData<MovieInfo?> {
         return Transformations.map(movieDao.getInfoById(movieId)) {
             it?.mapFrom()
+        }
+    }
+
+    override fun movieGenres(movieId: Long): LiveData<List<MovieGenre>> {
+        return Transformations.map(movieGenreDao.getByMovie(movieId)) {
+            it?.map { movieGenreEntity -> movieGenreEntity.mapFrom() }
         }
     }
 }

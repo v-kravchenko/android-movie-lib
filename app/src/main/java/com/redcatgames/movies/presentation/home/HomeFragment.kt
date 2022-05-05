@@ -93,19 +93,8 @@ class HomeFragment : BaseFragment() {
         }
 
         observe(viewModel.loadDictionaryEvent) {
-            it.onSuccess {
-                Timber.d("Dictionary loaded")
-            }.onFailure { errorMessage ->
+            it.onFailure { errorMessage ->
                 Timber.d("Error loading config: $errorMessage")
-            }
-        }
-
-        observe(viewModel.deleteAllMoviesEvent) {
-            it.onSuccess { movieCount ->
-                Toast.makeText(requireContext(), "Removed $movieCount movies", Toast.LENGTH_SHORT)
-                    .show()
-            }.onFailure { errorMessage ->
-                Toast.makeText(requireContext(), "Error $errorMessage", Toast.LENGTH_SHORT).show()
             }
         }
     }

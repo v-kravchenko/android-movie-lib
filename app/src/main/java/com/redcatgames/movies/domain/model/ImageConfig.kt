@@ -12,6 +12,5 @@ data class ImageConfig(
     val logoSizes : List<String>,
     val posterSizes : List<String>,
     val profileSizes : List<String>,
-    val stillSizes : List<String>,
-    val created: Date
+    val stillSizes : List<String>
 ) : Parcelable

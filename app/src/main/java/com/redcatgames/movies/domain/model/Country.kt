@@ -8,6 +8,5 @@ import java.util.*
 data class Country(
     val iso : String,
     val englishName : String,
-    val nativeName : String,
-    val created: Date
+    val nativeName : String
 ) : Parcelable

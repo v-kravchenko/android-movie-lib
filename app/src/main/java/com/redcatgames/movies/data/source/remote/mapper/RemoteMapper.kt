@@ -1,7 +1,5 @@
 package com.redcatgames.movies.data.source.remote.mapper
 
-import com.redcatgames.movies.data.source.local.dao.MovieGenreDao
-import com.redcatgames.movies.data.source.local.entity.MovieGenreEntity
 import com.redcatgames.movies.data.source.remote.response.configuration.ConfigurationCountriesResult
 import com.redcatgames.movies.data.source.remote.response.configuration.ConfigurationLanguagesResult
 import com.redcatgames.movies.data.source.remote.response.configuration.ConfigurationResult
@@ -11,26 +9,25 @@ import com.redcatgames.movies.data.source.remote.response.movie.GenreResult
 import com.redcatgames.movies.data.source.remote.response.movie.MovieResult
 import com.redcatgames.movies.domain.model.*
 import com.redcatgames.movies.util.empty
-import com.redcatgames.movies.util.now
 
 fun ConfigurationCountriesResult.mapFrom() = Country(
-    iso, englishName, nativeName, now()
+    iso, englishName, nativeName
 )
 
 fun ConfigurationLanguagesResult.mapFrom() = Language(
-    iso, englishName, name, now()
+    iso, englishName, name
 )
 
 fun ConfigurationTimezonesResult.mapFrom(): List<Timezone> {
     val timezones = mutableListOf<Timezone>()
     this.zones.forEach {
-        timezones.add(Timezone(this.iso, it, now()))
+        timezones.add(Timezone(this.iso, it))
     }
     return timezones.toList()
 }
 
 fun GenreResult.Genre.mapFrom() = Genre(
-    id, name ?: String.empty, now()
+    id, name ?: String.empty
 )
 
 fun ConfigurationResult.Images.mapFrom() = ImageConfig(
@@ -40,8 +37,7 @@ fun ConfigurationResult.Images.mapFrom() = ImageConfig(
     logoSizes = logoSizes,
     posterSizes = posterSizes,
     profileSizes = profileSizes,
-    stillSizes = stillSizes,
-    created = now()
+    stillSizes = stillSizes
 )
 
 fun DiscoverMovieResult.Movie.mapFrom() = Movie(
@@ -58,8 +54,7 @@ fun DiscoverMovieResult.Movie.mapFrom() = Movie(
     title = title,
     video = video,
     voteAverage = voteAverage,
-    voteCount = voteCount,
-    created = now()
+    voteCount = voteCount
 )
 
 fun MovieResult.mapFrom() = Movie(
@@ -76,13 +71,11 @@ fun MovieResult.mapFrom() = Movie(
     title = title,
     video = video,
     voteAverage = voteAverage,
-    voteCount = voteCount,
-    created = now()
+    voteCount = voteCount
 )
 
 fun MovieResult.Genre.mapFrom(movie: Movie) = MovieGenre(
     movieId = movie.id,
     genreId = id,
-    genreName = name,
-    created = now()
+    genreName = name
 )

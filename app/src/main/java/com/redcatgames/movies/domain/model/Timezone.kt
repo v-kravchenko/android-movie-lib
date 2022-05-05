@@ -7,6 +7,5 @@ import java.util.*
 @Parcelize
 data class Timezone(
     val iso : String,
-    val zoneName : String,
-    val created: Date
+    val zoneName : String
 ) : Parcelable

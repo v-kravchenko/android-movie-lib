@@ -7,6 +7,5 @@ import java.util.*
 @Parcelize
 data class Genre(
     val id : Long,
-    val name : String,
-    val created: Date
+    val name : String
 ) : Parcelable

@@ -6,6 +6,5 @@ import java.util.*
 
 @Parcelize
 data class PrimaryTranslation(
-    val name : String,
-    val created: Date
+    val name : String
 ) : Parcelable

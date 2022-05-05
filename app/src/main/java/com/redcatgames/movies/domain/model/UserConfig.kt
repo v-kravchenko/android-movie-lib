@@ -6,6 +6,5 @@ import java.util.*
 
 @Parcelize
 data class UserConfig(
-    val apiLanguage : String,
-    val created: Date
+    val apiLanguage : String
 ) : Parcelable

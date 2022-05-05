@@ -17,7 +17,6 @@ import com.redcatgames.movies.domain.model.MovieInfo
 import com.redcatgames.movies.domain.repository.MovieRepository
 import com.redcatgames.movies.domain.util.UseCaseResult
 import com.redcatgames.movies.util.empty
-import com.redcatgames.movies.util.now
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 
@@ -92,8 +91,7 @@ class MovieRepositoryImpl(
                         MovieGenre(
                             movieId = movie.id,
                             genreId = it,
-                            genreName = genreList.find { genre -> genre.id == it }?.name ?: String.empty,
-                            created = now()
+                            genreName = genreList.find { genre -> genre.id == it }?.name ?: String.empty
                         ) })
                 }
                 putMoviesGenres(movies, moveGenreList)

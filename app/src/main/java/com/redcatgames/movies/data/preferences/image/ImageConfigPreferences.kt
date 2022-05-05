@@ -27,8 +27,7 @@ class ImageConfigPreferences(private val preferences: Preferences) {
             listOf(),
             listOf(),
             listOf(),
-            listOf(),
-            now()
+            listOf()
         )
     }
     
@@ -40,8 +39,7 @@ class ImageConfigPreferences(private val preferences: Preferences) {
             listOf(),
             listOf(),
             listOf(),
-            listOf(),
-            now()
+            listOf()
         )
     }
 

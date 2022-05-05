@@ -8,6 +8,5 @@ import java.util.*
 data class Language(
     val iso : String,
     val englishName : String,
-    val name : String,
-    val created: Date
+    val name : String
 ) : Parcelable

@@ -82,7 +82,7 @@ class DictionaryRepositoryImpl(
         return when (val response = networkService.getPrimaryTranslations()) {
             is NetworkResponse.Success -> {
                 deleteAllPrimaryTranslations()
-                putPrimaryTranslations(response.body.map { PrimaryTranslation(it, now()) })
+                putPrimaryTranslations(response.body.map { PrimaryTranslation(it) })
                 UseCaseResult.Success(Unit)
             }
             is NetworkResponse.ApiError ->
@@ -98,10 +98,7 @@ class DictionaryRepositoryImpl(
         return when (val response = networkService.getTimezones()) {
             is NetworkResponse.Success -> {
                 deleteAllTimezones()
-                val timezones = mutableListOf<Timezone>()
-                response.body.forEach { row ->
-                    timezones.addAll(row.zones.map { Timezone(row.iso, it, now()) })
-                }
+                val timezones = response.body.flatMap { it.mapFrom() }
                 putTimezones(timezones.toList())
                 UseCaseResult.Success(Unit)
             }

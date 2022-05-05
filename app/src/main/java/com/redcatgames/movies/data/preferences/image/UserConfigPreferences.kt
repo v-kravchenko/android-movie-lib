@@ -19,15 +19,13 @@ class UserConfigPreferences(private val preferences: Preferences) {
     val userConfig: LiveData<UserConfig> = preferences.data.map {
         val keyApiLanguage = stringPreferencesKey(API_LANGUAGE)
         UserConfig(
-            it[keyApiLanguage] ?: DEFAULT_API_LANGUAGE,
-            now()
+            it[keyApiLanguage] ?: DEFAULT_API_LANGUAGE
         )
     }
     
     suspend fun readConfig(): UserConfig {
         return UserConfig(
-            preferences.getString(API_LANGUAGE) ?: DEFAULT_API_LANGUAGE,
-            now()
+            preferences.getString(API_LANGUAGE) ?: DEFAULT_API_LANGUAGE
         )
     }
 

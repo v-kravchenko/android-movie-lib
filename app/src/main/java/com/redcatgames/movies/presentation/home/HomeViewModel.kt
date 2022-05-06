@@ -48,7 +48,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun putLanguage(language: Language) = viewModelScope.launch {
+    fun setApiLanguage(language: Language) = viewModelScope.launch {
         setUserConfigApiLanguageUseCase(language)
         loadDictionary()
     }

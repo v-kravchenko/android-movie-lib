@@ -4,15 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
-import android.widget.ListAdapter
-import android.widget.Toast
-import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
-import com.redcatgames.movies.R
 import com.redcatgames.movies.databinding.HomeFragmentBinding
-import com.redcatgames.movies.domain.model.Language
 import com.redcatgames.movies.presentation.base.BaseFragment
 import com.redcatgames.movies.presentation.util.autoCleared
 import dagger.hilt.android.AndroidEntryPoint
@@ -73,7 +67,7 @@ class HomeFragment : BaseFragment() {
             it.setAdapter(languageAdapter)
             it.setOnItemClickListener { _, _, position, _ ->
                 languageAdapter.getItem(position)?.let { language ->
-                    viewModel.putLanguage(language)
+                    viewModel.setApiLanguage(language)
                 }
             }
         }

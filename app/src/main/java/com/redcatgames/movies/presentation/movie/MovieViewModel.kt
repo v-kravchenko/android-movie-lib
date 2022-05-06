@@ -27,10 +27,12 @@ class MovieViewModel @Inject constructor(
     val loadMovieEvent = SingleLiveEvent<UseCaseResult<Unit, String?>>()
 
     init {
-        viewModelScope.launch {
-            loadMovieInfoUseCase(args.movieId).run {
-                loadMovieEvent.postValue(this)
-            }
+        loadMovieInfo()
+    }
+
+    private fun loadMovieInfo() = viewModelScope.launch {
+        loadMovieInfoUseCase(args.movieId).run {
+            loadMovieEvent.postValue(this)
         }
     }
 }

@@ -44,14 +44,14 @@ class MovieFragment : BaseFragment() {
 
     private fun setupObserver() {
 
-        observe(viewModel.movieInfo) { movieInfo ->
-            movieInfo?.let {
-                binding.text1.text = it.movie.title
-                binding.text2.text = it.movie.overview
-                binding.posterImage.loadByUrl("w500/${it.movie.posterPath}")
-                binding.text3.text = it.genres.joinToString { genre -> genre.genreName }
-                binding.text4.text = it.casts.joinToString(limit = 5) { cast -> cast.name }
-                binding.text5.text = it.crews.joinToString(limit = 5) { crew -> crew.name }
+        observe(viewModel.movieInfo) { info ->
+            info?.let { movieInfo ->
+                binding.text1.text = movieInfo.movie.title
+                binding.text2.text = movieInfo.movie.overview
+                binding.posterImage.loadByUrl("w500/${movieInfo.movie.posterPath}")
+                binding.text3.text = movieInfo.genres.joinToString { genre -> genre.genreName }
+                binding.text4.text = movieInfo.casts.sortedBy { it.order }.joinToString(limit = 5) { cast -> cast.name }
+                binding.text5.text = movieInfo.crews.joinToString(limit = 5) { crew -> crew.name }
             }
         }
 

@@ -5,20 +5,21 @@ import androidx.lifecycle.Transformations
 import com.redcatgames.movies.data.preferences.image.ImageConfigPreferences
 import com.redcatgames.movies.data.preferences.image.UserConfigPreferences
 import com.redcatgames.movies.data.source.local.dao.*
-import com.redcatgames.movies.data.source.local.mapper.mapFrom
-import com.redcatgames.movies.data.source.local.mapper.mapTo
+import com.redcatgames.movies.data.source.local.mapper.fromEntity
+import com.redcatgames.movies.data.source.local.mapper.toEntity
 import com.redcatgames.movies.data.source.remote.NetworkService
 import com.redcatgames.movies.data.source.remote.adapter.NetworkResponse
-import com.redcatgames.movies.data.source.remote.mapper.mapFrom
+import com.redcatgames.movies.data.source.remote.mapper.toCountry
+import com.redcatgames.movies.data.source.remote.mapper.toLanguage
+import com.redcatgames.movies.data.source.remote.mapper.toTimezoneList
+import com.redcatgames.movies.data.source.remote.mapper.toGenre
+import com.redcatgames.movies.data.source.remote.mapper.toImageConfig
 import com.redcatgames.movies.domain.model.*
 import com.redcatgames.movies.domain.repository.DictionaryRepository
-import com.redcatgames.movies.domain.repository.MovieRepository
 import com.redcatgames.movies.domain.util.UseCaseResult
-import com.redcatgames.movies.util.now
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.delay
 
 class DictionaryRepositoryImpl(
     private val userConfigPreferences: UserConfigPreferences,
@@ -34,7 +35,7 @@ class DictionaryRepositoryImpl(
     override suspend fun loadConfig(): UseCaseResult<Unit, String?> {
         return when (val response = networkService.getConfiguration()) {
             is NetworkResponse.Success -> {
-                imageConfigPreferences.putConfig(response.body.images.mapFrom())
+                imageConfigPreferences.putConfig(response.body.images.toImageConfig())
                 UseCaseResult.Success(Unit)
             }
             is NetworkResponse.ApiError ->
@@ -50,7 +51,7 @@ class DictionaryRepositoryImpl(
         return when (val response = networkService.getCountries()) {
             is NetworkResponse.Success -> {
                 deleteAllCountries()
-                putCountries(response.body.map { it.mapFrom() })
+                putCountries(response.body.map { it.toCountry() })
                 UseCaseResult.Success(Unit)
             }
             is NetworkResponse.ApiError ->
@@ -66,7 +67,7 @@ class DictionaryRepositoryImpl(
         return when (val response = networkService.getLanguages()) {
             is NetworkResponse.Success -> {
                 deleteAllLanguages()
-                putLanguages(response.body.map { it.mapFrom() })
+                putLanguages(response.body.map { it.toLanguage() })
                 UseCaseResult.Success(Unit)
             }
             is NetworkResponse.ApiError ->
@@ -98,7 +99,7 @@ class DictionaryRepositoryImpl(
         return when (val response = networkService.getTimezones()) {
             is NetworkResponse.Success -> {
                 deleteAllTimezones()
-                val timezones = response.body.flatMap { it.mapFrom() }
+                val timezones = response.body.flatMap { it.toTimezoneList() }
                 putTimezones(timezones.toList())
                 UseCaseResult.Success(Unit)
             }
@@ -115,7 +116,7 @@ class DictionaryRepositoryImpl(
         return when (val response = networkService.getGenres()) {
             is NetworkResponse.Success -> {
                 deleteAllGenres()
-                putGenres(response.body.genres.map { it.mapFrom() })
+                putGenres(response.body.genres.map { it.toGenre() })
                 UseCaseResult.Success(Unit)
             }
             is NetworkResponse.ApiError ->
@@ -128,21 +129,15 @@ class DictionaryRepositoryImpl(
     }
 
     override suspend fun loadDictionary(): UseCaseResult<Unit, String?> {
-        val res = coroutineScope {
-            val configResult = async { loadConfig() }
-            val countriesResult = async { loadCountries() }
-            val languagesResult = async { loadLanguages() }
-            val primaryTranslationsResult = async { loadPrimaryTranslations() }
-            val timezonesResult = async { loadTimezones() }
-            val genresResult = async { loadGenres() }
-            val jobList = awaitAll(
-                configResult,
-                countriesResult,
-                languagesResult,
-                primaryTranslationsResult,
-                timezonesResult,
-                genresResult
-            )
+        return coroutineScope {
+            val jobList= listOf(
+                async { loadConfig() },
+                async { loadCountries() },
+                async { loadLanguages() },
+                async { loadPrimaryTranslations() },
+                async { loadTimezones() },
+                async { loadGenres() }
+                ).awaitAll()
 
             jobList.find { it.isFailure }?.let {
                 if (it is UseCaseResult.Failure) {
@@ -152,28 +147,26 @@ class DictionaryRepositoryImpl(
 
             return@coroutineScope UseCaseResult.Success<Unit, String?>(Unit)
         }
-
-        return res
     }
 
     override suspend fun putCountries(countries: List<Country>) {
-        countryDao.insertAll(countries.map { it.mapTo() })
+        countryDao.insertAll(countries.map { it.toEntity() })
     }
 
     override suspend fun putLanguages(languages: List<Language>) {
-        languageDao.insertAll(languages.map { it.mapTo() })
+        languageDao.insertAll(languages.map { it.toEntity() })
     }
 
     override suspend fun putPrimaryTranslations(primaryTranslations: List<PrimaryTranslation>) {
-        primaryTranslationDao.insertAll(primaryTranslations.map { it.mapTo() })
+        primaryTranslationDao.insertAll(primaryTranslations.map { it.toEntity() })
     }
 
     override suspend fun putTimezones(timezones: List<Timezone>) {
-        timezoneDao.insertAll(timezones.map { it.mapTo() })
+        timezoneDao.insertAll(timezones.map { it.toEntity() })
     }
 
     override suspend fun putGenres(genres: List<Genre>) {
-        genreDao.insertAll(genres.map { it.mapTo() })
+        genreDao.insertAll(genres.map { it.toEntity() })
     }
 
     override suspend fun deleteAllCountries(): UseCaseResult<Int, Unit> {
@@ -208,12 +201,13 @@ class DictionaryRepositoryImpl(
 
     override suspend fun deleteAll() {
         coroutineScope {
-            val countries = async { deleteAllCountries() }
-            val languages = async { deleteAllLanguages() }
-            val primaryTranslations = async { deleteAllPrimaryTranslations() }
-            val timezones = async { deleteAllTimezones() }
-            val genres = async { deleteAllGenres() }
-            awaitAll(countries, languages, primaryTranslations, timezones, genres)
+            listOf(
+                async { deleteAllCountries() },
+                async { deleteAllLanguages() },
+                async { deleteAllPrimaryTranslations() },
+                async { deleteAllTimezones() },
+                async { deleteAllGenres() }
+            ).awaitAll()
         }
     }
 
@@ -225,13 +219,13 @@ class DictionaryRepositoryImpl(
 
     override fun languages(): LiveData<List<Language>> {
         return Transformations.map(languageDao.getAll()) {
-            it.map { languageEntity -> languageEntity.mapFrom() }
+            it.map { languageEntity -> languageEntity.fromEntity() }
         }
     }
 
     override fun getLanguage(iso: String): LiveData<Language?> {
         return Transformations.map(languageDao.getByIso(iso)) {
-            it?.mapFrom()
+            it?.fromEntity()
         }
     }
 }

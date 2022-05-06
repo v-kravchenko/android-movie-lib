@@ -12,8 +12,12 @@ interface MovieRepository {
 
     suspend fun loadPopularMovies(page: Int): UseCaseResult<List<Movie>, String?>
     suspend fun loadMovie(movieId: Long): UseCaseResult<Unit, String?>
+    suspend fun loadMovieCredits(movieId: Long): UseCaseResult<Unit, String?>
+    suspend fun loadMovieInfo(movieId: Long): UseCaseResult<Unit, String?>
     fun popularMovies(): LiveData<List<Movie>>
     fun movie(movieId: Long): LiveData<Movie?>
     fun movieInfo(movieId: Long): LiveData<MovieInfo?>
     fun movieGenres(movieId: Long): LiveData<List<MovieGenre>>
+    fun movieCasts(movieId: Long): LiveData<List<MovieCast>>
+    fun movieCrews(movieId: Long): LiveData<List<MovieCrew>>
 }

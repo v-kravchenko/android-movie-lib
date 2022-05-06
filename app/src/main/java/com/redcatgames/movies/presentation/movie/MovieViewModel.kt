@@ -5,7 +5,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.redcatgames.movies.domain.usecase.movie.GetMovieInfoUseCase
 import com.redcatgames.movies.domain.usecase.movie.GetMovieUseCase
-import com.redcatgames.movies.domain.usecase.movie.LoadMovieUseCase
+import com.redcatgames.movies.domain.usecase.movie.LoadMovieInfoUseCase
 import com.redcatgames.movies.domain.util.UseCaseResult
 import com.redcatgames.movies.presentation.base.BaseViewModel
 import com.redcatgames.movies.presentation.util.SingleLiveEvent
@@ -18,19 +18,17 @@ import javax.inject.Inject
 class MovieViewModel @Inject constructor(
     @ApplicationContext appContext: Context,
     savedStateHandle: SavedStateHandle,
-    getMovieUserCase: GetMovieUseCase,
     getMovieInfoUseCase: GetMovieInfoUseCase,
-    private val loadMovieUseCase: LoadMovieUseCase
+    private val loadMovieInfoUseCase: LoadMovieInfoUseCase
 ) : BaseViewModel(appContext) {
 
     private val args = MovieFragmentArgs.fromSavedStateHandle(savedStateHandle)
-    val movie = getMovieUserCase(args.movieId)
     val movieInfo = getMovieInfoUseCase(args.movieId)
     val loadMovieEvent = SingleLiveEvent<UseCaseResult<Unit, String?>>()
 
     init {
         viewModelScope.launch {
-            loadMovieUseCase(args.movieId).run {
+            loadMovieInfoUseCase(args.movieId).run {
                 loadMovieEvent.postValue(this)
             }
         }

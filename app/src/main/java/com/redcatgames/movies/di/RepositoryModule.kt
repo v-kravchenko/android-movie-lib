@@ -47,12 +47,16 @@ class RepositoryModule {
     fun provideMovieRepository(
         movieDao: MovieDao,
         movieGenreDao: MovieGenreDao,
+        movieCastDao: MovieCastDao,
+        movieCrewDao: MovieCrewDao,
         genreDao: GenreDao,
         networkService: NetworkService
     ): MovieRepository {
         return MovieRepositoryImpl(
             movieDao,
             movieGenreDao,
+            movieCastDao,
+            movieCrewDao,
             genreDao,
             networkService
         )

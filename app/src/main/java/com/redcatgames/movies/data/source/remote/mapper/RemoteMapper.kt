@@ -7,30 +7,29 @@ import com.redcatgames.movies.data.source.remote.response.configuration.Configur
 import com.redcatgames.movies.data.source.remote.response.discover.movie.DiscoverMovieResult
 import com.redcatgames.movies.data.source.remote.response.movie.GenreResult
 import com.redcatgames.movies.data.source.remote.response.movie.MovieResult
+import com.redcatgames.movies.data.source.remote.response.movie.credits.MovieCreditsResult
 import com.redcatgames.movies.domain.model.*
 import com.redcatgames.movies.util.empty
 
-fun ConfigurationCountriesResult.mapFrom() = Country(
+fun ConfigurationCountriesResult.toCountry() = Country(
     iso, englishName, nativeName
 )
 
-fun ConfigurationLanguagesResult.mapFrom() = Language(
+fun ConfigurationLanguagesResult.toLanguage() = Language(
     iso, englishName, name
 )
 
-fun ConfigurationTimezonesResult.mapFrom(): List<Timezone> {
-    val timezones = mutableListOf<Timezone>()
-    this.zones.forEach {
-        timezones.add(Timezone(this.iso, it))
-    }
-    return timezones.toList()
+fun ConfigurationTimezonesResult.toTimezoneList(): List<Timezone> {
+    return mutableListOf<Timezone>().apply {
+        addAll(zones.map { Timezone(iso, it) })
+    }.toList()
 }
 
-fun GenreResult.Genre.mapFrom() = Genre(
+fun GenreResult.Genre.toGenre() = Genre(
     id, name ?: String.empty
 )
 
-fun ConfigurationResult.Images.mapFrom() = ImageConfig(
+fun ConfigurationResult.Images.toImageConfig() = ImageConfig(
     baseUrl = baseUrl,
     secureBaseUrl = secureBaseUrl,
     backdropSizes = backdropSizes,
@@ -40,7 +39,7 @@ fun ConfigurationResult.Images.mapFrom() = ImageConfig(
     stillSizes = stillSizes
 )
 
-fun DiscoverMovieResult.Movie.mapFrom() = Movie(
+fun DiscoverMovieResult.Movie.toMovie() = Movie(
     id = id,
     isAdult = isAdult,
     backdropPath = backdropPath,
@@ -57,7 +56,7 @@ fun DiscoverMovieResult.Movie.mapFrom() = Movie(
     voteCount = voteCount
 )
 
-fun MovieResult.mapFrom() = Movie(
+fun MovieResult.toMovie() = Movie(
     id = id,
     isAdult = isAdult,
     backdropPath = backdropPath,
@@ -74,8 +73,51 @@ fun MovieResult.mapFrom() = Movie(
     voteCount = voteCount
 )
 
-fun MovieResult.Genre.mapFrom(movie: Movie) = MovieGenre(
+fun MovieResult.Genre.toMovieGenre(movie: Movie) = MovieGenre(
     movieId = movie.id,
     genreId = id,
     genreName = name
 )
+
+fun MovieCreditsResult.toMovieCastList(): List<MovieCast> {
+    return mutableListOf<MovieCast>().apply {
+        addAll(castList.map {
+            MovieCast(
+                id = it.id,
+                movieId = this@toMovieCastList.movieId,
+                adult = it.adult,
+                gender = it.gender,
+                knownForDepartment = it.knownForDepartment,
+                name = it.name,
+                originalName = it.originalName,
+                popularity = it.popularity,
+                profilePath = it.profilePath,
+                castId = it.castId,
+                character = it.character,
+                creditId = it.creditId,
+                order = it.order
+            )
+        })
+    }.toList()
+}
+
+fun MovieCreditsResult.toMovieCrewList(): List<MovieCrew> {
+    return mutableListOf<MovieCrew>().apply {
+        addAll(crewList.map {
+            MovieCrew(
+                id = it.id,
+                movieId = this@toMovieCrewList.movieId,
+                adult = it.adult,
+                gender = it.gender,
+                knownForDepartment = it.knownForDepartment,
+                name = it.name,
+                originalName = it.originalName,
+                popularity = it.popularity,
+                profilePath = it.profilePath,
+                creditId = it.creditId,
+                department = it.department,
+                job = it.job
+            )
+        })
+    }.toList()
+}

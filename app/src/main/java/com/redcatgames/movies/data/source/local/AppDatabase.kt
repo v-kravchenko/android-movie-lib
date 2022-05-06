@@ -10,9 +10,11 @@ import com.redcatgames.movies.data.source.local.converter.StringListConverter
 import com.redcatgames.movies.data.source.local.dao.*
 import com.redcatgames.movies.data.source.local.entity.*
 
-@Database(entities = [CountryEntity::class, LanguageEntity::class, PrimaryTranslationEntity::class,
-    TimezoneEntity::class, GenreEntity::class, MovieEntity::class, MovieGenreEntity::class],
-    version = 2, exportSchema = false)
+@Database(entities = [
+    CountryEntity::class, LanguageEntity::class, PrimaryTranslationEntity::class,
+    TimezoneEntity::class, GenreEntity::class, MovieEntity::class, MovieGenreEntity::class,
+    MovieCastEntity::class, MovieCrewEntity::class],
+    version = 3, exportSchema = false)
 @TypeConverters(DateConverter::class, StringListConverter::class, IntListConverter::class, LongListConverter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract val countryDao: CountryDao
@@ -22,6 +24,8 @@ abstract class AppDatabase : RoomDatabase() {
     abstract val genreDao: GenreDao
     abstract val movieDao: MovieDao
     abstract val movieGenreDao: MovieGenreDao
+    abstract val movieCastDao: MovieCastDao
+    abstract val movieCrewDao: MovieCrewDao
 
     companion object {
         const val DB_NAME = "MoviesDatabase.db"

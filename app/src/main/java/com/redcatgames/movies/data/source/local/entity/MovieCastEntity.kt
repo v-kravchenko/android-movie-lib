@@ -11,7 +11,7 @@ data class MovieCastEntity(
     val movieId: Long,
     val adult : Boolean,
     val gender : Int,
-    val knownForDepartment : String,
+    val knownForDepartment : String?,
     val name : String,
     val originalName : String,
     val popularity : Double,

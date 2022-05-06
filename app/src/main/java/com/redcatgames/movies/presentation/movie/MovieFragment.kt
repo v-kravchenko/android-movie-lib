@@ -6,21 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
-import coil.imageLoader
-import coil.load
-import coil.request.ErrorResult
-import coil.request.ImageRequest
-import coil.request.SuccessResult
-import com.redcatgames.movies.databinding.HomeFragmentBinding
 import com.redcatgames.movies.databinding.MovieFragmentBinding
 import com.redcatgames.movies.presentation.base.BaseFragment
 import com.redcatgames.movies.presentation.util.autoCleared
 import com.redcatgames.movies.presentation.util.loadByUrl
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
-import timber.log.Timber
 
 @AndroidEntryPoint
 class MovieFragment : BaseFragment() {
@@ -56,8 +47,12 @@ class MovieFragment : BaseFragment() {
         }
 
         observe(viewModel.loadMovieEvent) {
-            it.onFailure { errorMessage ->
-                Toast.makeText(requireContext(), "Error loading: $errorMessage", Toast.LENGTH_SHORT)
+            it.onFailure { throwable ->
+                Toast.makeText(
+                    requireContext(),
+                    "Error loading: ${throwable.localizedMessage}",
+                    Toast.LENGTH_SHORT
+                )
                     .show()
             }
         }

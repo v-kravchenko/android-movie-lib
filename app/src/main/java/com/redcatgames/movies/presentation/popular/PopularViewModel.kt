@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.redcatgames.movies.domain.model.Movie
 import com.redcatgames.movies.domain.usecase.movie.GetPopularMoviesUseCase
 import com.redcatgames.movies.domain.usecase.movie.LoadPopularMoviesUseCase
-import com.redcatgames.movies.domain.util.UseCaseResult
 import com.redcatgames.movies.presentation.base.BaseViewModel
 import com.redcatgames.movies.presentation.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,7 +21,7 @@ class PopularViewModel @Inject constructor(
 
     private var page = 0
     val popularMovies = getPopularMoviesUseCase()
-    val loadPopularMoviesEvent = SingleLiveEvent<UseCaseResult<List<Movie>, String?>>()
+    val loadPopularMoviesEvent = SingleLiveEvent<Result<List<Movie>>>()
 
     init {
         loadNextPage()

@@ -87,8 +87,8 @@ class HomeFragment : BaseFragment() {
         }
 
         observe(viewModel.loadDictionaryEvent) {
-            it.onFailure { errorMessage ->
-                Timber.d("Error loading config: $errorMessage")
+            it.onFailure { throwable ->
+                Timber.d("Error loading config: ${throwable.localizedMessage}")
             }
         }
     }

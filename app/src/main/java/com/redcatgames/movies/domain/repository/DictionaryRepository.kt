@@ -2,17 +2,16 @@ package com.redcatgames.movies.domain.repository
 
 import androidx.lifecycle.LiveData
 import com.redcatgames.movies.domain.model.*
-import com.redcatgames.movies.domain.util.UseCaseResult
 
 interface DictionaryRepository {
-    suspend fun loadConfig(): UseCaseResult<Unit, String?>
-    suspend fun loadCountries(): UseCaseResult<Unit, String?>
-    suspend fun loadLanguages(): UseCaseResult<Unit, String?>
-    suspend fun loadPrimaryTranslations(): UseCaseResult<Unit, String?>
-    suspend fun loadTimezones(): UseCaseResult<Unit, String?>
-    suspend fun loadGenres(): UseCaseResult<Unit, String?>
+    suspend fun loadConfig(): Result<Unit>
+    suspend fun loadCountries(): Result<Unit>
+    suspend fun loadLanguages(): Result<Unit>
+    suspend fun loadPrimaryTranslations(): Result<Unit>
+    suspend fun loadTimezones(): Result<Unit>
+    suspend fun loadGenres(): Result<Unit>
 
-    suspend fun loadDictionary(): UseCaseResult<Unit, String?>
+    suspend fun loadDictionary(): Result<Unit>
 
     suspend fun putCountries(countries: List<Country>)
     suspend fun putLanguages(languages: List<Language>)
@@ -20,11 +19,11 @@ interface DictionaryRepository {
     suspend fun putTimezones(timezones: List<Timezone>)
     suspend fun putGenres(genres: List<Genre>)
 
-    suspend fun deleteAllCountries(): UseCaseResult<Int, Unit>
-    suspend fun deleteAllLanguages(): UseCaseResult<Int, Unit>
-    suspend fun deleteAllPrimaryTranslations(): UseCaseResult<Int, Unit>
-    suspend fun deleteAllTimezones(): UseCaseResult<Int, Unit>
-    suspend fun deleteAllGenres(): UseCaseResult<Int, Unit>
+    suspend fun deleteAllCountries(): Result<Int>
+    suspend fun deleteAllLanguages(): Result<Int>
+    suspend fun deleteAllPrimaryTranslations(): Result<Int>
+    suspend fun deleteAllTimezones(): Result<Int>
+    suspend fun deleteAllGenres(): Result<Int>
     suspend fun deleteAll()
 
     fun userConfig(): LiveData<UserConfig>

@@ -17,6 +17,10 @@ internal class NetworkResponseCall<S : Any, E : Any>(
     private val errorConverter: Converter<ResponseBody, E>
 ) : Call<NetworkResponse<S, E>> {
 
+    private companion object {
+        const val ERROR_EMPTY_BODY = "Empty body"
+    }
+
     override fun enqueue(callback: Callback<NetworkResponse<S, E>>) {
         return delegate.enqueue(object : Callback<S> {
             override fun onResponse(call: Call<S>, response: Response<S>) {
@@ -35,7 +39,7 @@ internal class NetworkResponseCall<S : Any, E : Any>(
                         // Response is successful but the body is null
                         callback.onResponse(
                             this@NetworkResponseCall,
-                            Response.success(NetworkResponse.UnknownError(null))
+                            Response.success(NetworkResponse.UnknownError(Exception(ERROR_EMPTY_BODY)))
                         )
                     }
                 } else {
@@ -58,7 +62,7 @@ internal class NetworkResponseCall<S : Any, E : Any>(
                         // Response is not successful but the error body is null
                         callback.onResponse(
                             this@NetworkResponseCall,
-                            Response.success(NetworkResponse.UnknownError(null))
+                            Response.success(NetworkResponse.UnknownError(Exception(ERROR_EMPTY_BODY)))
                         )
                     }
                 }

@@ -4,21 +4,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.asFlow
 import com.redcatgames.movies.data.source.local.dao.*
-import com.redcatgames.movies.data.source.local.mapper.fromEntity
-import com.redcatgames.movies.data.source.local.mapper.toMovie
-import com.redcatgames.movies.data.source.local.mapper.toMovieGenre
-import com.redcatgames.movies.data.source.local.mapper.toMovieCast
-import com.redcatgames.movies.data.source.local.mapper.toMovieCrew
-import com.redcatgames.movies.data.source.local.mapper.toEntity
+import com.redcatgames.movies.data.source.local.mapper.*
 import com.redcatgames.movies.data.source.remote.NetworkService
 import com.redcatgames.movies.data.source.remote.adapter.NetworkResponse
 import com.redcatgames.movies.data.source.remote.mapper.toMovie
-import com.redcatgames.movies.data.source.remote.mapper.toMovieGenre
 import com.redcatgames.movies.data.source.remote.mapper.toMovieCastList
 import com.redcatgames.movies.data.source.remote.mapper.toMovieCrewList
+import com.redcatgames.movies.data.source.remote.mapper.toMovieGenre
 import com.redcatgames.movies.domain.model.*
 import com.redcatgames.movies.domain.repository.MovieRepository
-import com.redcatgames.movies.domain.util.UseCaseResult
 import com.redcatgames.movies.util.empty
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -35,10 +29,10 @@ class MovieRepositoryImpl(
     private val networkService: NetworkService
 ) : MovieRepository {
 
-    override suspend fun deleteAllMovies(): UseCaseResult<Int, Unit> {
+    override suspend fun deleteAllMovies(): Result<Int> {
         val rowCount = movieDao.getCount()
         movieDao.deleteAll()
-        return UseCaseResult.Success(rowCount)
+        return Result.success(rowCount)
     }
 
     override suspend fun putMovies(movies: List<Movie>) {
@@ -80,7 +74,7 @@ class MovieRepositoryImpl(
         }
     }
 
-    override suspend fun loadMovieInfo(movieId: Long): UseCaseResult<Unit, String?> {
+    override suspend fun loadMovieInfo(movieId: Long): Result<Unit> {
         return coroutineScope {
 
             val jobList = listOf(
@@ -89,34 +83,34 @@ class MovieRepositoryImpl(
             ).awaitAll()
 
             jobList.find { it.isFailure }?.let {
-                if (it is UseCaseResult.Failure) {
-                    return@coroutineScope UseCaseResult.Failure(it.error)
+                if (it.isFailure) {
+                    return@coroutineScope it
                 }
             }
 
-            UseCaseResult.Success(Unit)
+            Result.success(Unit)
         }
     }
 
-    override suspend fun loadMovieCredits(movieId: Long): UseCaseResult<Unit, String?> {
-        return when(val response = networkService.getMovieCredits(movieId)) {
+    override suspend fun loadMovieCredits(movieId: Long): Result<Unit> {
+        return when (val response = networkService.getMovieCredits(movieId)) {
             is NetworkResponse.Success -> {
                 val castList = response.body.toMovieCastList()
                 val crewList = response.body.toMovieCrewList()
                 putMovieCasts(movieId, castList)
                 putMovieCrews(movieId, crewList)
-                UseCaseResult.Success(Unit)
+                Result.success(Unit)
             }
             is NetworkResponse.ApiError ->
-                UseCaseResult.Failure(response.body.statusMessage)
+                Result.failure(Exception(response.body.statusMessage))
             is NetworkResponse.NetworkError ->
-                UseCaseResult.Failure(response.error.localizedMessage)
+                Result.failure(response.error)
             is NetworkResponse.UnknownError ->
-                UseCaseResult.Failure(response.error?.localizedMessage)
+                Result.failure(response.error)
         }
     }
 
-    override suspend fun loadMovie(movieId: Long): UseCaseResult<Unit, String?> {
+    override suspend fun loadMovie(movieId: Long): Result<Unit> {
 
         return when (val response = networkService.getMovie(movieId)) {
             is NetworkResponse.Success -> {
@@ -124,18 +118,18 @@ class MovieRepositoryImpl(
                 val genres = response.body.genres.map { it.toMovieGenre(movie) }
                 putMovie(movie)
                 putMovieGenres(movie, genres)
-                UseCaseResult.Success(Unit)
+                Result.success(Unit)
             }
             is NetworkResponse.ApiError ->
-                UseCaseResult.Failure(response.body.statusMessage)
+                Result.failure(Exception(response.body.statusMessage))
             is NetworkResponse.NetworkError ->
-                UseCaseResult.Failure(response.error.localizedMessage)
+                Result.failure(response.error)
             is NetworkResponse.UnknownError ->
-                UseCaseResult.Failure(response.error?.localizedMessage)
+                Result.failure(response.error)
         }
     }
 
-    override suspend fun loadPopularMovies(page: Int): UseCaseResult<List<Movie>, String?> {
+    override suspend fun loadPopularMovies(page: Int): Result<List<Movie>> {
 
         return when (val response = networkService.getPopularMovies(page)) {
             is NetworkResponse.Success -> {
@@ -156,14 +150,14 @@ class MovieRepositoryImpl(
                 }
                 putMoviesGenres(movies, moveGenreList)
 
-                UseCaseResult.Success(movies)
+                Result.success(movies)
             }
             is NetworkResponse.ApiError ->
-                UseCaseResult.Failure(response.body.statusMessage)
+                Result.failure(Exception(response.body.statusMessage))
             is NetworkResponse.NetworkError ->
-                UseCaseResult.Failure(response.error.localizedMessage)
+                Result.failure(response.error)
             is NetworkResponse.UnknownError ->
-                UseCaseResult.Failure(response.error?.localizedMessage)
+                Result.failure(response.error)
         }
     }
 

@@ -22,7 +22,7 @@ sealed class NetworkResponse<out T : Any, out U : Any> {
         }
     }
 
-    inline fun onUnknownError(callback: (error: Throwable?) -> Unit) {
+    inline fun onUnknownError(callback: (error: Throwable) -> Unit) {
         if (this is UnknownError) {
             callback(this.error)
         }
@@ -52,5 +52,5 @@ sealed class NetworkResponse<out T : Any, out U : Any> {
     /**
      * Represents unexpected exceptions (for example parsing issues).
      */
-    data class UnknownError(val error: Throwable?) : NetworkResponse<Nothing, Nothing>()
+    data class UnknownError(val error: Throwable) : NetworkResponse<Nothing, Nothing>()
 }

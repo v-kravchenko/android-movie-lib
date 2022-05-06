@@ -5,18 +5,13 @@ import androidx.lifecycle.Transformations
 import com.redcatgames.movies.data.preferences.image.ImageConfigPreferences
 import com.redcatgames.movies.data.preferences.image.UserConfigPreferences
 import com.redcatgames.movies.data.source.local.dao.*
-import com.redcatgames.movies.data.source.local.mapper.toLanguage
 import com.redcatgames.movies.data.source.local.mapper.toEntity
+import com.redcatgames.movies.data.source.local.mapper.toLanguage
 import com.redcatgames.movies.data.source.remote.NetworkService
 import com.redcatgames.movies.data.source.remote.adapter.NetworkResponse
-import com.redcatgames.movies.data.source.remote.mapper.toCountry
-import com.redcatgames.movies.data.source.remote.mapper.toLanguage
-import com.redcatgames.movies.data.source.remote.mapper.toTimezoneList
-import com.redcatgames.movies.data.source.remote.mapper.toGenre
-import com.redcatgames.movies.data.source.remote.mapper.toImageConfig
+import com.redcatgames.movies.data.source.remote.mapper.*
 import com.redcatgames.movies.domain.model.*
 import com.redcatgames.movies.domain.repository.DictionaryRepository
-import com.redcatgames.movies.domain.util.UseCaseResult
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
@@ -32,120 +27,120 @@ class DictionaryRepositoryImpl(
     private val networkService: NetworkService
 ) : DictionaryRepository {
 
-    override suspend fun loadConfig(): UseCaseResult<Unit, String?> {
+    override suspend fun loadConfig(): Result<Unit> {
         return when (val response = networkService.getConfiguration()) {
             is NetworkResponse.Success -> {
                 imageConfigPreferences.putConfig(response.body.images.toImageConfig())
-                UseCaseResult.Success(Unit)
+                Result.success(Unit)
             }
             is NetworkResponse.ApiError ->
-                UseCaseResult.Failure(response.body.statusMessage)
+                Result.failure(Exception(response.body.statusMessage))
             is NetworkResponse.NetworkError ->
-                UseCaseResult.Failure(response.error.localizedMessage)
+                Result.failure(response.error)
             is NetworkResponse.UnknownError ->
-                UseCaseResult.Failure(response.error?.localizedMessage)
+                Result.failure(response.error)
         }
     }
 
-    override suspend fun loadCountries(): UseCaseResult<Unit, String?> {
+    override suspend fun loadCountries(): Result<Unit> {
         return when (val response = networkService.getCountries()) {
             is NetworkResponse.Success -> {
                 deleteAllCountries()
                 putCountries(response.body.map { it.toCountry() })
-                UseCaseResult.Success(Unit)
+                Result.success(Unit)
             }
             is NetworkResponse.ApiError ->
-                UseCaseResult.Failure(response.body.statusMessage)
+                Result.failure(Exception(response.body.statusMessage))
             is NetworkResponse.NetworkError ->
-                UseCaseResult.Failure(response.error.localizedMessage)
+                Result.failure(response.error)
             is NetworkResponse.UnknownError ->
-                UseCaseResult.Failure(response.error?.localizedMessage)
+                Result.failure(response.error)
         }
     }
 
-    override suspend fun loadLanguages(): UseCaseResult<Unit, String?> {
+    override suspend fun loadLanguages(): Result<Unit> {
         return when (val response = networkService.getLanguages()) {
             is NetworkResponse.Success -> {
                 deleteAllLanguages()
                 putLanguages(response.body.map { it.toLanguage() })
-                UseCaseResult.Success(Unit)
+                Result.success(Unit)
             }
             is NetworkResponse.ApiError ->
-                UseCaseResult.Failure(response.body.statusMessage)
+                Result.failure(Exception(response.body.statusMessage))
             is NetworkResponse.NetworkError ->
-                UseCaseResult.Failure(response.error.localizedMessage)
+                Result.failure(response.error)
             is NetworkResponse.UnknownError ->
-                UseCaseResult.Failure(response.error?.localizedMessage)
+                Result.failure(response.error)
         }
     }
 
-    override suspend fun loadPrimaryTranslations(): UseCaseResult<Unit, String?> {
+    override suspend fun loadPrimaryTranslations(): Result<Unit> {
         return when (val response = networkService.getPrimaryTranslations()) {
             is NetworkResponse.Success -> {
                 deleteAllPrimaryTranslations()
                 putPrimaryTranslations(response.body.map { PrimaryTranslation(it) })
-                UseCaseResult.Success(Unit)
+                Result.success(Unit)
             }
             is NetworkResponse.ApiError ->
-                UseCaseResult.Failure(response.body.statusMessage)
+                Result.failure(Exception(response.body.statusMessage))
             is NetworkResponse.NetworkError ->
-                UseCaseResult.Failure(response.error.localizedMessage)
+                Result.failure(response.error)
             is NetworkResponse.UnknownError ->
-                UseCaseResult.Failure(response.error?.localizedMessage)
+                Result.failure(response.error)
         }
     }
 
-    override suspend fun loadTimezones(): UseCaseResult<Unit, String?> {
+    override suspend fun loadTimezones(): Result<Unit> {
         return when (val response = networkService.getTimezones()) {
             is NetworkResponse.Success -> {
                 deleteAllTimezones()
                 val timezones = response.body.flatMap { it.toTimezoneList() }
                 putTimezones(timezones.toList())
-                UseCaseResult.Success(Unit)
+                Result.success(Unit)
             }
             is NetworkResponse.ApiError ->
-                UseCaseResult.Failure(response.body.statusMessage)
+                Result.failure(Exception(response.body.statusMessage))
             is NetworkResponse.NetworkError ->
-                UseCaseResult.Failure(response.error.localizedMessage)
+                Result.failure(response.error)
             is NetworkResponse.UnknownError ->
-                UseCaseResult.Failure(response.error?.localizedMessage)
+                Result.failure(response.error)
         }
     }
 
-    override suspend fun loadGenres(): UseCaseResult<Unit, String?> {
+    override suspend fun loadGenres(): Result<Unit> {
         return when (val response = networkService.getGenres()) {
             is NetworkResponse.Success -> {
                 deleteAllGenres()
                 putGenres(response.body.genres.map { it.toGenre() })
-                UseCaseResult.Success(Unit)
+                Result.success(Unit)
             }
             is NetworkResponse.ApiError ->
-                UseCaseResult.Failure(response.body.statusMessage)
+                Result.failure(Exception(response.body.statusMessage))
             is NetworkResponse.NetworkError ->
-                UseCaseResult.Failure(response.error.localizedMessage)
+                Result.failure(response.error)
             is NetworkResponse.UnknownError ->
-                UseCaseResult.Failure(response.error?.localizedMessage)
+                Result.failure(response.error)
         }
     }
 
-    override suspend fun loadDictionary(): UseCaseResult<Unit, String?> {
+    override suspend fun loadDictionary(): Result<Unit> {
         return coroutineScope {
-            val jobList= listOf(
+            val jobList = listOf(
                 async { loadConfig() },
                 async { loadCountries() },
                 async { loadLanguages() },
                 async { loadPrimaryTranslations() },
                 async { loadTimezones() },
                 async { loadGenres() }
-                ).awaitAll()
+            ).awaitAll()
 
             jobList.find { it.isFailure }?.let {
-                if (it is UseCaseResult.Failure) {
-                    return@coroutineScope UseCaseResult.Failure(it.error)
+                if (it.isFailure) {
+                    return@coroutineScope it
                 }
             }
 
-            return@coroutineScope UseCaseResult.Success<Unit, String?>(Unit)
+            return@coroutineScope Result.success(Unit)
         }
     }
 
@@ -169,34 +164,34 @@ class DictionaryRepositoryImpl(
         genreDao.insertAll(genres.map { it.toEntity() })
     }
 
-    override suspend fun deleteAllCountries(): UseCaseResult<Int, Unit> {
+    override suspend fun deleteAllCountries(): Result<Int> {
         val rowCount = countryDao.getCount()
         countryDao.deleteAll()
-        return UseCaseResult.Success(rowCount)
+        return Result.success(rowCount)
     }
 
-    override suspend fun deleteAllLanguages(): UseCaseResult<Int, Unit> {
+    override suspend fun deleteAllLanguages(): Result<Int> {
         val rowCount = languageDao.getCount()
         languageDao.deleteAll()
-        return UseCaseResult.Success(rowCount)
+        return Result.success(rowCount)
     }
 
-    override suspend fun deleteAllPrimaryTranslations(): UseCaseResult<Int, Unit> {
+    override suspend fun deleteAllPrimaryTranslations(): Result<Int> {
         val rowCount = primaryTranslationDao.getCount()
         primaryTranslationDao.deleteAll()
-        return UseCaseResult.Success(rowCount)
+        return Result.success(rowCount)
     }
 
-    override suspend fun deleteAllTimezones(): UseCaseResult<Int, Unit> {
+    override suspend fun deleteAllTimezones(): Result<Int> {
         val rowCount = timezoneDao.getCount()
         timezoneDao.deleteAll()
-        return UseCaseResult.Success(rowCount)
+        return Result.success(rowCount)
     }
 
-    override suspend fun deleteAllGenres(): UseCaseResult<Int, Unit> {
+    override suspend fun deleteAllGenres(): Result<Int> {
         val rowCount = genreDao.getCount()
         genreDao.deleteAll()
-        return UseCaseResult.Success(rowCount)
+        return Result.success(rowCount)
     }
 
     override suspend fun deleteAll() {

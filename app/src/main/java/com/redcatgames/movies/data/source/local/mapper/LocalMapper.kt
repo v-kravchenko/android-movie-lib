@@ -6,35 +6,35 @@ import com.redcatgames.movies.domain.model.*
 import com.redcatgames.movies.util.now
 
 fun Country.toEntity() = CountryEntity(iso, englishName, nativeName, now())
-fun CountryEntity.fromEntity() = Country(iso, englishName, nativeName)
+fun CountryEntity.toCountry() = Country(iso, englishName, nativeName)
 
 fun Language.toEntity() = LanguageEntity(iso, englishName, name, now())
-fun LanguageEntity.fromEntity() = Language(iso, englishName, name)
+fun LanguageEntity.toLanguage() = Language(iso, englishName, name)
 
 fun PrimaryTranslation.toEntity() = PrimaryTranslationEntity(name, now())
-fun PrimaryTranslationEntity.fromEntity() = PrimaryTranslation(name)
+fun PrimaryTranslationEntity.toPrimaryTranslation() = PrimaryTranslation(name)
 
 fun Timezone.toEntity() = TimezoneEntity(iso, zoneName, now())
-fun TimezoneEntity.fromEntity() = Timezone(iso, zoneName)
+fun TimezoneEntity.toTimezone() = Timezone(iso, zoneName)
 
 fun Genre.toEntity() = GenreEntity(id, name, now())
-fun GenreEntity.fromEntity() = Genre(id, name)
+fun GenreEntity.toGenre() = Genre(id, name)
 
 fun Movie.toEntity() = MovieEntity(id, isAdult, backdropPath, genreIds, originalLanguage, originalTitle, overview, popularity, posterPath, releaseDate, title, video, voteAverage, voteCount, now())
-fun MovieEntity.fromEntity() = Movie(id, isAdult, backdropPath, genreIds, originalLanguage, originalTitle, overview, popularity, posterPath, releaseDate, title, video, voteAverage, voteCount)
+fun MovieEntity.toMovie() = Movie(id, isAdult, backdropPath, genreIds, originalLanguage, originalTitle, overview, popularity, posterPath, releaseDate, title, video, voteAverage, voteCount)
 
 fun MovieGenre.toEntity() = MovieGenreEntity(movieId, genreId, genreName, now())
-fun MovieGenreEntity.fromEntity() = MovieGenre(movieId, genreId, genreName)
+fun MovieGenreEntity.toMovieGenre() = MovieGenre(movieId, genreId, genreName)
 
 fun MovieCast.toEntity() = MovieCastEntity(id, movieId, adult, gender, knownForDepartment, name, originalName, popularity, profilePath, castId, character, creditId, order, now())
-fun MovieCastEntity.fromEntity() = MovieCast(id, movieId, adult, gender, knownForDepartment, name, originalName, popularity, profilePath, castId, character, creditId, order)
+fun MovieCastEntity.toMovieCast() = MovieCast(id, movieId, adult, gender, knownForDepartment, name, originalName, popularity, profilePath, castId, character, creditId, order)
 
 fun MovieCrew.toEntity() = MovieCrewEntity(id, movieId, adult, gender, knownForDepartment, name, originalName, popularity, profilePath, creditId, department, job, now())
-fun MovieCrewEntity.fromEntity() = MovieCrew(id, movieId, adult, gender, knownForDepartment, name, originalName, popularity, profilePath, creditId, department, job)
+fun MovieCrewEntity.toMovieCrew() = MovieCrew(id, movieId, adult, gender, knownForDepartment, name, originalName, popularity, profilePath, creditId, department, job)
 
 fun MovieInfoEntity.fromEntity() = MovieInfo(
-    movie.fromEntity(),
-    genres.map { it.fromEntity() },
-    casts.map { it.fromEntity() },
-    crews.map { it.fromEntity() }
+    movie.toMovie(),
+    genres.map { it.toMovieGenre() },
+    casts.map { it.toMovieCast() },
+    crews.map { it.toMovieCrew() }
 )

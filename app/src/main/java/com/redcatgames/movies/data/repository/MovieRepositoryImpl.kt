@@ -5,6 +5,10 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.asFlow
 import com.redcatgames.movies.data.source.local.dao.*
 import com.redcatgames.movies.data.source.local.mapper.fromEntity
+import com.redcatgames.movies.data.source.local.mapper.toMovie
+import com.redcatgames.movies.data.source.local.mapper.toMovieGenre
+import com.redcatgames.movies.data.source.local.mapper.toMovieCast
+import com.redcatgames.movies.data.source.local.mapper.toMovieCrew
 import com.redcatgames.movies.data.source.local.mapper.toEntity
 import com.redcatgames.movies.data.source.remote.NetworkService
 import com.redcatgames.movies.data.source.remote.adapter.NetworkResponse
@@ -165,13 +169,13 @@ class MovieRepositoryImpl(
 
     override fun popularMovies(): LiveData<List<Movie>> {
         return Transformations.map(movieDao.getPopular()) {
-            it.map { movieEntity -> movieEntity.fromEntity() }
+            it.map { movieEntity -> movieEntity.toMovie() }
         }
     }
 
     override fun movie(movieId: Long): LiveData<Movie?> {
         return Transformations.map(movieDao.getById(movieId)) {
-            it?.fromEntity()
+            it?.toMovie()
         }
     }
 
@@ -183,19 +187,19 @@ class MovieRepositoryImpl(
 
     override fun movieGenres(movieId: Long): LiveData<List<MovieGenre>> {
         return Transformations.map(movieGenreDao.getByMovie(movieId)) {
-            it.map { movieGenreEntity -> movieGenreEntity.fromEntity() }
+            it.map { movieGenreEntity -> movieGenreEntity.toMovieGenre() }
         }
     }
 
     override fun movieCasts(movieId: Long): LiveData<List<MovieCast>> {
         return Transformations.map(movieCastDao.getByMovie(movieId)) {
-            it.map { movieCastEntity -> movieCastEntity.fromEntity() }
+            it.map { movieCastEntity -> movieCastEntity.toMovieCast() }
         }
     }
 
     override fun movieCrews(movieId: Long): LiveData<List<MovieCrew>> {
         return Transformations.map(movieCrewDao.getByMovie(movieId)) {
-            it.map { movieCrewEntity -> movieCrewEntity.fromEntity() }
+            it.map { movieCrewEntity -> movieCrewEntity.toMovieCrew() }
         }
     }
 }

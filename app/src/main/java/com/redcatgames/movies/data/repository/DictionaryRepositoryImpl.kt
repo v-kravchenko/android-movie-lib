@@ -5,7 +5,7 @@ import androidx.lifecycle.Transformations
 import com.redcatgames.movies.data.preferences.image.ImageConfigPreferences
 import com.redcatgames.movies.data.preferences.image.UserConfigPreferences
 import com.redcatgames.movies.data.source.local.dao.*
-import com.redcatgames.movies.data.source.local.mapper.fromEntity
+import com.redcatgames.movies.data.source.local.mapper.toLanguage
 import com.redcatgames.movies.data.source.local.mapper.toEntity
 import com.redcatgames.movies.data.source.remote.NetworkService
 import com.redcatgames.movies.data.source.remote.adapter.NetworkResponse
@@ -219,13 +219,13 @@ class DictionaryRepositoryImpl(
 
     override fun languages(): LiveData<List<Language>> {
         return Transformations.map(languageDao.getAll()) {
-            it.map { languageEntity -> languageEntity.fromEntity() }
+            it.map { languageEntity -> languageEntity.toLanguage() }
         }
     }
 
     override fun getLanguage(iso: String): LiveData<Language?> {
         return Transformations.map(languageDao.getByIso(iso)) {
-            it?.fromEntity()
+            it?.toLanguage()
         }
     }
 }

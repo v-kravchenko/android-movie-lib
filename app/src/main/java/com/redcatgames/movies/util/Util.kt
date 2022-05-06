@@ -32,3 +32,5 @@ class PairLiveData<A, B>(first: LiveData<A>, second: LiveData<B>) : MediatorLive
 fun <A, B> LiveData<A>.combine(other: LiveData<B>): PairLiveData<A, B> {
     return PairLiveData(this, other)
 }
+
+fun Double.format(digits: Int) = "%.${digits}f".format(this)

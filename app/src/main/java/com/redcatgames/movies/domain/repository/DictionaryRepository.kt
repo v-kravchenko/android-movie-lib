@@ -31,4 +31,5 @@ interface DictionaryRepository {
     fun languages(): LiveData<List<Language>>
 
     fun getLanguage(iso: String): LiveData<Language?>
+    suspend fun putUserApiLanguage(language: Language)
 }

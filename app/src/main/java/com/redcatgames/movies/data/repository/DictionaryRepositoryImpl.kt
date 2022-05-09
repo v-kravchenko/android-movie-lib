@@ -223,4 +223,10 @@ class DictionaryRepositoryImpl(
             it?.toLanguage()
         }
     }
+
+    override suspend fun putUserApiLanguage(language: Language) {
+        val userConfig = userConfigPreferences.readConfig()
+            .copy(apiLanguage = language.iso)
+        userConfigPreferences.putConfig(userConfig)
+    }
 }

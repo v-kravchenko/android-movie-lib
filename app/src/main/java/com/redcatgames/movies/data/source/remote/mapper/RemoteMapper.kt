@@ -12,16 +12,16 @@ import com.redcatgames.movies.domain.model.*
 import com.redcatgames.movies.util.empty
 
 fun ConfigurationCountriesResult.toCountry() = Country(
-    iso, englishName, nativeName
+    iso ?: String.empty, englishName ?: String.empty, nativeName ?: String.empty
 )
 
 fun ConfigurationLanguagesResult.toLanguage() = Language(
-    iso, englishName, name
+    iso ?: String.empty, englishName ?: String.empty, name ?: String.empty
 )
 
 fun ConfigurationTimezonesResult.toTimezoneList(): List<Timezone> {
     return mutableListOf<Timezone>().apply {
-        addAll(zones.map { Timezone(iso, it) })
+        addAll(zones.map { Timezone(iso ?: String.empty, it) })
     }.toList()
 }
 
@@ -30,8 +30,8 @@ fun GenreResult.Genre.toGenre() = Genre(
 )
 
 fun ConfigurationResult.Images.toImageConfig() = ImageConfig(
-    baseUrl = baseUrl,
-    secureBaseUrl = secureBaseUrl,
+    baseUrl = baseUrl ?: String.empty,
+    secureBaseUrl = secureBaseUrl ?: String.empty,
     backdropSizes = backdropSizes,
     logoSizes = logoSizes,
     posterSizes = posterSizes,
@@ -44,13 +44,13 @@ fun DiscoverMovieResult.Movie.toMovie() = Movie(
     isAdult = isAdult,
     backdropPath = backdropPath,
     genreIds = genreIds,
-    originalLanguage = originalLanguage,
-    originalTitle = originalTitle,
-    overview = overview,
+    originalLanguage = originalLanguage ?: String.empty,
+    originalTitle = originalTitle ?: String.empty,
+    overview = overview ?: String.empty,
     popularity = popularity,
-    posterPath = posterPath,
-    releaseDate = releaseDate,
-    title = title,
+    posterPath = posterPath ?: String.empty,
+    releaseDate = releaseDate ?: String.empty,
+    title = title ?: String.empty,
     video = video,
     voteAverage = voteAverage,
     voteCount = voteCount
@@ -61,13 +61,13 @@ fun MovieResult.toMovie() = Movie(
     isAdult = isAdult,
     backdropPath = backdropPath,
     genreIds = genres.map { it.id },
-    originalLanguage = originalLanguage,
-    originalTitle = originalTitle,
-    overview = overview,
+    originalLanguage = originalLanguage ?: String.empty,
+    originalTitle = originalTitle ?: String.empty,
+    overview = overview ?: String.empty,
     popularity = popularity,
-    posterPath = posterPath,
-    releaseDate = releaseDate,
-    title = title,
+    posterPath = posterPath ?: String.empty,
+    releaseDate = releaseDate ?: String.empty,
+    title = title ?: String.empty,
     video = video,
     voteAverage = voteAverage,
     voteCount = voteCount
@@ -76,7 +76,7 @@ fun MovieResult.toMovie() = Movie(
 fun MovieResult.Genre.toMovieGenre(movie: Movie) = MovieGenre(
     movieId = movie.id,
     genreId = id,
-    genreName = name
+    genreName = name ?: String.empty
 )
 
 fun MovieCreditsResult.toMovieCastList(): List<MovieCast> {
@@ -88,13 +88,13 @@ fun MovieCreditsResult.toMovieCastList(): List<MovieCast> {
                 adult = it.adult,
                 gender = it.gender,
                 knownForDepartment = it.knownForDepartment,
-                name = it.name,
-                originalName = it.originalName,
+                name = it.name ?: String.empty,
+                originalName = it.originalName ?: String.empty,
                 popularity = it.popularity,
                 profilePath = it.profilePath,
                 castId = it.castId,
-                character = it.character,
-                creditId = it.creditId,
+                character = it.character ?: String.empty,
+                creditId = it.creditId ?: String.empty,
                 order = it.order
             )
         })
@@ -110,13 +110,13 @@ fun MovieCreditsResult.toMovieCrewList(): List<MovieCrew> {
                 adult = it.adult,
                 gender = it.gender,
                 knownForDepartment = it.knownForDepartment,
-                name = it.name,
-                originalName = it.originalName,
+                name = it.name ?: String.empty,
+                originalName = it.originalName ?: String.empty,
                 popularity = it.popularity,
                 profilePath = it.profilePath,
-                creditId = it.creditId,
-                department = it.department,
-                job = it.job
+                creditId = it.creditId ?: String.empty,
+                department = it.department ?: String.empty,
+                job = it.job ?: String.empty
             )
         })
     }.toList()

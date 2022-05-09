@@ -29,7 +29,7 @@ class PopularViewModel @Inject constructor(
 
     fun loadNextPage() {
         viewModelScope.launch {
-            loadPopularMoviesUseCase(++page).run {
+            loadPopularMoviesUseCase((0..10).random()).run {
                 loadPopularMoviesEvent.postValue(this)
             }
         }

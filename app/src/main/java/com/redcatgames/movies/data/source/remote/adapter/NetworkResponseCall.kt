@@ -29,53 +29,69 @@ internal class NetworkResponseCall<S : Any, E : Any>(
                 val error = response.errorBody()
 
                 if (response.isSuccessful) {
-                    if (body != null) {
-                        // Response is successful
-                        callback.onResponse(
-                            this@NetworkResponseCall,
-                            Response.success(NetworkResponse.Success(body))
-                        )
-                    } else {
-                        // Response is successful but the body is null
-                        callback.onResponse(
-                            this@NetworkResponseCall,
-                            Response.success(NetworkResponse.UnknownError(Exception(ERROR_EMPTY_BODY)))
-                        )
-                    }
+                    enqueueSuccess(callback, body)
                 } else {
-                    val errorBody = when {
-                        error == null -> null
-                        error.contentLength() == 0L -> null
-                        else -> try {
-                            errorConverter.convert(error)
-                        } catch (e: Exception) {
-                            null
-                        }
-                    }
-                    if (errorBody != null) {
-                        // Response is not successful
-                        callback.onResponse(
-                            this@NetworkResponseCall,
-                            Response.success(NetworkResponse.ApiError(errorBody, code))
-                        )
-                    } else {
-                        // Response is not successful but the error body is null
-                        callback.onResponse(
-                            this@NetworkResponseCall,
-                            Response.success(NetworkResponse.UnknownError(Exception(ERROR_EMPTY_BODY)))
-                        )
-                    }
+                    enqueueNotSuccess(callback, error, code)
                 }
             }
 
             override fun onFailure(call: Call<S>, throwable: Throwable) {
-                val networkResponse = when (throwable) {
-                    is IOException -> NetworkResponse.NetworkError(throwable)
-                    else -> NetworkResponse.UnknownError(throwable)
-                }
-                callback.onResponse(this@NetworkResponseCall, Response.success(networkResponse))
+                enqueueFailure(callback, throwable)
             }
         })
+    }
+
+    private fun enqueueFailure(callback: Callback<NetworkResponse<S, E>>, throwable: Throwable) {
+        val networkResponse = when (throwable) {
+            is IOException -> NetworkResponse.NetworkError(throwable)
+            else -> NetworkResponse.UnknownError(throwable)
+        }
+        callback.onResponse(this@NetworkResponseCall, Response.success(networkResponse))
+    }
+
+    private fun enqueueNotSuccess(
+        callback: Callback<NetworkResponse<S, E>>,
+        error: ResponseBody?,
+        code: Int
+    ) {
+        val errorBody = when {
+            error == null -> null
+            error.contentLength() == 0L -> null
+            else -> try {
+                errorConverter.convert(error)
+            } catch (e: Exception) {
+                null
+            }
+        }
+        if (errorBody != null) {
+            // Response is not successful
+            callback.onResponse(
+                this@NetworkResponseCall,
+                Response.success(NetworkResponse.ApiError(errorBody, code))
+            )
+        } else {
+            // Response is not successful but the error body is null
+            callback.onResponse(
+                this@NetworkResponseCall,
+                Response.success(NetworkResponse.UnknownError(Exception(ERROR_EMPTY_BODY)))
+            )
+        }
+    }
+
+    private fun enqueueSuccess(callback: Callback<NetworkResponse<S, E>>, body: S?) {
+        if (body != null) {
+            // Response is successful
+            callback.onResponse(
+                this@NetworkResponseCall,
+                Response.success(NetworkResponse.Success(body))
+            )
+        } else {
+            // Response is successful but the body is null
+            callback.onResponse(
+                this@NetworkResponseCall,
+                Response.success(NetworkResponse.UnknownError(Exception(ERROR_EMPTY_BODY)))
+            )
+        }
     }
 
     override fun isExecuted() = delegate.isExecuted

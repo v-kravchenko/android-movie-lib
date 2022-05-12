@@ -4,9 +4,7 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import com.redcatgames.movies.data.preferences.Preferences
-import com.redcatgames.movies.domain.model.ImageConfig
 import com.redcatgames.movies.domain.model.UserConfig
-import com.redcatgames.movies.util.now
 
 class UserConfigPreferences(private val preferences: Preferences) {
 

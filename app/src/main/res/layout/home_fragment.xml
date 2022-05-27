@@ -1,44 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.home.HomeFragment"
-    android:padding="5dp">
+    android:orientation="vertical"
+    tools:context=".presentation.home.HomeFragment">
 
-    <TextView
-        android:id="@+id/text1"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.Material3.HeadlineLarge"
-        android:gravity="center"
-        android:text="@string/app_name"/>
+        android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/button_popular"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Popular movies"/>
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/top_app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_scrollFlags="scroll|snap"
+            app:menu="@menu/home_menu"
+            app:subtitle="@string/home_subtitle"
+            app:title="@string/home_title" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/spinner_language"
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/chapter_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        >
+        android:layout_height="match_parent"
+        android:paddingStart="@dimen/dimen2"
+        android:paddingEnd="@dimen/dimen2"
+        android:paddingBottom="@dimen/dimen2"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <com.google.android.material.textfield.MaterialAutoCompleteTextView
-            android:id="@+id/text_language"
-            android:saveEnabled="false"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_popular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/home_button_popular"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/spinner_language"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="none"
-            android:hint="Api language"
-            />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/button_popular">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/text_language"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Api language"
+                android:inputType="none"
+                android:saveEnabled="false" />
 
+        </com.google.android.material.textfield.TextInputLayout>
 
-</LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

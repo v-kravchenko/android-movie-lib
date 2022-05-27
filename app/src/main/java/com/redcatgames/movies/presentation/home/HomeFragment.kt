@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AutoCompleteTextView
 import androidx.fragment.app.viewModels
+import com.google.android.material.snackbar.Snackbar
+import com.redcatgames.movies.R
 import com.redcatgames.movies.databinding.HomeFragmentBinding
 import com.redcatgames.movies.presentation.base.BaseFragment
 import com.redcatgames.movies.presentation.util.autoCleared
@@ -21,9 +23,7 @@ class HomeFragment : BaseFragment() {
 
     private val viewModel: HomeViewModel by viewModels()
     private var binding: HomeFragmentBinding by autoCleared()
-    private val languageAdapter by lazy {
-        LanguageAdapter(requireContext())
-    }
+    private val languageAdapter by lazy { LanguageAdapter(requireContext()) }
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -46,7 +46,8 @@ class HomeFragment : BaseFragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = HomeFragmentBinding.inflate(inflater, container, false)
@@ -58,7 +59,21 @@ class HomeFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.text1.text = this.javaClass.simpleName
+
+        binding.topAppBar.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.action_settings -> {
+                    Snackbar.make(binding.root, item.title, Snackbar.LENGTH_SHORT).show()
+                    true
+                }
+                R.id.action_night_mode -> {
+                    toggleNightMode()
+                    true
+                }
+                else -> false
+            }
+        }
+
         binding.buttonPopular.setOnClickListener {
             navigateTo(HomeFragmentDirections.actionHomeFragmentToPopularFragment())
         }
@@ -82,9 +97,7 @@ class HomeFragment : BaseFragment() {
             languageAdapter.addAll(it)
         }
 
-        observe(viewModel.language) {
-            binding.textLanguage.setText(it?.englishName, false)
-        }
+        observe(viewModel.language) { binding.textLanguage.setText(it?.englishName, false) }
 
         observe(viewModel.loadDictionaryEvent) {
             it.onFailure { throwable ->

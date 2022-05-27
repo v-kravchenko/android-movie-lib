@@ -35,8 +35,9 @@ class Holder(
     @SuppressLint("SetTextI18n")
     fun bind(item: Movie) {
         this.itemView.setOnClickListener { eventClickItem?.invoke(item) }
-        itemBinding.text1.text = "[${item.popularity}] ${item.title}"
+        itemBinding.text1.text = item.title
         itemBinding.text2.text = item.voteAverage.format(1)
+        itemBinding.text3.text = item.popularity.toString()
     }
 
 }

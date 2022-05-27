@@ -21,7 +21,8 @@ class MovieFragment : BaseFragment() {
     private var binding: MovieFragmentBinding by autoCleared()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = MovieFragmentBinding.inflate(inflater, container, false)
@@ -30,6 +31,7 @@ class MovieFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.topAppBar.setNavigationOnClickListener { navigateBack() }
         setupObserver()
     }
 
@@ -37,11 +39,14 @@ class MovieFragment : BaseFragment() {
 
         observe(viewModel.movieInfo) { info ->
             info?.let { movieInfo ->
-                binding.text1.text = movieInfo.movie.title
+                binding.topAppBar.title = movieInfo.movie.title
                 binding.text2.text = movieInfo.movie.overview
                 binding.posterImage.loadByUrl("w500/${movieInfo.movie.posterPath}")
                 binding.text3.text = movieInfo.genres.joinToString { genre -> genre.genreName }
-                binding.text4.text = movieInfo.casts.sortedBy { it.order }.joinToString(limit = 5) { cast -> cast.name }
+                binding.text4.text =
+                    movieInfo.casts
+                        .sortedBy { it.order }
+                        .joinToString(limit = 5) { cast -> cast.name }
                 binding.text5.text = movieInfo.crews.joinToString(limit = 5) { crew -> crew.name }
             }
         }

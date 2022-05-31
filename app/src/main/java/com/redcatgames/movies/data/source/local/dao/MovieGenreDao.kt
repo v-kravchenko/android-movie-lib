@@ -35,4 +35,16 @@ interface MovieGenreDao {
 
     @Query("SELECT COUNT(1) FROM movie_genres")
     suspend fun getCount(): Int
+
+    @Transaction
+    suspend fun replace(movieId: Long, movieGenres: List<MovieGenreEntity>) {
+        deleteByMovie(movieId)
+        insertAll(movieGenres)
+    }
+
+    @Transaction
+    suspend fun replace(movieIds: List<Long>, moviesGenres: List<MovieGenreEntity>) {
+        deleteByMovieList(movieIds)
+        insertAll(moviesGenres)
+    }
 }

@@ -35,4 +35,10 @@ interface MovieCrewDao {
 
     @Query("SELECT COUNT(1) FROM movie_crews")
     suspend fun getCount(): Int
+
+    @Transaction
+    suspend fun replace(movieId: Long, movieCrews: List<MovieCrewEntity>) {
+        deleteByMovie(movieId)
+        insertAll(movieCrews)
+    }
 }

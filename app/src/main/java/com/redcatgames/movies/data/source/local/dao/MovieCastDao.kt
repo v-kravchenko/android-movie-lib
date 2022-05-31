@@ -3,6 +3,7 @@ package com.redcatgames.movies.data.source.local.dao
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.redcatgames.movies.data.source.local.entity.MovieCastEntity
+import com.redcatgames.movies.data.source.local.entity.MovieGenreEntity
 
 @Dao
 interface MovieCastDao {
@@ -35,4 +36,10 @@ interface MovieCastDao {
 
     @Query("SELECT COUNT(1) FROM movie_casts")
     suspend fun getCount(): Int
+
+    @Transaction
+    suspend fun replace(movieId: Long, movieCasts: List<MovieCastEntity>) {
+        deleteByMovie(movieId)
+        insertAll(movieCasts)
+    }
 }

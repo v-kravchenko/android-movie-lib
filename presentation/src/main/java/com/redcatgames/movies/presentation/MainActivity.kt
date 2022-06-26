@@ -3,7 +3,7 @@ package com.redcatgames.movies.presentation
 import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.redcatgames.movies.databinding.ActivityMainBinding
+import com.redcatgames.movies.presentation.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -22,12 +22,12 @@ class MainActivity : AppCompatActivity() {
     override fun onBackPressed() {
         if (
             Build.VERSION.SDK_INT == Build.VERSION_CODES.Q &&
-            isTaskRoot &&
-            (supportFragmentManager.primaryNavigationFragment
-                ?.childFragmentManager
-                ?.backStackEntryCount
-                ?: 0) == 0 &&
-            supportFragmentManager.backStackEntryCount == 0
+                isTaskRoot &&
+                (supportFragmentManager.primaryNavigationFragment
+                    ?.childFragmentManager
+                    ?.backStackEntryCount
+                    ?: 0) == 0 &&
+                supportFragmentManager.backStackEntryCount == 0
         ) {
             finishAfterTransition()
         } else {

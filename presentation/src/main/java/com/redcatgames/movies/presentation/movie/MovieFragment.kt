@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
-import com.redcatgames.movies.databinding.MovieFragmentBinding
 import com.redcatgames.movies.presentation.base.BaseFragment
+import com.redcatgames.movies.presentation.databinding.MovieFragmentBinding
 import com.redcatgames.movies.presentation.util.autoCleared
 import com.redcatgames.movies.presentation.util.loadByUrl
 import dagger.hilt.android.AndroidEntryPoint

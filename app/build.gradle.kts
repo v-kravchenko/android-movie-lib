@@ -44,6 +44,7 @@ dependencies {
     implementation(project(":util"))
     implementation(project(":data"))
     implementation(project(":domain"))
+    implementation(project(":presentation"))
 
     // Hilt
     implementation(Dependencies.Hilt.runtime)

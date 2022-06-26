@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import android.widget.AutoCompleteTextView
 import androidx.fragment.app.viewModels
 import com.google.android.material.snackbar.Snackbar
-import com.redcatgames.movies.R
-import com.redcatgames.movies.databinding.HomeFragmentBinding
+import com.redcatgames.movies.presentation.R
 import com.redcatgames.movies.presentation.base.BaseFragment
+import com.redcatgames.movies.presentation.databinding.HomeFragmentBinding
 import com.redcatgames.movies.presentation.util.autoCleared
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber

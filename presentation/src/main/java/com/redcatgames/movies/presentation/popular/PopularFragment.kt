@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import com.redcatgames.movies.databinding.PopularFragmentBinding
 import com.redcatgames.movies.presentation.base.BaseFragment
+import com.redcatgames.movies.presentation.databinding.PopularFragmentBinding
 import com.redcatgames.movies.presentation.util.autoCleared
 import dagger.hilt.android.AndroidEntryPoint
 

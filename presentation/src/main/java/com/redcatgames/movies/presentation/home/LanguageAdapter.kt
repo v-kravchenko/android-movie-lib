@@ -6,11 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
-import com.redcatgames.movies.R
 import com.redcatgames.movies.domain.model.Language
+import com.redcatgames.movies.presentation.R
 
-class LanguageAdapter(context: Context) :
-    ArrayAdapter<com.redcatgames.movies.domain.model.Language?>(context, R.layout.list_item) {
+class LanguageAdapter(context: Context) : ArrayAdapter<Language?>(context, R.layout.list_item) {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var view = convertView

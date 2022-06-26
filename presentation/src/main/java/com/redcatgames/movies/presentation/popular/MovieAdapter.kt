@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.redcatgames.movies.databinding.RowMovieBinding
 import com.redcatgames.movies.domain.model.Movie
+import com.redcatgames.movies.presentation.databinding.RowMovieBinding
 import com.redcatgames.movies.util.format
 
 class MovieAdapter : ListAdapter<Movie, Holder>(ItemDiffCallback()) {

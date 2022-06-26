@@ -11,6 +11,7 @@ buildscript {
         classpath(BuildPlugins.hilt)
         classpath(BuildPlugins.ksp)
         classpath(BuildPlugins.safeArgs)
+        classpath(BuildPlugins.gradleVersion)
     }
 }
 

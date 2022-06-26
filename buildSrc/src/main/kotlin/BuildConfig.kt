@@ -1,15 +1,16 @@
 object Versions {
-    const val gradleVersion = "7.1.3"
-    const val kotlinVersion = "1.6.20"
-    const val hiltVersion = "2.38.1"
+    const val gradleVersion = "7.2.1"
+    const val kotlinVersion = "1.7.0"
+    const val hiltVersion = "2.42"
     const val roomVersion = "2.4.2"
-    const val kspVersion = "1.6.20-1.0.5"
-    const val coroutines = "1.6.1"
+    const val kspVersion = "1.7.0-1.0.6"
+    const val coroutines = "1.6.3"
+    const val gradleVersions = "0.41.0"
 
-    const val coreKtx = "1.7.0"
-    const val appCompat = "1.4.1"
-    const val material = "1.5.0"
-    const val constraint = "2.1.3"
+    const val coreKtx = "1.8.0"
+    const val appCompat = "1.4.2"
+    const val material = "1.6.1"
+    const val constraint = "2.1.4"
     const val lifecycle = "2.4.1"
     const val navigation = "2.4.2"
     const val timber = "5.0.1"
@@ -17,15 +18,24 @@ object Versions {
     const val retrofit2 = "2.9.0"
     const val paging = "3.1.1"
     const val dataStore = "1.0.0"
-    const val coil = "2.0.0-rc03"
+    const val coil = "2.1.0"
 }
 
 object BuildPlugins {
-    val gradle by lazy { "com.android.application:com.android.application.gradle.plugin:${Versions.gradleVersion}" }
+    val gradle by lazy {
+        "com.android.application:com.android.application.gradle.plugin:${Versions.gradleVersion}"
+    }
     val kotlin by lazy { "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlinVersion}" }
     val hilt by lazy { "com.google.dagger:hilt-android-gradle-plugin:${Versions.hiltVersion}" }
-    val ksp by lazy { "com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin:${Versions.kspVersion}" }
-    val safeArgs by lazy { "androidx.navigation:navigation-safe-args-gradle-plugin:${Versions.navigation}" }
+    val ksp by lazy {
+        "com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin:${Versions.kspVersion}"
+    }
+    val safeArgs by lazy {
+        "androidx.navigation:navigation-safe-args-gradle-plugin:${Versions.navigation}"
+    }
+    val gradleVersion by lazy {
+        "com.github.ben-manes:gradle-versions-plugin:${Versions.gradleVersions}"
+    }
 }
 
 object AppConfig {
@@ -47,7 +57,9 @@ object Dependencies {
 
     object Coroutines {
         val core by lazy { "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}" }
-        val android by lazy { "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}" }
+        val android by lazy {
+            "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
+        }
     }
 
     object Room {
@@ -59,11 +71,15 @@ object Dependencies {
     object Lifecycle {
         val viewModel by lazy { "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}" }
         val liveData by lazy { "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle}" }
-        val saveState by lazy { "androidx.lifecycle:lifecycle-viewmodel-savedstate:${Versions.lifecycle}" }
+        val saveState by lazy {
+            "androidx.lifecycle:lifecycle-viewmodel-savedstate:${Versions.lifecycle}"
+        }
     }
 
     object Navigation {
-        val fragment by lazy { "androidx.navigation:navigation-fragment-ktx:${Versions.navigation}" }
+        val fragment by lazy {
+            "androidx.navigation:navigation-fragment-ktx:${Versions.navigation}"
+        }
         val ui by lazy { "androidx.navigation:navigation-ui-ktx:${Versions.navigation}" }
     }
 

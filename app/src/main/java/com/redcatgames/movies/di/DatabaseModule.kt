@@ -18,13 +18,9 @@ class DatabaseModule {
     @Provides
     @Singleton
     internal fun provideAppDatabase(application: Application): AppDatabase {
-        return Room.databaseBuilder(
-            application,
-            AppDatabase::class.java,
-            AppDatabase.DB_NAME
-        )
+        return Room.databaseBuilder(application, AppDatabase::class.java, AppDatabase.DB_NAME)
             .fallbackToDestructiveMigration()
-            //.allowMainThreadQueries()
+            // .allowMainThreadQueries()
             .setJournalMode(RoomDatabase.JournalMode.TRUNCATE)
             .build()
     }
@@ -82,5 +78,4 @@ class DatabaseModule {
     fun provideMovieCrewDao(appDatabase: AppDatabase): MovieCrewDao {
         return appDatabase.movieCrewDao
     }
-
 }

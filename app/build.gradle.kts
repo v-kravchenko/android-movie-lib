@@ -6,6 +6,7 @@ plugins {
     id("com.google.devtools.ksp")
     id("kotlin-parcelize")
     id("androidx.navigation.safeargs.kotlin")
+    id("com.github.ben-manes.versions")
 }
 
 android {
@@ -23,62 +24,61 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-    buildFeatures {
-        viewBinding = true
-    }
+    kotlinOptions { jvmTarget = "1.8" }
+    buildFeatures { viewBinding = true }
 }
 
 dependencies {
 
-    //Hilt
+    // Hilt
     implementation(Dependencies.Hilt.runtime)
     kapt(Dependencies.Hilt.compiler)
 
-    //Coroutines
+    // Coroutines
     implementation(Dependencies.Coroutines.core)
     implementation(Dependencies.Coroutines.android)
 
-    //Room
+    // Room
     implementation(Dependencies.Room.runtime)
     implementation(Dependencies.Room.coroutines)
     ksp(Dependencies.Room.compiler)
 
-    //Lifecycle
+    // Lifecycle
     implementation(Dependencies.Lifecycle.viewModel)
     implementation(Dependencies.Lifecycle.liveData)
     implementation(Dependencies.Lifecycle.saveState)
 
-    //Navigation
+    // Navigation
     implementation(Dependencies.Navigation.fragment)
     implementation(Dependencies.Navigation.ui)
 
-    //LeakCanary
+    // LeakCanary
     debugImplementation(Dependencies.leakCanary)
 
-    //Retrofit2
+    // Retrofit2
     implementation(Dependencies.Retrofit2.retrofit)
     implementation(Dependencies.Retrofit2.gson)
 
-    //Jetpack paging 3
+    // Jetpack paging 3
     implementation(Dependencies.paging)
 
-    //Datastore
+    // Datastore
     implementation(Dependencies.dataStore)
 
-    //Coil
+    // Coil
     implementation(Dependencies.coil)
 
-    //Other
+    // Other
     implementation(Dependencies.coreKtx)
     implementation(Dependencies.appCompat)
     implementation(Dependencies.material)
@@ -86,6 +86,26 @@ dependencies {
     implementation(Dependencies.timber)
 }
 
-kapt {
-    correctErrorTypes = true
+kapt { correctErrorTypes = true }
+
+fun isNonStable(version: String): Boolean {
+    val stableKeyword = listOf("RELEASE", "FINAL", "GA").any { version.toUpperCase().contains(it) }
+    val regex = "^[0-9,.v-]+(-r)?$".toRegex()
+    val isStable = stableKeyword || regex.matches(version)
+    return isStable.not()
 }
+
+tasks
+    .named<com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask>("dependencyUpdates")
+    .configure {
+        checkForGradleUpdate = true
+        resolutionStrategy {
+            componentSelection {
+                all {
+                    if (isNonStable(candidate.version) && !isNonStable(currentVersion)) {
+                        reject("Release candidate")
+                    }
+                }
+            }
+        }
+    }

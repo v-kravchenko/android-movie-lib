@@ -97,4 +97,5 @@ object Dependencies {
     val paging by lazy { "androidx.paging:paging-runtime:${Versions.paging}" }
     val dataStore by lazy { "androidx.datastore:datastore-preferences:${Versions.dataStore}" }
     val coil by lazy { "io.coil-kt:coil:${Versions.coil}" }
+    val javaxInject by lazy { "javax.inject:javax.inject:1" }
 }

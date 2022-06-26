@@ -39,6 +39,11 @@ android {
 }
 
 dependencies {
+    implementation(Dependencies.coreKtx)
+
+    implementation(project(":util"))
+    implementation(project(":data"))
+    implementation(project(":domain"))
 
     // Hilt
     implementation(Dependencies.Hilt.runtime)
@@ -79,7 +84,6 @@ dependencies {
     implementation(Dependencies.coil)
 
     // Other
-    implementation(Dependencies.coreKtx)
     implementation(Dependencies.appCompat)
     implementation(Dependencies.material)
     implementation(Dependencies.constraint)
@@ -109,3 +113,5 @@ tasks
             }
         }
     }
+
+hilt { enableAggregatingTask = true }

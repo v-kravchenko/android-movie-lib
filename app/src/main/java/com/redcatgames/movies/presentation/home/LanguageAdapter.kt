@@ -10,7 +10,7 @@ import com.redcatgames.movies.R
 import com.redcatgames.movies.domain.model.Language
 
 class LanguageAdapter(context: Context) :
-    ArrayAdapter<Language?>(context, R.layout.list_item) {
+    ArrayAdapter<com.redcatgames.movies.domain.model.Language?>(context, R.layout.list_item) {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var view = convertView

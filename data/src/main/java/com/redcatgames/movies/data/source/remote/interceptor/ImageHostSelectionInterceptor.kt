@@ -18,7 +18,7 @@ class ImageHostSelectionInterceptor @Inject constructor(
 
         request = request.newBuilder()
             .url(
-                request.url.toString().replace(
+                request.url().toString().replace(
                     "https://localhost", host.secureBaseUrl
                 )
             )

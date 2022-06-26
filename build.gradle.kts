@@ -12,6 +12,7 @@ buildscript {
         classpath(BuildPlugins.ksp)
         classpath(BuildPlugins.safeArgs)
         classpath(BuildPlugins.gradleVersion)
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.0")
     }
 }
 

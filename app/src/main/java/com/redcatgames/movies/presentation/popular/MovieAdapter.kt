@@ -39,21 +39,14 @@ class Holder(
         itemBinding.text2.text = item.voteAverage.format(1)
         itemBinding.text3.text = item.popularity.toString()
     }
-
 }
 
 private class ItemDiffCallback : DiffUtil.ItemCallback<Movie>() {
-    override fun areItemsTheSame(
-        oldItem: Movie,
-        newItem: Movie
-    ): Boolean {
+    override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
         return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(
-        oldItem: Movie,
-        newItem: Movie
-    ): Boolean {
+    override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
         return oldItem == newItem
     }
 }

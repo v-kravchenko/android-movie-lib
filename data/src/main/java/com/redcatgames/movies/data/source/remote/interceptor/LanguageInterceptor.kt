@@ -14,7 +14,7 @@ class LanguageInterceptor @Inject constructor(
         val userApiLanguage = runBlocking { userConfigPreferences.readConfig().apiLanguage }
 
         var request = chain.request()
-        val url = request.url.newBuilder().addQueryParameter("language", userApiLanguage).build()
+        val url = request.url().newBuilder().addQueryParameter("language", userApiLanguage).build()
         request = request.newBuilder().url(url).build()
         return chain.proceed(request)
     }

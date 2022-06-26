@@ -54,10 +54,10 @@ class MovieFragment : BaseFragment() {
         observe(viewModel.loadMovieEvent) {
             it.onFailure { throwable ->
                 Toast.makeText(
-                    requireContext(),
-                    "Error loading: ${throwable.localizedMessage}",
-                    Toast.LENGTH_SHORT
-                )
+                        requireContext(),
+                        "Error loading: ${throwable.localizedMessage}",
+                        Toast.LENGTH_SHORT
+                    )
                     .show()
             }
         }

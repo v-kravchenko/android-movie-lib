@@ -9,11 +9,13 @@ import com.redcatgames.movies.presentation.base.BaseViewModel
 import com.redcatgames.movies.presentation.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlinx.coroutines.launch
 
 @HiltViewModel
-class MovieViewModel @Inject constructor(
+class MovieViewModel
+@Inject
+constructor(
     @ApplicationContext appContext: Context,
     savedStateHandle: SavedStateHandle,
     getMovieInfoUseCase: GetMovieInfoUseCase,
@@ -28,9 +30,8 @@ class MovieViewModel @Inject constructor(
         loadMovieInfo()
     }
 
-    private fun loadMovieInfo() = viewModelScope.launch {
-        loadMovieInfoUseCase(args.movieId).run {
-            loadMovieEvent.postValue(this)
+    private fun loadMovieInfo() =
+        viewModelScope.launch {
+            loadMovieInfoUseCase(args.movieId).run { loadMovieEvent.postValue(this) }
         }
-    }
 }

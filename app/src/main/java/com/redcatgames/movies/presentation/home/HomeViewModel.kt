@@ -13,11 +13,13 @@ import com.redcatgames.movies.presentation.base.BaseViewModel
 import com.redcatgames.movies.presentation.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlinx.coroutines.launch
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
+class HomeViewModel
+@Inject
+constructor(
     @ApplicationContext appContext: Context,
     userConfigUseCase: GetUserConfigUseCase,
     languagesUseCase: GetLanguagesUseCase,
@@ -29,22 +31,21 @@ class HomeViewModel @Inject constructor(
     val languages = languagesUseCase()
     val loadDictionaryEvent = SingleLiveEvent<Result<Unit>>()
 
-    val language = Transformations.switchMap(userConfigUseCase()) {
-        languageUseCase(it.apiLanguage)
-    }
+    val language =
+        Transformations.switchMap(userConfigUseCase()) { languageUseCase(it.apiLanguage) }
 
     init {
         loadDictionary()
     }
 
-    private fun loadDictionary() = viewModelScope.launch {
-        loadDictionaryUseCase().run {
-            loadDictionaryEvent.postValue(this)
+    private fun loadDictionary() =
+        viewModelScope.launch {
+            loadDictionaryUseCase().run { loadDictionaryEvent.postValue(this) }
         }
-    }
 
-    fun setApiLanguage(language: Language) = viewModelScope.launch {
-        setUserConfigApiLanguageUseCase(language)
-        loadDictionary()
-    }
+    fun setApiLanguage(language: Language) =
+        viewModelScope.launch {
+            setUserConfigApiLanguageUseCase(language)
+            loadDictionary()
+        }
 }

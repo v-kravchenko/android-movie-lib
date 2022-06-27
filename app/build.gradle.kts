@@ -24,7 +24,6 @@ android {
 
     signingConfigs {
         register("release") {
-
             val keystorePropertiesFile = file("../keystore.properties")
 
             if (!keystorePropertiesFile.exists()) {
@@ -52,13 +51,20 @@ android {
             signingConfig = signingConfigs.getByName("release")
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 
-    kotlinOptions { jvmTarget = JavaVersion.VERSION_1_8.toString() }
-    buildFeatures { viewBinding = true }
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
+    buildFeatures {
+        viewBinding = true
+    }
+
     kapt.correctErrorTypes = true
 }
 
@@ -106,7 +112,9 @@ tasks
         }
     }
 
-hilt { enableAggregatingTask = true }
+hilt {
+    enableAggregatingTask = true
+}
 
 ktfmt {
     kotlinLangStyle()

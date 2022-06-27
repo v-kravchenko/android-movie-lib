@@ -1,10 +1,10 @@
 plugins {
-    id("com.android.library")
+    id(BuildPlugins.ANDROID_LIB)
+    id(BuildPlugins.HILT)
+    id(BuildPlugins.KSP)
+    id(BuildPlugins.KTFMT)
     kotlin("android")
     kotlin("kapt")
-    id("com.google.devtools.ksp")
-    id("dagger.hilt.android.plugin")
-    id("com.ncorti.ktfmt.gradle")
 }
 
 android {

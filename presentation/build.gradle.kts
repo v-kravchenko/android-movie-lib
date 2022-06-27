@@ -1,11 +1,11 @@
 plugins {
-    id("com.android.library")
+    id(BuildPlugins.ANDROID_LIB)
     kotlin("android")
     kotlin("kapt")
-    id("dagger.hilt.android.plugin")
-    id("kotlin-parcelize")
-    id("androidx.navigation.safeargs.kotlin")
-    id("com.ncorti.ktfmt.gradle")
+    id(BuildPlugins.HILT)
+    id(BuildPlugins.KTFMT)
+    id(BuildPlugins.PARCELIZE)
+    id(BuildPlugins.NAVIGATION_SAFEARGS)
 }
 
 android {

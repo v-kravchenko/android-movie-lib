@@ -2,10 +2,10 @@ import java.io.FileInputStream
 import java.util.*
 
 plugins {
-    id("com.android.application")
+    id(BuildPlugins.ANDROID_APP)
     kotlin("android")
     kotlin("kapt")
-    id("dagger.hilt.android.plugin")
+    id(BuildPlugins.HILT)
     id("com.github.ben-manes.versions")
     id("com.ncorti.ktfmt.gradle")
 }
@@ -69,7 +69,6 @@ android {
 }
 
 dependencies {
-    implementation(Dependencies.ANDROID_CORE_KTX)
 
     implementation(project(":util"))
     implementation(project(":data"))
@@ -78,13 +77,8 @@ dependencies {
 
     hilt()
 
-    // LeakCanary
     debugImplementation(Dependencies.LEAKCANARY)
-
-    // Coil
     implementation(Dependencies.COIL)
-
-    // Other
     implementation(Dependencies.TIMBER)
 }
 

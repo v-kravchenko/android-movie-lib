@@ -34,14 +34,24 @@ object Versions {
 }
 
 object BuildPlugins {
-    const val gradle =
+    const val ANDROID_APP = "com.android.application"
+    const val ANDROID_LIB = "com.android.library"
+    const val HILT = "dagger.hilt.android.plugin"
+    const val KSP = "com.google.devtools.ksp"
+    const val KTFMT = "com.ncorti.ktfmt.gradle"
+    const val PARCELIZE = "kotlin-parcelize"
+    const val NAVIGATION_SAFEARGS = "androidx.navigation.safeargs.kotlin"
+}
+
+object BuildClass {
+    const val ANDROID_APP =
         "com.android.application:com.android.application.gradle.plugin:${Versions.gradleVersion}"
-    const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlinVersion}"
-    const val hilt = "com.google.dagger:hilt-android-gradle-plugin:${Versions.hiltVersion}"
-    const val ksp = "com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin:${Versions.kspVersion}"
-    const val safeArgs = "androidx.navigation:navigation-safe-args-gradle-plugin:${Versions.navigation}"
-    const val gradleVersion = "com.github.ben-manes:gradle-versions-plugin:${Versions.gradleVersions}"
-    const val ktFmt = "com.ncorti.ktfmt.gradle:plugin:${Versions.ktFmt}"
+    const val KOTLIN = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlinVersion}"
+    const val HILT = "com.google.dagger:hilt-android-gradle-plugin:${Versions.hiltVersion}"
+    const val KSP = "com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin:${Versions.kspVersion}"
+    const val SAFEARGS = "androidx.navigation:navigation-safe-args-gradle-plugin:${Versions.navigation}"
+    const val GRADLEVERSION = "com.github.ben-manes:gradle-versions-plugin:${Versions.gradleVersions}"
+    const val KTFMT = "com.ncorti.ktfmt.gradle:plugin:${Versions.ktFmt}"
 }
 
 object Dependencies {

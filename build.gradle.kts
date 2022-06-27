@@ -7,13 +7,13 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath(BuildPlugins.gradle)
-        classpath(BuildPlugins.kotlin)
-        classpath(BuildPlugins.hilt)
-        classpath(BuildPlugins.ksp)
-        classpath(BuildPlugins.safeArgs)
-        classpath(BuildPlugins.gradleVersion)
-        classpath(BuildPlugins.ktFmt)
+        classpath(BuildClass.ANDROID_APP)
+        classpath(BuildClass.KOTLIN)
+        classpath(BuildClass.HILT)
+        classpath(BuildClass.KSP)
+        classpath(BuildClass.SAFEARGS)
+        classpath(BuildClass.GRADLEVERSION)
+        classpath(BuildClass.KTFMT)
     }
 }
 

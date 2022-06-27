@@ -1,8 +1,8 @@
 plugins {
-    id("com.android.library")
+    id(BuildPlugins.ANDROID_LIB)
+    id(BuildPlugins.KTFMT)
+    id(BuildPlugins.PARCELIZE)
     kotlin("android")
-    id("kotlin-parcelize")
-    id("com.ncorti.ktfmt.gradle")
 }
 
 android {

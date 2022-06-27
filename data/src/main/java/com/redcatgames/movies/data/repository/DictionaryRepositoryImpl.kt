@@ -116,13 +116,11 @@ class DictionaryRepositoryImpl(
                 async { loadGenres() })
             .awaitAll()
 
-    jobList
-        .find { job -> job.isFailure }
-        ?.let {
-          if (it.isFailure) {
-            return@coroutineScope it
-          }
-        }
+    jobList.find { job -> job.isFailure }?.let {
+      if (it.isFailure) {
+        return@coroutineScope it
+      }
+    }
 
     return@coroutineScope Result.success(Unit)
   }

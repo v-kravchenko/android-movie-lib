@@ -1,4 +1,5 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+import com.ncorti.ktfmt.gradle.tasks.*
+
 buildscript {
     repositories {
         gradlePluginPortal()
@@ -12,6 +13,7 @@ buildscript {
         classpath(BuildPlugins.ksp)
         classpath(BuildPlugins.safeArgs)
         classpath(BuildPlugins.gradleVersion)
+        classpath("com.ncorti.ktfmt.gradle:plugin:0.8.0")
     }
 }
 
@@ -22,6 +24,9 @@ allprojects {
     }
 }
 
-tasks.register("clean", Delete::class) {
-    delete(rootProject.buildDir)
+tasks.register("clean", Delete::class) { delete(rootProject.buildDir) }
+
+tasks.register<KtfmtFormatTask>("ktfmtPrecommit") {
+    source = project.fileTree(rootDir)
+    include("**/*.kt")
 }

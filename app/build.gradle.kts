@@ -7,6 +7,7 @@ plugins {
     kotlin("kapt")
     id("dagger.hilt.android.plugin")
     id("com.github.ben-manes.versions")
+    id("com.ncorti.ktfmt.gradle")
 }
 
 android {
@@ -106,3 +107,7 @@ tasks
     }
 
 hilt { enableAggregatingTask = true }
+
+ktfmt {
+    kotlinLangStyle()
+}

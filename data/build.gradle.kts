@@ -4,6 +4,7 @@ plugins {
     kotlin("kapt")
     id("com.google.devtools.ksp")
     id("dagger.hilt.android.plugin")
+    id("com.ncorti.ktfmt.gradle")
 }
 
 android {
@@ -57,4 +58,8 @@ dependencies {
     // Retrofit2
     implementation(Dependencies.Retrofit2.retrofit)
     implementation(Dependencies.Retrofit2.gson)
+}
+
+ktfmt {
+    kotlinLangStyle()
 }

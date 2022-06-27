@@ -6,27 +6,23 @@ import com.redcatgames.movies.data.source.local.entity.LanguageEntity
 
 @Dao
 interface LanguageDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(language: LanguageEntity): Long
+  @Insert(onConflict = OnConflictStrategy.REPLACE)
+  suspend fun insert(language: LanguageEntity): Long
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(languages: List<LanguageEntity>)
+  @Insert(onConflict = OnConflictStrategy.REPLACE)
+  suspend fun insertAll(languages: List<LanguageEntity>)
 
-    @Delete
-    suspend fun delete(language: LanguageEntity)
+  @Delete suspend fun delete(language: LanguageEntity)
 
-    @Query("DELETE FROM languages")
-    suspend fun deleteAll()
+  @Query("DELETE FROM languages") suspend fun deleteAll()
 
-    @Update
-    suspend fun update(language: LanguageEntity)
+  @Update suspend fun update(language: LanguageEntity)
 
-    @Query("SELECT * FROM languages ORDER BY englishName")
-    fun getAll(): LiveData<List<LanguageEntity>>
+  @Query("SELECT * FROM languages ORDER BY englishName")
+  fun getAll(): LiveData<List<LanguageEntity>>
 
-    @Query("SELECT * FROM languages WHERE iso = :iso")
-    fun getByIso(iso: String): LiveData<LanguageEntity?>
+  @Query("SELECT * FROM languages WHERE iso = :iso")
+  fun getByIso(iso: String): LiveData<LanguageEntity?>
 
-    @Query("SELECT COUNT(1) FROM languages")
-    suspend fun getCount(): Int
+  @Query("SELECT COUNT(1) FROM languages") suspend fun getCount(): Int
 }

@@ -5,6 +5,7 @@ plugins {
     id("dagger.hilt.android.plugin")
     id("kotlin-parcelize")
     id("androidx.navigation.safeargs.kotlin")
+    id("com.ncorti.ktfmt.gradle")
 }
 
 android {
@@ -53,4 +54,8 @@ dependencies {
     implementation(Dependencies.material)
     implementation(Dependencies.constraint)
     implementation(Dependencies.timber)
+}
+
+ktfmt {
+    kotlinLangStyle()
 }

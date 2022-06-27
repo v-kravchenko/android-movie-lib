@@ -5,9 +5,4 @@ import androidx.room.PrimaryKey
 import java.util.*
 
 @Entity(tableName = "timezones")
-data class TimezoneEntity(
-    @PrimaryKey
-    val iso : String,
-    val zoneName : String,
-    val created: Date
-)
+data class TimezoneEntity(@PrimaryKey val iso: String, val zoneName: String, val created: Date)

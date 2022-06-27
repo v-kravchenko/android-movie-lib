@@ -18,47 +18,40 @@ import javax.inject.Singleton
 @Module
 class RepositoryModule {
 
-    @Singleton
-    @Provides
-    fun provideDictionaryRepository(
-        userConfigPreferences: UserConfigPreferences,
-        imageConfigPreferences: ImageConfigPreferences,
-        countryDao: CountryDao,
-        languageDao: LanguageDao,
-        primaryTranslationDao: PrimaryTranslationDao,
-        timezoneDao: TimezoneDao,
-        genreDao: GenreDao,
-        networkService: NetworkService
-    ): DictionaryRepository {
-        return DictionaryRepositoryImpl(
-            userConfigPreferences,
-            imageConfigPreferences,
-            countryDao,
-            languageDao,
-            primaryTranslationDao,
-            timezoneDao,
-            genreDao,
-            networkService
-        )
-    }
+  @Singleton
+  @Provides
+  fun provideDictionaryRepository(
+      userConfigPreferences: UserConfigPreferences,
+      imageConfigPreferences: ImageConfigPreferences,
+      countryDao: CountryDao,
+      languageDao: LanguageDao,
+      primaryTranslationDao: PrimaryTranslationDao,
+      timezoneDao: TimezoneDao,
+      genreDao: GenreDao,
+      networkService: NetworkService
+  ): DictionaryRepository {
+    return DictionaryRepositoryImpl(
+        userConfigPreferences,
+        imageConfigPreferences,
+        countryDao,
+        languageDao,
+        primaryTranslationDao,
+        timezoneDao,
+        genreDao,
+        networkService)
+  }
 
-    @Singleton
-    @Provides
-    fun provideMovieRepository(
-        movieDao: MovieDao,
-        movieGenreDao: MovieGenreDao,
-        movieCastDao: MovieCastDao,
-        movieCrewDao: MovieCrewDao,
-        genreDao: GenreDao,
-        networkService: NetworkService
-    ): MovieRepository {
-        return MovieRepositoryImpl(
-            movieDao,
-            movieGenreDao,
-            movieCastDao,
-            movieCrewDao,
-            genreDao,
-            networkService
-        )
-    }
+  @Singleton
+  @Provides
+  fun provideMovieRepository(
+      movieDao: MovieDao,
+      movieGenreDao: MovieGenreDao,
+      movieCastDao: MovieCastDao,
+      movieCrewDao: MovieCrewDao,
+      genreDao: GenreDao,
+      networkService: NetworkService
+  ): MovieRepository {
+    return MovieRepositoryImpl(
+        movieDao, movieGenreDao, movieCastDao, movieCrewDao, genreDao, networkService)
+  }
 }

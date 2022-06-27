@@ -75,13 +75,11 @@ class MovieRepositoryImpl(
       val jobList =
           listOf(async { loadMovie(movieId) }, async { loadMovieCredits(movieId) }).awaitAll()
 
-      jobList
-          .find { it.isFailure }
-          ?.let {
-            if (it.isFailure) {
-              return@coroutineScope it
-            }
-          }
+      jobList.find { it.isFailure }?.let {
+        if (it.isFailure) {
+          return@coroutineScope it
+        }
+      }
 
       Result.success(Unit)
     }

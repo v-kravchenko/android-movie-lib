@@ -11,21 +11,21 @@ import androidx.navigation.fragment.findNavController
 
 open class BaseFragment : Fragment() {
 
-    protected fun <T> observe(liveData: LiveData<T>, observer: Observer<in T>) {
-        liveData.observe(viewLifecycleOwner, observer)
-    }
+  protected fun <T> observe(liveData: LiveData<T>, observer: Observer<in T>) {
+    liveData.observe(viewLifecycleOwner, observer)
+  }
 
-    protected fun navigateBack() {
-        findNavController().popBackStack()
-    }
+  protected fun navigateBack() {
+    findNavController().popBackStack()
+  }
 
-    protected fun navigateTo(navDirections: NavDirections) {
-        findNavController().navigate(navDirections)
-    }
+  protected fun navigateTo(navDirections: NavDirections) {
+    findNavController().navigate(navDirections)
+  }
 
-    protected fun isNightMode() = AppCompatDelegate.getDefaultNightMode() == MODE_NIGHT_YES
+  protected fun isNightMode() = AppCompatDelegate.getDefaultNightMode() == MODE_NIGHT_YES
 
-    protected fun toggleNightMode() {
-        AppCompatDelegate.setDefaultNightMode(if (isNightMode()) MODE_NIGHT_NO else MODE_NIGHT_YES)
-    }
+  protected fun toggleNightMode() {
+    AppCompatDelegate.setDefaultNightMode(if (isNightMode()) MODE_NIGHT_NO else MODE_NIGHT_YES)
+  }
 }

@@ -9,23 +9,7 @@ import com.redcatgames.movies.data.source.local.entity.MovieGenreEntity
 
 data class MovieInfoEntity(
     @Embedded val movie: MovieEntity,
-
-    @Relation(
-        parentColumn = "id",
-        entityColumn = "movieId"
-    )
-    val genres: List<MovieGenreEntity>,
-
-    @Relation(
-        parentColumn = "id",
-        entityColumn = "movieId"
-    )
-    val casts: List<MovieCastEntity>,
-
-    @Relation(
-        parentColumn = "id",
-        entityColumn = "movieId"
-    )
-    val crews: List<MovieCrewEntity>
+    @Relation(parentColumn = "id", entityColumn = "movieId") val genres: List<MovieGenreEntity>,
+    @Relation(parentColumn = "id", entityColumn = "movieId") val casts: List<MovieCastEntity>,
+    @Relation(parentColumn = "id", entityColumn = "movieId") val crews: List<MovieCrewEntity>
 )
-

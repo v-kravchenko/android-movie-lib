@@ -6,9 +6,8 @@ import java.util.*
 
 @Entity(tableName = "languages")
 data class LanguageEntity(
-    @PrimaryKey
-    val iso : String,
-    val englishName : String,
-    val name : String,
+    @PrimaryKey val iso: String,
+    val englishName: String,
+    val name: String,
     val created: Date
 )

@@ -6,8 +6,7 @@ import java.util.*
 
 @Entity(tableName = "movie_crews")
 data class MovieCrewEntity(
-    @PrimaryKey
-    val id: Long,
+    @PrimaryKey val id: Long,
     val movieId: Long,
     val adult: Boolean,
     val gender: Int,

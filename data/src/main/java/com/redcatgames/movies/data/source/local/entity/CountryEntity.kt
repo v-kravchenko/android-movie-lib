@@ -6,9 +6,8 @@ import java.util.*
 
 @Entity(tableName = "countries")
 data class CountryEntity(
-    @PrimaryKey
-    val iso : String,
-    val englishName : String,
-    val nativeName : String,
+    @PrimaryKey val iso: String,
+    val englishName: String,
+    val nativeName: String,
     val created: Date
 )

@@ -2,6 +2,7 @@ plugins {
     id("com.android.library")
     kotlin("android")
     id("kotlin-parcelize")
+    id("com.ncorti.ktfmt.gradle")
 }
 
 android {
@@ -36,4 +37,8 @@ dependencies {
     // Coroutines
     implementation(Dependencies.Coroutines.core)
     implementation(Dependencies.Coroutines.android)
+}
+
+ktfmt {
+    kotlinLangStyle()
 }

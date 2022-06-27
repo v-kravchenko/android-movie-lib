@@ -5,8 +5,4 @@ import androidx.room.PrimaryKey
 import java.util.*
 
 @Entity(tableName = "primary_translations")
-data class PrimaryTranslationEntity(
-    @PrimaryKey
-    val name : String,
-    val created: Date
-)
+data class PrimaryTranslationEntity(@PrimaryKey val name: String, val created: Date)

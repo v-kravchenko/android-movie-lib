@@ -21,17 +21,19 @@ constructor(
     private val loadPopularMoviesUseCase: LoadPopularMoviesUseCase
 ) : BaseViewModel(appContext) {
 
-  private var page = 0
-  val popularMovies = getPopularMoviesUseCase()
-  val loadPopularMoviesEvent = SingleLiveEvent<Result<List<Movie>>>()
+    private var page = 0
+    val popularMovies = getPopularMoviesUseCase()
+    val loadPopularMoviesEvent = SingleLiveEvent<Result<List<Movie>>>()
 
-  init {
-    loadNextPage()
-  }
-
-  fun loadNextPage() {
-    viewModelScope.launch {
-      loadPopularMoviesUseCase((0..10).random()).run { loadPopularMoviesEvent.postValue(this) }
+    init {
+        loadNextPage()
     }
-  }
+
+    fun loadNextPage() {
+        viewModelScope.launch {
+            loadPopularMoviesUseCase((0..10).random()).run {
+                loadPopularMoviesEvent.postValue(this)
+            }
+        }
+    }
 }

@@ -8,5 +8,5 @@ import kotlinx.coroutines.withContext
 class DeleteDictionaryUseCase
 @Inject
 constructor(private val dictionaryRepository: DictionaryRepository) : BaseUseCase() {
-  suspend operator fun invoke() = withContext(io) { dictionaryRepository.deleteAll() }
+    suspend operator fun invoke() = withContext(io) { dictionaryRepository.deleteAll() }
 }

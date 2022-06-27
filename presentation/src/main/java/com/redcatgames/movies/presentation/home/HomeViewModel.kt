@@ -28,21 +28,24 @@ constructor(
     private val loadDictionaryUseCase: LoadDictionaryUseCase,
 ) : BaseViewModel(appContext) {
 
-  val languages = languagesUseCase()
-  val loadDictionaryEvent = SingleLiveEvent<Result<Unit>>()
+    val languages = languagesUseCase()
+    val loadDictionaryEvent = SingleLiveEvent<Result<Unit>>()
 
-  val language = Transformations.switchMap(userConfigUseCase()) { languageUseCase(it.apiLanguage) }
+    val language =
+        Transformations.switchMap(userConfigUseCase()) { languageUseCase(it.apiLanguage) }
 
-  init {
-    loadDictionary()
-  }
-
-  private fun loadDictionary() =
-      viewModelScope.launch { loadDictionaryUseCase().run { loadDictionaryEvent.postValue(this) } }
-
-  fun setApiLanguage(language: Language) =
-      viewModelScope.launch {
-        setUserConfigApiLanguageUseCase(language)
+    init {
         loadDictionary()
-      }
+    }
+
+    private fun loadDictionary() =
+        viewModelScope.launch {
+            loadDictionaryUseCase().run { loadDictionaryEvent.postValue(this) }
+        }
+
+    fun setApiLanguage(language: Language) =
+        viewModelScope.launch {
+            setUserConfigApiLanguageUseCase(language)
+            loadDictionary()
+        }
 }

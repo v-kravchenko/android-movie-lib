@@ -8,7 +8,7 @@ import javax.inject.Inject
 class SetUserConfigApiLanguageUseCase
 @Inject
 constructor(private val dictionaryRepository: DictionaryRepository) : BaseUseCase() {
-  suspend operator fun invoke(language: Language) {
-    dictionaryRepository.putUserApiLanguage(language)
-  }
+    suspend operator fun invoke(language: Language) {
+        dictionaryRepository.putUserApiLanguage(language)
+    }
 }

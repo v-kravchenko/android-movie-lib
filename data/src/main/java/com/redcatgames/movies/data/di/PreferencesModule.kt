@@ -15,21 +15,21 @@ import javax.inject.Singleton
 @Module
 class PreferencesModule {
 
-  @Singleton
-  @Provides
-  fun providePreferences(@ApplicationContext appContext: Context): Preferences {
-    return Preferences(context = appContext)
-  }
+    @Singleton
+    @Provides
+    fun providePreferences(@ApplicationContext appContext: Context): Preferences {
+        return Preferences(context = appContext)
+    }
 
-  @Singleton
-  @Provides
-  fun provideImageConfigPreferences(preferences: Preferences): ImageConfigPreferences {
-    return ImageConfigPreferences(preferences)
-  }
+    @Singleton
+    @Provides
+    fun provideImageConfigPreferences(preferences: Preferences): ImageConfigPreferences {
+        return ImageConfigPreferences(preferences)
+    }
 
-  @Singleton
-  @Provides
-  fun provideUserConfigPreferences(preferences: Preferences): UserConfigPreferences {
-    return UserConfigPreferences(preferences)
-  }
+    @Singleton
+    @Provides
+    fun provideUserConfigPreferences(preferences: Preferences): UserConfigPreferences {
+        return UserConfigPreferences(preferences)
+    }
 }

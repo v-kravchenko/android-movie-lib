@@ -12,9 +12,9 @@ class NetworkResponseAdapter<S : Any, E : Any>(
     private val errorBodyConverter: Converter<ResponseBody, E>
 ) : CallAdapter<S, Call<NetworkResponse<S, E>>> {
 
-  override fun adapt(call: Call<S>): Call<NetworkResponse<S, E>> {
-    return NetworkResponseCall(call, errorBodyConverter)
-  }
+    override fun adapt(call: Call<S>): Call<NetworkResponse<S, E>> {
+        return NetworkResponseCall(call, errorBodyConverter)
+    }
 
-  override fun responseType(): Type = successType
+    override fun responseType(): Type = successType
 }

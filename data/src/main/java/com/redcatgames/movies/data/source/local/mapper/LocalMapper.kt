@@ -42,7 +42,8 @@ fun Movie.toEntity() =
         video,
         voteAverage,
         voteCount,
-        now())
+        now()
+    )
 
 fun MovieEntity.toMovie() =
     Movie(
@@ -59,7 +60,8 @@ fun MovieEntity.toMovie() =
         title,
         video,
         voteAverage,
-        voteCount)
+        voteCount
+    )
 
 fun MovieGenre.toEntity() = MovieGenreEntity(movieId, genreId, genreName, now())
 
@@ -80,7 +82,8 @@ fun MovieCast.toEntity() =
         character,
         creditId,
         order,
-        now())
+        now()
+    )
 
 fun MovieCastEntity.toMovieCast() =
     MovieCast(
@@ -96,7 +99,8 @@ fun MovieCastEntity.toMovieCast() =
         castId,
         character,
         creditId,
-        order)
+        order
+    )
 
 fun MovieCrew.toEntity() =
     MovieCrewEntity(
@@ -112,7 +116,8 @@ fun MovieCrew.toEntity() =
         creditId,
         department,
         job,
-        now())
+        now()
+    )
 
 fun MovieCrewEntity.toMovieCrew() =
     MovieCrew(
@@ -127,11 +132,13 @@ fun MovieCrewEntity.toMovieCrew() =
         profilePath,
         creditId,
         department,
-        job)
+        job
+    )
 
 fun MovieInfoEntity.fromEntity() =
     MovieInfo(
         movie.toMovie(),
         genres.map { it.toMovieGenre() },
         casts.map { it.toMovieCast() },
-        crews.map { it.toMovieCrew() })
+        crews.map { it.toMovieCrew() }
+    )

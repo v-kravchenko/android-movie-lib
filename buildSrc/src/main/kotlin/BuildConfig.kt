@@ -6,6 +6,7 @@ object Versions {
   const val kspVersion = "1.7.0-1.0.6"
   const val coroutines = "1.6.3"
   const val gradleVersions = "0.41.0"
+  const val ktFmt = "0.8.0"
 
   const val coreKtx = "1.8.0"
   const val appCompat = "1.4.2"
@@ -36,6 +37,7 @@ object BuildPlugins {
   val gradleVersion by lazy {
     "com.github.ben-manes:gradle-versions-plugin:${Versions.gradleVersions}"
   }
+  val ktFmt by lazy { "com.ncorti.ktfmt.gradle:plugin:${Versions.ktFmt}" }
 }
 
 object AppConfig {

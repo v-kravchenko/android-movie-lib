@@ -7,5 +7,5 @@ import kotlinx.coroutines.withContext
 
 class DeleteAllMoviesUseCase @Inject constructor(private val movieRepository: MovieRepository) :
     BaseUseCase() {
-  suspend operator fun invoke() = withContext(io) { movieRepository.deleteAllMovies() }
+    suspend operator fun invoke() = withContext(io) { movieRepository.deleteAllMovies() }
 }

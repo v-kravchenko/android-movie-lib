@@ -7,5 +7,5 @@ import javax.inject.Inject
 class GetUserConfigUseCase
 @Inject
 constructor(private val dictionaryRepository: DictionaryRepository) : BaseUseCase() {
-  operator fun invoke() = dictionaryRepository.userConfig()
+    operator fun invoke() = dictionaryRepository.userConfig()
 }

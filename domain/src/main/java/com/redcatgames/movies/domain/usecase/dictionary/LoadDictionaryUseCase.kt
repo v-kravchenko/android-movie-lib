@@ -8,5 +8,5 @@ import kotlinx.coroutines.withContext
 class LoadDictionaryUseCase
 @Inject
 constructor(private val dictionaryRepository: DictionaryRepository) : BaseUseCase() {
-  suspend operator fun invoke() = withContext(io) { dictionaryRepository.loadDictionary() }
+    suspend operator fun invoke() = withContext(io) { dictionaryRepository.loadDictionary() }
 }

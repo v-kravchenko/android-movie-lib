@@ -7,5 +7,5 @@ import javax.inject.Inject
 class GetImageConfigUseCase
 @Inject
 constructor(private val dictionaryRepository: DictionaryRepository) : BaseUseCase() {
-  operator fun invoke() = dictionaryRepository.imageConfig()
+    operator fun invoke() = dictionaryRepository.imageConfig()
 }

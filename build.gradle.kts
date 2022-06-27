@@ -13,7 +13,7 @@ buildscript {
         classpath(BuildPlugins.ksp)
         classpath(BuildPlugins.safeArgs)
         classpath(BuildPlugins.gradleVersion)
-        classpath("com.ncorti.ktfmt.gradle:plugin:0.8.0")
+        classpath(BuildPlugins.ktFmt)
     }
 }
 

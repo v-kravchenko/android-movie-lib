@@ -7,5 +7,5 @@ import javax.inject.Inject
 class GetLanguageUseCase
 @Inject
 constructor(private val dictionaryRepository: DictionaryRepository) : BaseUseCase() {
-  operator fun invoke(iso: String) = dictionaryRepository.getLanguage(iso)
+    operator fun invoke(iso: String) = dictionaryRepository.getLanguage(iso)
 }

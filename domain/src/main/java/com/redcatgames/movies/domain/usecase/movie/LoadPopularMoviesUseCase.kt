@@ -7,6 +7,6 @@ import kotlinx.coroutines.withContext
 
 class LoadPopularMoviesUseCase @Inject constructor(private val movieRepository: MovieRepository) :
     BaseUseCase() {
-  suspend operator fun invoke(page: Int) =
-      withContext(io) { movieRepository.loadPopularMovies(page) }
+    suspend operator fun invoke(page: Int) =
+        withContext(io) { movieRepository.loadPopularMovies(page) }
 }

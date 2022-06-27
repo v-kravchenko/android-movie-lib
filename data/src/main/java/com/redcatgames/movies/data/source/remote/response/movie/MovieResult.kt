@@ -18,5 +18,5 @@ data class MovieResult(
     @SerializedName("vote_average") val voteAverage: Double,
     @SerializedName("vote_count") val voteCount: Int
 ) {
-  data class Genre(@SerializedName("id") val id: Long, @SerializedName("name") val name: String?)
+    data class Genre(@SerializedName("id") val id: Long, @SerializedName("name") val name: String?)
 }

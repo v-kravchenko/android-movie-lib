@@ -6,5 +6,5 @@ import javax.inject.Inject
 
 class GetMovieInfoUseCase @Inject constructor(private val movieRepository: MovieRepository) :
     BaseUseCase() {
-  operator fun invoke(movieId: Long) = movieRepository.movieInfo(movieId)
+    operator fun invoke(movieId: Long) = movieRepository.movieInfo(movieId)
 }

@@ -7,6 +7,6 @@ import kotlinx.coroutines.withContext
 
 class LoadMovieInfoUseCase @Inject constructor(private val movieRepository: MovieRepository) :
     BaseUseCase() {
-  suspend operator fun invoke(movieId: Long) =
-      withContext(io) { movieRepository.loadMovieInfo(movieId) }
+    suspend operator fun invoke(movieId: Long) =
+        withContext(io) { movieRepository.loadMovieInfo(movieId) }
 }

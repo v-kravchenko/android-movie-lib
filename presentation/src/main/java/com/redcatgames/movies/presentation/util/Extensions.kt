@@ -5,5 +5,5 @@ import coil.load
 import coil.request.Disposable
 
 fun ImageView.loadByUrl(url: String): Disposable {
-  return this.load("https://localhost/$url")
+    return this.load("https://localhost/$url")
 }

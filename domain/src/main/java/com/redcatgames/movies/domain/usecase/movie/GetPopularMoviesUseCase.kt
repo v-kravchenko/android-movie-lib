@@ -6,5 +6,5 @@ import javax.inject.Inject
 
 class GetPopularMoviesUseCase @Inject constructor(private val movieRepository: MovieRepository) :
     BaseUseCase() {
-  operator fun invoke() = movieRepository.popularMovies()
+    operator fun invoke() = movieRepository.popularMovies()
 }

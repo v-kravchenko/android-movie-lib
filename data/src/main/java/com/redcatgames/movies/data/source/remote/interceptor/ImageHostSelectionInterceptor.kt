@@ -11,17 +11,17 @@ class ImageHostSelectionInterceptor
 @Inject
 constructor(private val imageConfigPreferences: ImageConfigPreferences) : Interceptor {
 
-  override fun intercept(chain: Interceptor.Chain): Response {
-    var request: Request = chain.request()
+    override fun intercept(chain: Interceptor.Chain): Response {
+        var request: Request = chain.request()
 
-    val host = runBlocking { imageConfigPreferences.readConfig() }
+        val host = runBlocking { imageConfigPreferences.readConfig() }
 
-    request =
-        request
-            .newBuilder()
-            .url(request.url().toString().replace("https://localhost", host.secureBaseUrl))
-            .build()
+        request =
+            request
+                .newBuilder()
+                .url(request.url().toString().replace("https://localhost", host.secureBaseUrl))
+                .build()
 
-    return chain.proceed(request)
-  }
+        return chain.proceed(request)
+    }
 }

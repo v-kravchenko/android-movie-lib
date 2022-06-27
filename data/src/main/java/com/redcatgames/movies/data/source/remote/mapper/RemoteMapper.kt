@@ -18,9 +18,9 @@ fun ConfigurationLanguagesResult.toLanguage() =
     Language(iso ?: String.empty, englishName ?: String.empty, name ?: String.empty)
 
 fun ConfigurationTimezonesResult.toTimezoneList(): List<Timezone> {
-  return mutableListOf<Timezone>()
-      .apply { addAll(zones.map { Timezone(iso ?: String.empty, it) }) }
-      .toList()
+    return mutableListOf<Timezone>()
+        .apply { addAll(zones.map { Timezone(iso ?: String.empty, it) }) }
+        .toList()
 }
 
 fun GenreResult.Genre.toGenre() = Genre(id, name ?: String.empty)
@@ -33,7 +33,8 @@ fun ConfigurationResult.Images.toImageConfig() =
         logoSizes = logoSizes,
         posterSizes = posterSizes,
         profileSizes = profileSizes,
-        stillSizes = stillSizes)
+        stillSizes = stillSizes
+    )
 
 fun DiscoverMovieResult.Movie.toMovie() =
     Movie(
@@ -50,7 +51,8 @@ fun DiscoverMovieResult.Movie.toMovie() =
         title = title ?: String.empty,
         video = video,
         voteAverage = voteAverage,
-        voteCount = voteCount)
+        voteCount = voteCount
+    )
 
 fun MovieResult.toMovie() =
     Movie(
@@ -67,54 +69,59 @@ fun MovieResult.toMovie() =
         title = title ?: String.empty,
         video = video,
         voteAverage = voteAverage,
-        voteCount = voteCount)
+        voteCount = voteCount
+    )
 
 fun MovieResult.Genre.toMovieGenre(movie: Movie) =
     MovieGenre(movieId = movie.id, genreId = id, genreName = name ?: String.empty)
 
 fun MovieCreditsResult.toMovieCastList(): List<MovieCast> {
-  return mutableListOf<MovieCast>()
-      .apply {
-        addAll(
-            castList.map {
-              MovieCast(
-                  id = it.id,
-                  movieId = this@toMovieCastList.movieId,
-                  adult = it.adult,
-                  gender = it.gender,
-                  knownForDepartment = it.knownForDepartment,
-                  name = it.name ?: String.empty,
-                  originalName = it.originalName ?: String.empty,
-                  popularity = it.popularity,
-                  profilePath = it.profilePath,
-                  castId = it.castId,
-                  character = it.character ?: String.empty,
-                  creditId = it.creditId ?: String.empty,
-                  order = it.order)
-            })
-      }
-      .toList()
+    return mutableListOf<MovieCast>()
+        .apply {
+            addAll(
+                castList.map {
+                    MovieCast(
+                        id = it.id,
+                        movieId = this@toMovieCastList.movieId,
+                        adult = it.adult,
+                        gender = it.gender,
+                        knownForDepartment = it.knownForDepartment,
+                        name = it.name ?: String.empty,
+                        originalName = it.originalName ?: String.empty,
+                        popularity = it.popularity,
+                        profilePath = it.profilePath,
+                        castId = it.castId,
+                        character = it.character ?: String.empty,
+                        creditId = it.creditId ?: String.empty,
+                        order = it.order
+                    )
+                }
+            )
+        }
+        .toList()
 }
 
 fun MovieCreditsResult.toMovieCrewList(): List<MovieCrew> {
-  return mutableListOf<MovieCrew>()
-      .apply {
-        addAll(
-            crewList.map {
-              MovieCrew(
-                  id = it.id,
-                  movieId = this@toMovieCrewList.movieId,
-                  adult = it.adult,
-                  gender = it.gender,
-                  knownForDepartment = it.knownForDepartment,
-                  name = it.name ?: String.empty,
-                  originalName = it.originalName ?: String.empty,
-                  popularity = it.popularity,
-                  profilePath = it.profilePath,
-                  creditId = it.creditId ?: String.empty,
-                  department = it.department ?: String.empty,
-                  job = it.job ?: String.empty)
-            })
-      }
-      .toList()
+    return mutableListOf<MovieCrew>()
+        .apply {
+            addAll(
+                crewList.map {
+                    MovieCrew(
+                        id = it.id,
+                        movieId = this@toMovieCrewList.movieId,
+                        adult = it.adult,
+                        gender = it.gender,
+                        knownForDepartment = it.knownForDepartment,
+                        name = it.name ?: String.empty,
+                        originalName = it.originalName ?: String.empty,
+                        popularity = it.popularity,
+                        profilePath = it.profilePath,
+                        creditId = it.creditId ?: String.empty,
+                        department = it.department ?: String.empty,
+                        job = it.job ?: String.empty
+                    )
+                }
+            )
+        }
+        .toList()
 }

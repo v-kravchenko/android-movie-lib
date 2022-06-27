@@ -17,21 +17,21 @@ import okhttp3.OkHttpClient
 @Module
 class ImageLoaderModule {
 
-  @Singleton
-  @Provides
-  @Named("CoilHttp")
-  fun provideHttpClient(imageConfigPreferences: ImageConfigPreferences): OkHttpClient {
-    return OkHttpClient.Builder()
-        .addInterceptor(ImageHostSelectionInterceptor(imageConfigPreferences))
-        .build()
-  }
+    @Singleton
+    @Provides
+    @Named("CoilHttp")
+    fun provideHttpClient(imageConfigPreferences: ImageConfigPreferences): OkHttpClient {
+        return OkHttpClient.Builder()
+            .addInterceptor(ImageHostSelectionInterceptor(imageConfigPreferences))
+            .build()
+    }
 
-  @Provides
-  @Singleton
-  fun provideImageLoader(
-      @ApplicationContext context: Context,
-      @Named("CoilHttp") httpClient: OkHttpClient
-  ): ImageLoader {
-    return ImageLoader.Builder(context).okHttpClient(httpClient).build()
-  }
+    @Provides
+    @Singleton
+    fun provideImageLoader(
+        @ApplicationContext context: Context,
+        @Named("CoilHttp") httpClient: OkHttpClient
+    ): ImageLoader {
+        return ImageLoader.Builder(context).okHttpClient(httpClient).build()
+    }
 }

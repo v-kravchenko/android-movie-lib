@@ -22,16 +22,16 @@ constructor(
     private val loadMovieInfoUseCase: LoadMovieInfoUseCase
 ) : BaseViewModel(appContext) {
 
-  private val args = MovieFragmentArgs.fromSavedStateHandle(savedStateHandle)
-  val movieInfo = getMovieInfoUseCase(args.movieId)
-  val loadMovieEvent = SingleLiveEvent<Result<Unit>>()
+    private val args = MovieFragmentArgs.fromSavedStateHandle(savedStateHandle)
+    val movieInfo = getMovieInfoUseCase(args.movieId)
+    val loadMovieEvent = SingleLiveEvent<Result<Unit>>()
 
-  init {
-    loadMovieInfo()
-  }
+    init {
+        loadMovieInfo()
+    }
 
-  private fun loadMovieInfo() =
-      viewModelScope.launch {
-        loadMovieInfoUseCase(args.movieId).run { loadMovieEvent.postValue(this) }
-      }
+    private fun loadMovieInfo() =
+        viewModelScope.launch {
+            loadMovieInfoUseCase(args.movieId).run { loadMovieEvent.postValue(this) }
+        }
 }

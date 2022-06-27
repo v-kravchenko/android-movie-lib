@@ -10,13 +10,13 @@ class LanguageInterceptor
 @Inject
 constructor(private val userConfigPreferences: UserConfigPreferences) : Interceptor {
 
-  override fun intercept(chain: Interceptor.Chain): Response {
+    override fun intercept(chain: Interceptor.Chain): Response {
 
-    val userApiLanguage = runBlocking { userConfigPreferences.readConfig().apiLanguage }
+        val userApiLanguage = runBlocking { userConfigPreferences.readConfig().apiLanguage }
 
-    var request = chain.request()
-    val url = request.url().newBuilder().addQueryParameter("language", userApiLanguage).build()
-    request = request.newBuilder().url(url).build()
-    return chain.proceed(request)
-  }
+        var request = chain.request()
+        val url = request.url().newBuilder().addQueryParameter("language", userApiLanguage).build()
+        request = request.newBuilder().url(url).build()
+        return chain.proceed(request)
+    }
 }

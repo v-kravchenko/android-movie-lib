@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Movies</string>
+    <string name="home_subtitle">Home screen</string>
+    <string name="home_title">Movie library</string>
+    <string name="home_button_popular">Popular movies</string>
+    <string name="popular_title">Popular movies</string>
+    <string name="movie_title">Movie details</string>
+</resources>

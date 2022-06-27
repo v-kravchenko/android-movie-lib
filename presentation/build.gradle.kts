@@ -33,31 +33,16 @@ dependencies {
     implementation(project(":util"))
     implementation(project(":domain"))
 
-    // Hilt
-    implementation(Dependencies.Hilt.runtime)
-    kapt(Dependencies.Hilt.compiler)
+    appCompat()
+    hilt()
+    coroutines()
+    lifecycle()
+    navigation()
 
-    // Coroutines
-    implementation(Dependencies.Coroutines.core)
-    implementation(Dependencies.Coroutines.android)
-
-    // Lifecycle
-    implementation(Dependencies.Lifecycle.viewModel)
-    implementation(Dependencies.Lifecycle.liveData)
-    implementation(Dependencies.Lifecycle.saveState)
-
-    // Navigation
-    implementation(Dependencies.Navigation.fragment)
-    implementation(Dependencies.Navigation.ui)
-
-    // Coil
-    implementation(Dependencies.coil)
-
-    // Other
-    implementation(Dependencies.appCompat)
-    implementation(Dependencies.material)
-    implementation(Dependencies.constraint)
-    implementation(Dependencies.timber)
+    implementation(Dependencies.COIL)
+    implementation(Dependencies.ANDROID_MATERIAL)
+    implementation(Dependencies.CONSTRAINT_LAYOUT)
+    implementation(Dependencies.TIMBER)
 }
 
 ktfmt {

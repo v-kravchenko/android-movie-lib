@@ -69,25 +69,23 @@ android {
 }
 
 dependencies {
-    implementation(Dependencies.coreKtx)
+    implementation(Dependencies.ANDROID_CORE_KTX)
 
     implementation(project(":util"))
     implementation(project(":data"))
     implementation(project(":domain"))
     implementation(project(":presentation"))
 
-    // Hilt
-    implementation(Dependencies.Hilt.runtime)
-    kapt(Dependencies.Hilt.compiler)
+    hilt()
 
     // LeakCanary
-    debugImplementation(Dependencies.leakCanary)
+    debugImplementation(Dependencies.LEAKCANARY)
 
     // Coil
-    implementation(Dependencies.coil)
+    implementation(Dependencies.COIL)
 
     // Other
-    implementation(Dependencies.timber)
+    implementation(Dependencies.TIMBER)
 }
 
 fun isNonStable(version: String): Boolean {

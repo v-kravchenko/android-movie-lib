@@ -29,26 +29,12 @@ dependencies {
     implementation(project(":util"))
     implementation(project(":domain"))
 
-    implementation(Dependencies.coreKtx)
+    hilt()
+    room()
+    retrofit()
 
-    // Lifecycle
-    implementation(Dependencies.Lifecycle.liveData)
-
-    // Hilt
-    implementation(Dependencies.Hilt.runtime)
-    kapt(Dependencies.Hilt.compiler)
-
-    // Datastore
-    implementation(Dependencies.dataStore)
-
-    // Room
-    implementation(Dependencies.Room.runtime)
-    implementation(Dependencies.Room.coroutines)
-    ksp(Dependencies.Room.compiler)
-
-    // Retrofit2
-    implementation(Dependencies.Retrofit2.retrofit)
-    implementation(Dependencies.Retrofit2.gson)
+    implementation(Dependencies.DATASTORE)
+    implementation(Dependencies.LIFECYCLE_LIVEDATA)
 }
 
 ktfmt {

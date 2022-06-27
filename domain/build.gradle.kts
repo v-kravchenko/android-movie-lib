@@ -26,14 +26,11 @@ android {
 
 dependencies {
     implementation(project(":util"))
-    implementation(Dependencies.javaxInject)
 
-    // Lifecycle
-    implementation(Dependencies.Lifecycle.liveData)
+    coroutines()
 
-    // Coroutines
-    implementation(Dependencies.Coroutines.core)
-    implementation(Dependencies.Coroutines.android)
+    implementation(Dependencies.JAVAX_INJECT)
+    implementation(Dependencies.LIFECYCLE_LIVEDATA)
 }
 
 ktfmt {

@@ -33,7 +33,6 @@ dependencies {
     implementation(project(":domain"))
 
     implementation(Dependencies.coreKtx)
-    implementation(Dependencies.javaxInject)
 
     // Lifecycle
     implementation(Dependencies.Lifecycle.liveData)

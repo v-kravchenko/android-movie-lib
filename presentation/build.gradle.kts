@@ -27,7 +27,6 @@ android {
 dependencies {
     implementation(project(":util"))
     implementation(project(":domain"))
-    implementation(Dependencies.javaxInject)
 
     // Hilt
     implementation(Dependencies.Hilt.runtime)

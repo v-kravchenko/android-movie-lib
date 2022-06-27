@@ -1,4 +1,4 @@
-package com.redcatgames.movies.di
+package com.redcatgames.movies.data.di
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder

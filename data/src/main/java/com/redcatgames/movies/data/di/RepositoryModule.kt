@@ -1,4 +1,4 @@
-package com.redcatgames.movies.di
+package com.redcatgames.movies.data.di
 
 import com.redcatgames.movies.data.preferences.image.ImageConfigPreferences
 import com.redcatgames.movies.data.preferences.image.UserConfigPreferences

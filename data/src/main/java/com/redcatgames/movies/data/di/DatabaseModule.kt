@@ -1,4 +1,4 @@
-package com.redcatgames.movies.di
+package com.redcatgames.movies.data.di
 
 import android.app.Application
 import androidx.room.Room

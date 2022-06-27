@@ -34,7 +34,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-    kotlinOptions { jvmTarget = "1.8" }
+    kotlinOptions { jvmTarget = JavaVersion.VERSION_1_8.toString() }
     buildFeatures { viewBinding = true }
 }
 
@@ -50,44 +50,14 @@ dependencies {
     implementation(Dependencies.Hilt.runtime)
     kapt(Dependencies.Hilt.compiler)
 
-    // Coroutines
-    implementation(Dependencies.Coroutines.core)
-    implementation(Dependencies.Coroutines.android)
-
-    // Room
-    implementation(Dependencies.Room.runtime)
-    implementation(Dependencies.Room.coroutines)
-    ksp(Dependencies.Room.compiler)
-
-    // Lifecycle
-    implementation(Dependencies.Lifecycle.viewModel)
-    implementation(Dependencies.Lifecycle.liveData)
-    implementation(Dependencies.Lifecycle.saveState)
-
-    // Navigation
-    implementation(Dependencies.Navigation.fragment)
-    implementation(Dependencies.Navigation.ui)
-
     // LeakCanary
     debugImplementation(Dependencies.leakCanary)
-
-    // Retrofit2
-    implementation(Dependencies.Retrofit2.retrofit)
-    implementation(Dependencies.Retrofit2.gson)
-
-    // Jetpack paging 3
-    implementation(Dependencies.paging)
-
-    // Datastore
-    implementation(Dependencies.dataStore)
 
     // Coil
     implementation(Dependencies.coil)
 
     // Other
     implementation(Dependencies.appCompat)
-    implementation(Dependencies.material)
-    implementation(Dependencies.constraint)
     implementation(Dependencies.timber)
 }
 

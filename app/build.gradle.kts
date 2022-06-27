@@ -6,9 +6,6 @@ plugins {
     kotlin("android")
     kotlin("kapt")
     id("dagger.hilt.android.plugin")
-    id("com.google.devtools.ksp")
-    id("kotlin-parcelize")
-    id("androidx.navigation.safeargs.kotlin")
     id("com.github.ben-manes.versions")
 }
 

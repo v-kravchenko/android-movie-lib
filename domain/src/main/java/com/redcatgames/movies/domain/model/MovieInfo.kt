@@ -5,8 +5,8 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class MovieInfo(
-    val movie: com.redcatgames.movies.domain.model.Movie,
-    val genres: List<com.redcatgames.movies.domain.model.MovieGenre>,
-    val casts: List<com.redcatgames.movies.domain.model.MovieCast>,
-    val crews: List<com.redcatgames.movies.domain.model.MovieCrew>
+    val movie: Movie,
+    val genres: List<MovieGenre>,
+    val casts: List<MovieCast>,
+    val crews: List<MovieCrew>
 ) : Parcelable

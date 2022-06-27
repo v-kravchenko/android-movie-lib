@@ -16,7 +16,7 @@ object Versions {
     const val timber = "5.0.1"
     const val leakCanary = "2.9.1"
     const val retrofit2 = "2.9.0"
-    const val paging = "3.1.1"
+//    const val paging = "3.1.1"
     const val dataStore = "1.0.0"
     const val coil = "2.1.0"
 }
@@ -94,7 +94,7 @@ object Dependencies {
     val material by lazy { "com.google.android.material:material:${Versions.material}" }
     val constraint by lazy { "androidx.constraintlayout:constraintlayout:${Versions.constraint}" }
     val timber by lazy { "com.jakewharton.timber:timber:${Versions.timber}" }
-    val paging by lazy { "androidx.paging:paging-runtime:${Versions.paging}" }
+//    val paging by lazy { "androidx.paging:paging-runtime:${Versions.paging}" }
     val dataStore by lazy { "androidx.datastore:datastore-preferences:${Versions.dataStore}" }
     val coil by lazy { "io.coil-kt:coil:${Versions.coil}" }
     val javaxInject by lazy { "javax.inject:javax.inject:1" }

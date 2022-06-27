@@ -1,2 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.redcatgames.movies.presentation" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.redcatgames.movies.presentation">
+
+    <application>
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:screenOrientation="fullSensor">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+
+</manifest>

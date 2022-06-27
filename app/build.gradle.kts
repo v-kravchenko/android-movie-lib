@@ -57,7 +57,6 @@ dependencies {
     implementation(Dependencies.coil)
 
     // Other
-    implementation(Dependencies.appCompat)
     implementation(Dependencies.timber)
 }
 

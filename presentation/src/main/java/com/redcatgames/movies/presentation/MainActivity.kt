@@ -15,8 +15,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val view = binding.root
         setContentView(view)
-
-        // binding.text1.text = BuildConfig.APPLICATION_ID
     }
 
     override fun onBackPressed() {

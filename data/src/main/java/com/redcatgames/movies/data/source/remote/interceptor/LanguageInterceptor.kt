@@ -1,10 +1,8 @@
 package com.redcatgames.movies.data.source.remote.interceptor
 
-import androidx.lifecycle.asFlow
 import com.redcatgames.movies.data.preferences.image.UserConfigPreferences
 import com.redcatgames.movies.data.source.local.dao.PrimaryTranslationDao
 import javax.inject.Inject
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -20,8 +18,7 @@ constructor(
 
         val language = runBlocking {
             val apiLanguage = userConfigPreferences.readConfig().apiLanguage
-            primaryTranslationDao.findByLanguage(apiLanguage).asFlow().firstOrNull()?.name
-                ?: apiLanguage
+            primaryTranslationDao.findByLanguage(apiLanguage)?.name ?: apiLanguage
         }
 
         var request = chain.request()

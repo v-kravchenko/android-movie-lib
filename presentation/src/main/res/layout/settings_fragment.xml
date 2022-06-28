@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".home.HomeFragment">
+    tools:context=".settings.SettingsFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -16,9 +16,9 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:layout_scrollFlags="scroll|snap"
-            app:menu="@menu/home_menu"
-            app:subtitle="@string/home_subtitle"
-            app:title="@string/home_title" />
+            app:menu="@menu/settings_menu"
+            app:navigationIcon="@drawable/ic_menu_back_32"
+            app:title="@string/settings_title" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -27,23 +27,6 @@
         android:layout_height="match_parent"
         android:padding="@dimen/dimen2"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_popular"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/home_button_popular"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_settings"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/home_button_settings"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/button_popular"
-            app:layout_constraintTop_toBottomOf="@id/button_popular" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

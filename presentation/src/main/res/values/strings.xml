@@ -10,4 +10,5 @@
     <string name="splash_status_failed">Something went wrong</string>
     <string name="image_warning_description">warning</string>
     <string name="splash_button_retry">Retry loading</string>
+    <string name="settings_title">Settings</string>
 </resources>

@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.AutoCompleteTextView
 import androidx.appcompat.app.AppCompatDelegate.*
 import androidx.fragment.app.viewModels
-import com.redcatgames.movies.domain.model.Language
 import com.redcatgames.movies.presentation.R
 import com.redcatgames.movies.presentation.databinding.SettingsFragmentBinding
 import com.redcatgmes.movies.baseui.BaseFragment
@@ -18,27 +17,9 @@ import timber.log.Timber
 @AndroidEntryPoint
 class SettingsFragment : BaseFragment() {
 
-    companion object {
-        private const val KEY_SAVE_LANGUAGE = "language"
-    }
-
     private val viewModel: SettingsViewModel by viewModels()
     private var binding: SettingsFragmentBinding by autoCleared()
-
     private val languageAdapter by lazy { LanguageAdapter(requireContext()) }
-
-    private var currentLanguage: Language? = null
-    private var currentDarkMode: Int = MODE_NIGHT_FOLLOW_SYSTEM
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        Timber.w("onSaveInstanceState()")
-        try {
-            outState.putString(KEY_SAVE_LANGUAGE, binding.textLanguage.text.toString())
-        } catch (ex: Exception) {
-            ex.printStackTrace()
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,19 +27,17 @@ class SettingsFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = SettingsFragmentBinding.inflate(inflater, container, false)
-        savedInstanceState?.getString(KEY_SAVE_LANGUAGE)?.let {
-            binding.textLanguage.setText(it, false)
-        }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         binding.topAppBar.setNavigationOnClickListener { navigateBack() }
         binding.topAppBar.setOnMenuItemClickListener { item ->
             when (item.itemId) {
                 R.id.action_save -> {
-                    viewModel.save(currentLanguage, currentDarkMode)
+                    viewModel.save()
                     true
                 }
                 else -> false
@@ -68,7 +47,9 @@ class SettingsFragment : BaseFragment() {
         (binding.spinnerLanguage.editText as? AutoCompleteTextView)?.let {
             it.setAdapter(languageAdapter)
             it.setOnItemClickListener { _, _, position, _ ->
-                languageAdapter.getItem(position)?.let { language -> setCurrentLanguage(language) }
+                languageAdapter.getItem(position)?.let { language ->
+                    viewModel.setApiLanguage(language.iso)
+                }
             }
         }
 
@@ -76,35 +57,35 @@ class SettingsFragment : BaseFragment() {
             val value =
                 if (binding.radioDarkYes.isChecked) MODE_NIGHT_YES
                 else if (binding.radioDarkNo.isChecked) MODE_NIGHT_NO else MODE_NIGHT_FOLLOW_SYSTEM
-            currentDarkMode = value
+            viewModel.setUiDarkMode(value)
         }
 
         setupObserver()
     }
 
-    private fun setCurrentLanguage(language: Language?) {
-        currentLanguage = language
-        binding.textLanguage.setText(language?.englishName, false)
-    }
-
     private fun setupObserver() {
+
+        Timber.d(System.currentTimeMillis().toString())
+
         observe(viewModel.languages) {
             languageAdapter.clear()
             languageAdapter.addAll(it)
         }
 
-        observe(viewModel.language) { setCurrentLanguage(it) }
-
-        observe(viewModel.darkMode) {
-            binding.radioDarkSystem.isChecked = it == MODE_NIGHT_FOLLOW_SYSTEM
-            binding.radioDarkYes.isChecked = it == MODE_NIGHT_YES
-            binding.radioDarkNo.isChecked = it == MODE_NIGHT_NO
-            currentDarkMode = it
-        }
-
-        observe(viewModel.eventSaved) {
-            setDefaultNightMode(currentDarkMode)
-            navigateTo(SettingsFragmentDirections.actionSettingsFragmentToSplashFragment())
+        observe(viewModel.state) {
+            when (it) {
+                SettingsViewModel.State.Empty -> {}
+                is SettingsViewModel.State.Saved -> {
+                    setDefaultNightMode(it.darkMode)
+                    navigateTo(SettingsFragmentDirections.actionSettingsFragmentToSplashFragment())
+                }
+                is SettingsViewModel.State.Data -> {
+                    binding.textLanguage.setText(it.language?.englishName, false)
+                    binding.radioDarkSystem.isChecked = it.darkMode == MODE_NIGHT_FOLLOW_SYSTEM
+                    binding.radioDarkYes.isChecked = it.darkMode == MODE_NIGHT_YES
+                    binding.radioDarkNo.isChecked = it.darkMode == MODE_NIGHT_NO
+                }
+            }
         }
     }
 }

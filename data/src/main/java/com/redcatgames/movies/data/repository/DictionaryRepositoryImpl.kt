@@ -191,6 +191,8 @@ class DictionaryRepositoryImpl(
 
     override fun userConfig(): LiveData<UserConfig> = userConfigPreferences.userConfig
 
+    override suspend fun getUserConfig(): UserConfig = userConfigPreferences.readConfig()
+
     override fun imageConfig(): LiveData<ImageConfig> = imageConfigPreferences.imageConfig
 
     override fun languages(): LiveData<List<Language>> =
@@ -198,8 +200,8 @@ class DictionaryRepositoryImpl(
             it.map { languageEntity -> languageEntity.toLanguage() }
         }
 
-    override fun getLanguage(iso: String): LiveData<Language?> =
-        Transformations.map(languageDao.getByIso(iso)) { it?.toLanguage() }
+    override suspend fun getLanguage(iso: String): Language? =
+        languageDao.getByIso(iso)?.toLanguage()
 
     override suspend fun putUserApiLanguage(language: Language) {
         val userConfig = userConfigPreferences.readConfig().copy(apiLanguage = language.iso)

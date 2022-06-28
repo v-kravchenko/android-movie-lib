@@ -30,7 +30,9 @@ interface DictionaryRepository {
     fun imageConfig(): LiveData<ImageConfig>
     fun languages(): LiveData<List<Language>>
 
-    fun getLanguage(iso: String): LiveData<Language?>
+    suspend fun getLanguage(iso: String): Language?
+
+    suspend fun getUserConfig(): UserConfig
 
     suspend fun putUserApiLanguage(language: Language)
     suspend fun putUserUiDarkMode(darkMode: Int)

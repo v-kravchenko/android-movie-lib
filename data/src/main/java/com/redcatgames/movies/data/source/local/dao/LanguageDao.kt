@@ -22,7 +22,7 @@ interface LanguageDao {
     fun getAll(): LiveData<List<LanguageEntity>>
 
     @Query("SELECT * FROM languages WHERE iso = :iso")
-    fun getByIso(iso: String): LiveData<LanguageEntity?>
+    suspend fun getByIso(iso: String): LanguageEntity?
 
     @Query("SELECT COUNT(1) FROM languages") suspend fun getCount(): Int
 }

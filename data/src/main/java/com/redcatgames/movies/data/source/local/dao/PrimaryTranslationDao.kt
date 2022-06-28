@@ -22,4 +22,7 @@ interface PrimaryTranslationDao {
     fun getAll(): LiveData<List<PrimaryTranslationEntity>>
 
     @Query("SELECT COUNT(1) FROM primary_translations") suspend fun getCount(): Int
+
+    @Query("SELECT * FROM primary_translations WHERE name LIKE :languageCode || '-%'")
+    fun findByLanguage(languageCode: String): LiveData<PrimaryTranslationEntity?>
 }

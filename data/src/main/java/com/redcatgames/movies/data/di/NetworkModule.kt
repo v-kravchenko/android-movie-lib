@@ -3,6 +3,7 @@ package com.redcatgames.movies.data.di
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.redcatgames.movies.data.preferences.image.UserConfigPreferences
+import com.redcatgames.movies.data.source.local.dao.PrimaryTranslationDao
 import com.redcatgames.movies.data.source.remote.NetworkService
 import com.redcatgames.movies.data.source.remote.adapter.NetworkResponseAdapterFactory
 import com.redcatgames.movies.data.source.remote.interceptor.BearerLoginInterceptor
@@ -26,10 +27,13 @@ class NetworkModule {
     @Singleton
     @Provides
     @Named("TMDBHttp")
-    fun provideHttpClient(userConfigPreferences: UserConfigPreferences): OkHttpClient {
+    fun provideHttpClient(
+        userConfigPreferences: UserConfigPreferences,
+        primaryTranslationDao: PrimaryTranslationDao
+    ): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(BearerLoginInterceptor(NetworkService.TOKEN))
-            .addInterceptor(LanguageInterceptor(userConfigPreferences))
+            .addInterceptor(LanguageInterceptor(userConfigPreferences, primaryTranslationDao))
             .build()
     }
 

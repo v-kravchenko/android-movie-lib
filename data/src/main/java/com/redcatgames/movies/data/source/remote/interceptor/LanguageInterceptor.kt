@@ -18,19 +18,14 @@ constructor(
 
     override fun intercept(chain: Interceptor.Chain): Response {
 
-        val userApiLanguage = runBlocking { userConfigPreferences.readConfig().apiLanguage }
-
-        val primaryTranslation = runBlocking {
-            primaryTranslationDao.findByLanguage(userApiLanguage).asFlow().firstOrNull()
+        val language = runBlocking {
+            val apiLanguage = userConfigPreferences.readConfig().apiLanguage
+            primaryTranslationDao.findByLanguage(apiLanguage).asFlow().firstOrNull()?.name
+                ?: apiLanguage
         }
 
         var request = chain.request()
-        val url =
-            request
-                .url()
-                .newBuilder()
-                .addQueryParameter("language", primaryTranslation?.name ?: userApiLanguage)
-                .build()
+        val url = request.url().newBuilder().addQueryParameter("language", language).build()
         request = request.newBuilder().url(url).build()
         return chain.proceed(request)
     }

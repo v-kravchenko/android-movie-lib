@@ -7,22 +7,70 @@
     android:orientation="vertical"
     tools:context=".splash.SplashFragment">
 
-    <ProgressBar
-        android:id="@+id/progress"
+    <LinearLayout
+        android:id="@+id/view_state_loading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="48dp"
+            android:layout_height="48dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/splash_status_loading"
+            android:textAppearance="?attr/textAppearanceSubtitle1" />
+
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/view_state_failed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Please wait..."
-        android:textAppearance="?attr/textAppearanceSubtitle1"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/progress" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/image_warning"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:contentDescription="@string/image_warning_description"
+            android:src="@drawable/ic_round_warning_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/text_failed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/splash_status_failed"
+            android:textAppearance="?attr/textAppearanceSubtitle1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/image_warning" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_retry"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/splash_button_retry"
+            android:layout_marginTop="@dimen/dimen6"
+            app:layout_constraintEnd_toEndOf="@id/text_failed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_failed" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

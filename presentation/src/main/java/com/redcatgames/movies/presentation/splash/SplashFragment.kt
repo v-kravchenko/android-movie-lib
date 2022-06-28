@@ -29,18 +29,27 @@ class SplashFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupObserver()
+
+        binding.buttonRetry.setOnClickListener { viewModel.loadDictionary() }
     }
 
     private fun setupObserver() {
+        observe(viewModel.state) {
+            Timber.d("ViewModelState is ${it.name()}")
 
-        observe(viewModel.loadDictionaryEvent) {
-            it
-                .onFailure { throwable ->
-                    Timber.d("Error loading config: ${throwable.localizedMessage}")
+            when (it) {
+                SplashViewModel.SplashState.Loading -> {
+                    binding.viewStateLoading.visibility = View.VISIBLE
+                    binding.viewStateFailed.visibility = View.GONE
                 }
-                .onSuccess {
+                SplashViewModel.SplashState.Failed -> {
+                    binding.viewStateFailed.visibility = View.VISIBLE
+                    binding.viewStateLoading.visibility = View.GONE
+                }
+                SplashViewModel.SplashState.Success -> {
                     navigateTo(SplashFragmentDirections.actionSplashFragmentToHomeFragment())
                 }
+            }
         }
     }
 }

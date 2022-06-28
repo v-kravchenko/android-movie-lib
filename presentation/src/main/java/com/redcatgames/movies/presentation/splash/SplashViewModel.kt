@@ -1,10 +1,11 @@
 package com.redcatgames.movies.presentation.splash
 
 import android.content.Context
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.redcatgames.movies.domain.usecase.dictionary.LoadDictionaryUseCase
 import com.redcatgames.movies.presentation.base.BaseViewModel
-import com.redcatgames.movies.presentation.util.SingleLiveEvent
+import com.redcatgames.movies.presentation.base.BaseViewModelState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
@@ -15,17 +16,27 @@ class SplashViewModel
 @Inject
 constructor(
     @ApplicationContext appContext: Context,
-    private val loadDictionaryUseCase: LoadDictionaryUseCase,
+    private val loadDictionaryUseCase: LoadDictionaryUseCase
 ) : BaseViewModel(appContext) {
 
-    val loadDictionaryEvent = SingleLiveEvent<Result<Unit>>()
+    sealed class SplashState : BaseViewModelState() {
+        object Loading : SplashState()
+        object Failed : SplashState()
+        object Success : SplashState()
+    }
+
+    val state: MutableLiveData<SplashState> = MutableLiveData(SplashState.Loading)
 
     init {
         loadDictionary()
     }
 
-    private fun loadDictionary() =
+    fun loadDictionary() =
         viewModelScope.launch {
-            loadDictionaryUseCase().run { loadDictionaryEvent.postValue(this) }
+            state.postValue(SplashState.Loading)
+
+            loadDictionaryUseCase().run {
+                state.postValue(if (isSuccess) SplashState.Success else SplashState.Failed)
+            }
         }
 }

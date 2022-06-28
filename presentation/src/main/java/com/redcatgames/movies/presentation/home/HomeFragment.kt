@@ -11,23 +11,12 @@ import com.redcatgames.movies.presentation.base.BaseFragment
 import com.redcatgames.movies.presentation.databinding.HomeFragmentBinding
 import com.redcatgames.movies.presentation.util.autoCleared
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment() {
 
     private val viewModel: HomeViewModel by viewModels()
     private var binding: HomeFragmentBinding by autoCleared()
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        Timber.w("onDestroyView()")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Timber.w("onDestroy()")
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

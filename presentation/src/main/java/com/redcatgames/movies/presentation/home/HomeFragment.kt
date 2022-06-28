@@ -35,20 +35,12 @@ class HomeFragment : BaseFragment() {
                     navigateTo(HomeFragmentDirections.actionHomeFragmentToSettingsFragment())
                     true
                 }
-                R.id.action_night_mode -> {
-                    toggleNightMode()
-                    true
-                }
                 else -> false
             }
         }
 
         binding.buttonPopular.setOnClickListener {
             navigateTo(HomeFragmentDirections.actionHomeFragmentToPopularFragment())
-        }
-
-        binding.buttonSettings.setOnClickListener {
-            navigateTo(HomeFragmentDirections.actionHomeFragmentToSettingsFragment())
         }
 
         setupObserver()

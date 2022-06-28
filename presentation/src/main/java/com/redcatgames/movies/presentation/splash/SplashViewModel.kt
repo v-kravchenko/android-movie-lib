@@ -2,7 +2,9 @@ package com.redcatgames.movies.presentation.splash
 
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
+import com.redcatgames.movies.domain.usecase.config.GetUserConfigUseCase
 import com.redcatgames.movies.domain.usecase.dictionary.LoadDictionaryUseCase
 import com.redcatgmes.movies.baseui.BaseViewModel
 import com.redcatgmes.movies.baseui.BaseViewModelState
@@ -16,6 +18,7 @@ class SplashViewModel
 @Inject
 constructor(
     @ApplicationContext appContext: Context,
+    userConfigUseCase: GetUserConfigUseCase,
     private val loadDictionaryUseCase: LoadDictionaryUseCase
 ) : BaseViewModel(appContext) {
 
@@ -26,6 +29,7 @@ constructor(
     }
 
     val state: MutableLiveData<State> = MutableLiveData(State.Loading)
+    val darkMode = Transformations.map(userConfigUseCase()) { it.uiDarkMode }
 
     init {
         loadDictionary()

@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.redcatgames.movies.domain.model.Language
 import com.redcatgames.movies.domain.usecase.config.GetUserConfigUseCase
 import com.redcatgames.movies.domain.usecase.config.SetUserConfigApiLanguageUseCase
+import com.redcatgames.movies.domain.usecase.config.SetUserConfigUiDarkModeUseCase
 import com.redcatgames.movies.domain.usecase.dictionary.GetLanguageUseCase
 import com.redcatgames.movies.domain.usecase.dictionary.GetLanguagesUseCase
 import com.redcatgmes.movies.baseui.BaseViewModel
@@ -23,7 +24,8 @@ constructor(
     userConfigUseCase: GetUserConfigUseCase,
     languagesUseCase: GetLanguagesUseCase,
     languageUseCase: GetLanguageUseCase,
-    private val setUserConfigApiLanguageUseCase: SetUserConfigApiLanguageUseCase
+    private val setUserConfigApiLanguageUseCase: SetUserConfigApiLanguageUseCase,
+    private val setUserConfigUiDarkModeUseCase: SetUserConfigUiDarkModeUseCase
 ) : BaseViewModel(appContext) {
 
     val eventSaved = SingleLiveEvent<Unit>()
@@ -33,10 +35,13 @@ constructor(
     val language =
         Transformations.switchMap(userConfigUseCase()) { languageUseCase(it.apiLanguage) }
 
-    fun save(currentLanguage: Language?) {
+    val darkMode = Transformations.map(userConfigUseCase()) { it.uiDarkMode }
+
+    fun save(currentLanguage: Language?, darkMode: Int) {
 
         viewModelScope.launch {
             currentLanguage?.let { setUserConfigApiLanguageUseCase(it) }
+            setUserConfigUiDarkModeUseCase(darkMode)
             eventSaved.postValue(Unit)
         }
     }

@@ -2,10 +2,6 @@ plugins {
     id(BuildPlugins.ANDROID_LIB)
     kotlin("android")
     kotlin("kapt")
-    id(BuildPlugins.HILT)
-    id(BuildPlugins.KTFMT)
-    id(BuildPlugins.PARCELIZE)
-    id(BuildPlugins.NAVIGATION_SAFEARGS)
 }
 
 android {
@@ -21,7 +17,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-    
+
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
@@ -31,21 +27,9 @@ android {
 
 dependencies {
     implementation(project(":util"))
-    implementation(project(":baseui"))
     implementation(project(":domain"))
 
     appCompat()
-    hilt()
-    coroutines()
-    lifecycle()
-    navigation()
 
-    implementation(Dependencies.COIL)
     implementation(Dependencies.ANDROID_MATERIAL)
-    implementation(Dependencies.CONSTRAINT_LAYOUT)
-    implementation(Dependencies.TIMBER)
-}
-
-ktfmt {
-    kotlinLangStyle()
 }

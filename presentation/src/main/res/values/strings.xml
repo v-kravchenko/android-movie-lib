@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Movies</string>
+    <string name="app_name">presentation</string>
     <string name="home_subtitle">Home screen</string>
     <string name="home_title">Movie library</string>
     <string name="home_button_popular">Popular movies</string>

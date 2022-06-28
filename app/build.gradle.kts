@@ -71,6 +71,7 @@ android {
 dependencies {
 
     implementation(project(":util"))
+    implementation(project(":baseui"))
     implementation(project(":data"))
     implementation(project(":domain"))
     implementation(project(":presentation"))

@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AutoCompleteTextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate.*
 import androidx.fragment.app.viewModels
 import com.redcatgames.movies.domain.model.Language
@@ -104,7 +103,7 @@ class SettingsFragment : BaseFragment() {
         }
 
         observe(viewModel.eventSaved) {
-            Toast.makeText(requireContext(), "Saved", Toast.LENGTH_SHORT).show()
+            setDefaultNightMode(currentDarkMode)
             navigateTo(SettingsFragmentDirections.actionSettingsFragmentToSplashFragment())
         }
     }

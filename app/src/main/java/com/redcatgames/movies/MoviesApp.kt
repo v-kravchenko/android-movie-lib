@@ -28,10 +28,10 @@ class MoviesApp : Application(), ImageLoaderFactory {
                 object : Timber.DebugTree() {
                     override fun createStackElementTag(element: StackTraceElement): String {
                         return "${element.fileName}[L:${element.lineNumber}] ${
-                        super.createStackElementTag(
-                            element
-                        )
-                    }"
+                            super.createStackElementTag(
+                                element
+                            )
+                        }"
                     }
 
                     override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {

@@ -41,6 +41,7 @@ object BuildPlugins {
     const val KTFMT = "com.ncorti.ktfmt.gradle"
     const val PARCELIZE = "kotlin-parcelize"
     const val NAVIGATION_SAFEARGS = "androidx.navigation.safeargs.kotlin"
+    const val GRADLE_VERSIONS = "com.github.ben-manes.versions"
 }
 
 object BuildClass {

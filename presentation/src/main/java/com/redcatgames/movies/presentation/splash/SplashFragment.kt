@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.viewModels
 import com.redcatgames.movies.presentation.databinding.SplashFragmentBinding
 import com.redcatgmes.movies.baseui.BaseFragment
@@ -35,8 +34,6 @@ class SplashFragment : BaseFragment() {
     }
 
     private fun setupObserver() {
-
-        observe(viewModel.darkMode) { AppCompatDelegate.setDefaultNightMode(it) }
 
         observe(viewModel.state) {
             Timber.d("ViewModelState is ${it.name()}")

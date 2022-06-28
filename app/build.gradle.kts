@@ -6,8 +6,8 @@ plugins {
     kotlin("android")
     kotlin("kapt")
     id(BuildPlugins.HILT)
-    id("com.github.ben-manes.versions")
-    id("com.ncorti.ktfmt.gradle")
+    id(BuildPlugins.GRADLE_VERSIONS)
+    id(BuildPlugins.KTFMT)
 }
 
 android {

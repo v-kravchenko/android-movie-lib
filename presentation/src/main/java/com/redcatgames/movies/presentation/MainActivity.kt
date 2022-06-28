@@ -3,11 +3,20 @@ package com.redcatgames.movies.presentation
 import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.lifecycle.asFlow
+import androidx.lifecycle.lifecycleScope
+import com.redcatgames.movies.domain.usecase.config.GetUserConfigUseCase
 import com.redcatgames.movies.presentation.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
+    @Inject lateinit var userConfigUseCase: GetUserConfigUseCase
 
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
 
@@ -15,6 +24,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val view = binding.root
         setContentView(view)
+
+        lifecycleScope.launch {
+            userConfigUseCase().asFlow().firstOrNull()?.run {
+                AppCompatDelegate.setDefaultNightMode(uiDarkMode)
+            }
+        }
     }
 
     override fun onBackPressed() {

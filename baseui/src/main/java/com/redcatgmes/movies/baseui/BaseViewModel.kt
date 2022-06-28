@@ -1,4 +1,4 @@
-package com.redcatgames.movies.presentation.base
+package com.redcatgmes.movies.baseui
 
 import android.app.Application
 import android.content.Context

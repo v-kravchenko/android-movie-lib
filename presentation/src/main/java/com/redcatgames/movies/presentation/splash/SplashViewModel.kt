@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.redcatgames.movies.domain.usecase.dictionary.LoadDictionaryUseCase
-import com.redcatgames.movies.presentation.base.BaseViewModel
-import com.redcatgames.movies.presentation.base.BaseViewModelState
+import com.redcatgmes.movies.baseui.BaseViewModel
+import com.redcatgmes.movies.baseui.BaseViewModelState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject

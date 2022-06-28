@@ -1,4 +1,4 @@
-package com.redcatgames.movies.presentation.util
+package com.redcatgmes.movies.baseui.util
 
 import androidx.annotation.MainThread
 import androidx.annotation.Nullable

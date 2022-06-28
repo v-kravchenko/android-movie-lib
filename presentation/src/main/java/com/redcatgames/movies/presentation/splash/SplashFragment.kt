@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import com.redcatgames.movies.presentation.base.BaseFragment
 import com.redcatgames.movies.presentation.databinding.SplashFragmentBinding
-import com.redcatgames.movies.presentation.util.autoCleared
+import com.redcatgmes.movies.baseui.BaseFragment
+import com.redcatgmes.movies.baseui.util.autoCleared
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 

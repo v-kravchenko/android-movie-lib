@@ -1,4 +1,4 @@
-package com.redcatgames.movies.presentation.util
+package com.redcatgmes.movies.baseui.util
 
 import android.widget.ImageView
 import coil.load

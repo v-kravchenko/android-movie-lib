@@ -1,7 +1,7 @@
 package com.redcatgames.movies.presentation.home
 
 import android.content.Context
-import com.redcatgames.movies.presentation.base.BaseViewModel
+import com.redcatgmes.movies.baseui.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject

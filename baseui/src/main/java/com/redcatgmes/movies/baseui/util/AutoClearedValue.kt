@@ -1,4 +1,4 @@
-package com.redcatgames.movies.presentation.util
+package com.redcatgmes.movies.baseui.util
 
 /*
  * Copyright (C) 2018 The Android Open Source Project

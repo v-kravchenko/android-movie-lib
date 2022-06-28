@@ -1,4 +1,4 @@
-package com.redcatgames.movies.presentation.base
+package com.redcatgmes.movies.baseui
 
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO

@@ -30,6 +30,9 @@ dependencies {
     implementation(project(":domain"))
 
     appCompat()
+    navigation()
 
+    implementation(Dependencies.COIL)
     implementation(Dependencies.ANDROID_MATERIAL)
+    implementation(Dependencies.TIMBER)
 }

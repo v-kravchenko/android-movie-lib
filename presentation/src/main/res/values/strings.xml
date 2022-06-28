@@ -11,4 +11,5 @@
     <string name="image_warning_description">warning</string>
     <string name="splash_button_retry">Retry loading</string>
     <string name="settings_title">Settings</string>
+    <string name="settings_language_hint">Api language</string>
 </resources>

@@ -19,13 +19,13 @@ constructor(
     private val loadDictionaryUseCase: LoadDictionaryUseCase
 ) : BaseViewModel(appContext) {
 
-    sealed class SplashState : BaseViewModelState() {
-        object Loading : SplashState()
-        object Failed : SplashState()
-        object Success : SplashState()
+    sealed class State : BaseViewModelState() {
+        object Loading : State()
+        object Failed : State()
+        object Success : State()
     }
 
-    val state: MutableLiveData<SplashState> = MutableLiveData(SplashState.Loading)
+    val state: MutableLiveData<State> = MutableLiveData(State.Loading)
 
     init {
         loadDictionary()
@@ -33,10 +33,10 @@ constructor(
 
     fun loadDictionary() =
         viewModelScope.launch {
-            state.postValue(SplashState.Loading)
+            state.postValue(State.Loading)
 
             loadDictionaryUseCase().run {
-                state.postValue(if (isSuccess) SplashState.Success else SplashState.Failed)
+                state.postValue(if (isSuccess) State.Success else State.Failed)
             }
         }
 }

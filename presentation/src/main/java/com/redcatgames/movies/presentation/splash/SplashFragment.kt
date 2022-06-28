@@ -38,15 +38,15 @@ class SplashFragment : BaseFragment() {
             Timber.d("ViewModelState is ${it.name()}")
 
             when (it) {
-                SplashViewModel.SplashState.Loading -> {
+                SplashViewModel.State.Loading -> {
                     binding.viewStateLoading.visibility = View.VISIBLE
                     binding.viewStateFailed.visibility = View.GONE
                 }
-                SplashViewModel.SplashState.Failed -> {
+                SplashViewModel.State.Failed -> {
                     binding.viewStateFailed.visibility = View.VISIBLE
                     binding.viewStateLoading.visibility = View.GONE
                 }
-                SplashViewModel.SplashState.Success -> {
+                SplashViewModel.State.Success -> {
                     navigateTo(SplashFragmentDirections.actionSplashFragmentToHomeFragment())
                 }
             }

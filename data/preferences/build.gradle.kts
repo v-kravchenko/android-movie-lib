@@ -1,6 +1,9 @@
 plugins {
     id(BuildPlugins.ANDROID_LIB)
+    id(BuildPlugins.HILT)
+    id(BuildPlugins.KTFMT)
     kotlin("android")
+    kotlin("kapt")
 }
 
 android {
@@ -24,8 +27,13 @@ android {
 dependencies {
     implementation(project(":util"))
     implementation(project(":domain"))
-    implementation(project(":data:local"))
-    implementation(project(":data:remote"))
-    implementation(project(":data:preferences"))
-    implementation(project(":data:repository"))
+
+    hilt()
+
+    implementation(Dependencies.DATASTORE)
+    implementation(Dependencies.LIFECYCLE_LIVEDATA)
+}
+
+ktfmt {
+    kotlinLangStyle()
 }

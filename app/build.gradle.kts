@@ -73,6 +73,10 @@ dependencies {
     implementation(project(":util"))
     implementation(project(":baseui"))
     implementation(project(":data"))
+    implementation(project(":data:local"))
+    implementation(project(":data:remote"))
+    implementation(project(":data:preferences"))
+    implementation(project(":data:repository"))
     implementation(project(":domain"))
     implementation(project(":presentation"))
 

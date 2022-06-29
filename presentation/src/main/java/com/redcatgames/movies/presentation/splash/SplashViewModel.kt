@@ -3,6 +3,7 @@ package com.redcatgames.movies.presentation.splash
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.redcatgames.movies.domain.usecase.dictionary.DictionaryInfoUseCase
 import com.redcatgames.movies.domain.usecase.dictionary.LoadDictionaryUseCase
 import com.redcatgmes.movies.baseui.BaseViewModel
 import com.redcatgmes.movies.baseui.BaseViewModelState
@@ -16,6 +17,7 @@ class SplashViewModel
 @Inject
 constructor(
     @ApplicationContext appContext: Context,
+    dictionaryInfoUseCase: DictionaryInfoUseCase,
     private val loadDictionaryUseCase: LoadDictionaryUseCase
 ) : BaseViewModel(appContext) {
 
@@ -23,9 +25,14 @@ constructor(
         object Loading : State()
         object Failed : State()
         object Success : State()
+
+        inline fun onNotLoading(callback: () -> Unit) {
+            if (this !is Loading) callback()
+        }
     }
 
     val state: MutableLiveData<State> = MutableLiveData(State.Loading)
+    val dictionaryInfo = dictionaryInfoUseCase()
 
     init {
         loadDictionary()
@@ -33,7 +40,7 @@ constructor(
 
     fun loadDictionary() =
         viewModelScope.launch {
-            state.postValue(State.Loading)
+            state.value?.onNotLoading { state.postValue(State.Loading) }
 
             loadDictionaryUseCase().run {
                 state.postValue(if (isSuccess) State.Success else State.Failed)

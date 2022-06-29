@@ -28,6 +28,7 @@ interface DictionaryRepository {
     suspend fun deleteAllGenres(): Result<Int>
     suspend fun deleteAll()
 
+    fun dictionaryInfo(): LiveData<DictionaryInfo?>
     fun userConfig(): LiveData<UserConfig>
     fun imageConfig(): LiveData<ImageConfig>
     fun languages(): LiveData<List<Language>>
@@ -35,7 +36,7 @@ interface DictionaryRepository {
     suspend fun getLanguage(iso: String): Language?
 
     suspend fun getUserConfig(): UserConfig
-
     suspend fun putUserApiLanguage(language: Language)
+
     suspend fun putUserUiDarkMode(darkMode: Int)
 }

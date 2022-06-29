@@ -21,7 +21,6 @@ constructor(
     private val loadPopularMoviesUseCase: LoadPopularMoviesUseCase
 ) : BaseViewModel(appContext) {
 
-    private var page = 0
     val popularMovies = getPopularMoviesUseCase()
     val loadPopularMoviesEvent = SingleLiveEvent<Result<List<Movie>>>()
 

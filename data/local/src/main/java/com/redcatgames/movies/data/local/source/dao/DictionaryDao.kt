@@ -1,10 +1,14 @@
 package com.redcatgames.movies.data.local.source.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.redcatgames.movies.data.local.source.entity.DictionaryEntity
 
 @Dao
 interface DictionaryDao {
+
+    @Query("SELECT * FROM dictionary LIMIT 1") fun first(): LiveData<DictionaryEntity>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(entity: DictionaryEntity): Long
 

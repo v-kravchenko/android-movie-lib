@@ -35,6 +35,8 @@ class SplashFragment : BaseFragment() {
 
     private fun setupObserver() {
 
+        observe(viewModel.dictionaryInfo) { Timber.d("Dictionary info: $it") }
+
         observe(viewModel.state) {
             Timber.d("ViewModelState is ${it.name()}")
 

@@ -3,6 +3,7 @@ package com.redcatgames.movies.data.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import com.redcatgames.movies.data.local.source.dao.*
+import com.redcatgames.movies.data.local.source.mapper.toDictionaryInfo
 import com.redcatgames.movies.data.local.source.mapper.toEntity
 import com.redcatgames.movies.data.local.source.mapper.toLanguage
 import com.redcatgames.movies.data.preferences.source.image.ImageConfigPreferences
@@ -204,6 +205,9 @@ class DictionaryRepositoryImpl(
                 .awaitAll()
         }
     }
+
+    override fun dictionaryInfo(): LiveData<DictionaryInfo?> =
+        Transformations.map(dictionaryDao.first()) { it?.toDictionaryInfo() }
 
     override fun userConfig(): LiveData<UserConfig> = userConfigPreferences.userConfig
 

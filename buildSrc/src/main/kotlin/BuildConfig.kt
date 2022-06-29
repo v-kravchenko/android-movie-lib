@@ -72,6 +72,7 @@ object Dependencies {
     const val LIFECYCLE_VIEWMODEL = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"
     const val LIFECYCLE_LIVEDATA = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle}"
     const val LIFECYCLE_SAVEDSTATE = "androidx.lifecycle:lifecycle-viewmodel-savedstate:${Versions.lifecycle}"
+    const val LIFECYCLE_RUNTIME = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycle}"
 
     const val COROUTINES_CORE = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
     const val COROUTINES_ANDROID = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
@@ -109,6 +110,7 @@ fun DependencyHandler.lifecycle() {
     implementation(Dependencies.LIFECYCLE_VIEWMODEL)
     implementation(Dependencies.LIFECYCLE_LIVEDATA)
     implementation(Dependencies.LIFECYCLE_SAVEDSTATE)
+    implementation(Dependencies.LIFECYCLE_RUNTIME)
 }
 
 fun DependencyHandler.room() {

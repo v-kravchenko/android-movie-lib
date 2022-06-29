@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.AutoCompleteTextView
 import androidx.appcompat.app.AppCompatDelegate.*
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.redcatgames.movies.presentation.R
 import com.redcatgames.movies.presentation.databinding.SettingsFragmentBinding
 import com.redcatgmes.movies.baseui.BaseFragment
@@ -60,32 +61,34 @@ class SettingsFragment : BaseFragment() {
             viewModel.setUiDarkMode(value)
         }
 
+        lifecycleScope.launchWhenStarted { viewModel.state.collect { setState(it) } }
+
         setupObserver()
+    }
+
+    private fun setState(state: SettingsViewModel.State) {
+        Timber.d("ViewModelState is ${state.name()}")
+
+        when (state) {
+            SettingsViewModel.State.Empty -> {}
+            is SettingsViewModel.State.Saved -> {
+                setDefaultNightMode(state.darkMode)
+                navigateTo(SettingsFragmentDirections.actionSettingsFragmentToSplashFragment())
+            }
+            is SettingsViewModel.State.Data -> {
+                binding.textLanguage.setText(state.language?.englishName, false)
+                binding.radioDarkSystem.isChecked = state.darkMode == MODE_NIGHT_FOLLOW_SYSTEM
+                binding.radioDarkYes.isChecked = state.darkMode == MODE_NIGHT_YES
+                binding.radioDarkNo.isChecked = state.darkMode == MODE_NIGHT_NO
+            }
+        }
     }
 
     private fun setupObserver() {
 
-        Timber.d(System.currentTimeMillis().toString())
-
         observe(viewModel.languages) {
             languageAdapter.clear()
             languageAdapter.addAll(it)
-        }
-
-        observe(viewModel.state) {
-            when (it) {
-                SettingsViewModel.State.Empty -> {}
-                is SettingsViewModel.State.Saved -> {
-                    setDefaultNightMode(it.darkMode)
-                    navigateTo(SettingsFragmentDirections.actionSettingsFragmentToSplashFragment())
-                }
-                is SettingsViewModel.State.Data -> {
-                    binding.textLanguage.setText(it.language?.englishName, false)
-                    binding.radioDarkSystem.isChecked = it.darkMode == MODE_NIGHT_FOLLOW_SYSTEM
-                    binding.radioDarkYes.isChecked = it.darkMode == MODE_NIGHT_YES
-                    binding.radioDarkNo.isChecked = it.darkMode == MODE_NIGHT_NO
-                }
-            }
         }
     }
 }

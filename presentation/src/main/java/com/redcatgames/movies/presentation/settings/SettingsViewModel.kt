@@ -1,7 +1,6 @@
 package com.redcatgames.movies.presentation.settings
 
 import android.content.Context
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.redcatgames.movies.domain.model.Language
 import com.redcatgames.movies.domain.usecase.config.GetUserConfigUseCase
@@ -14,6 +13,9 @@ import com.redcatgmes.movies.baseui.BaseViewModelState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 @HiltViewModel
@@ -38,7 +40,9 @@ constructor(
         }
     }
 
-    val state: MutableLiveData<State> = MutableLiveData(State.Empty)
+    private val _state = MutableStateFlow<State>(State.Empty)
+    val state: StateFlow<State> = _state.asStateFlow()
+
     val languages = languagesUseCase()
 
     init {
@@ -50,28 +54,28 @@ constructor(
 
     private suspend fun setDataState(apiLanguage: String, uiDarkMode: Int) {
         val dataState = State.Data(languageUseCase(apiLanguage), uiDarkMode)
-        state.postValue(dataState)
+        _state.value = dataState
     }
 
     fun setApiLanguage(apiLanguage: String) {
         viewModelScope.launch {
-            state.value?.onData {
+            _state.value.onData {
                 val language = languageUseCase(apiLanguage)
-                state.postValue(it.copy(language = language))
+                _state.value = it.copy(language = language)
             }
         }
     }
 
     fun setUiDarkMode(uiDarkMode: Int) {
-        state.value?.onData { state.postValue(it.copy(darkMode = uiDarkMode)) }
+        _state.value.onData { _state.value = it.copy(darkMode = uiDarkMode) }
     }
 
     fun save() {
         viewModelScope.launch {
-            state.value?.onData {
+            _state.value.onData {
                 it.language?.let { language -> setUserConfigApiLanguageUseCase(language) }
                 setUserConfigUiDarkModeUseCase(it.darkMode)
-                state.postValue(State.Saved(it.language, it.darkMode))
+                _state.value = State.Saved(it.language, it.darkMode)
             }
         }
     }

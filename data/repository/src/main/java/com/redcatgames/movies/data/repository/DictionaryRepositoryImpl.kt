@@ -128,7 +128,8 @@ class DictionaryRepositoryImpl(
             }
         }
 
-        putDictionaryInfo(DictionaryInfo(getUserConfig().apiLanguage, now()))
+        val row = DictionaryInfo(getUserConfig().apiLanguage, now())
+        putDictionaryInfo(row)
 
         return@coroutineScope Result.success(Unit)
     }

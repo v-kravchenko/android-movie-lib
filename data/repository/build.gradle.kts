@@ -33,11 +33,10 @@ dependencies {
     implementation(project(":data:preferences"))
 
     hilt()
-    room()
-    retrofit()
 
     implementation(Dependencies.DATASTORE)
     implementation(Dependencies.LIFECYCLE_LIVEDATA)
+    implementation(Dependencies.TIMBER)
 }
 
 ktfmt {

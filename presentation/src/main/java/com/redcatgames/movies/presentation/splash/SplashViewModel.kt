@@ -1,7 +1,6 @@
 package com.redcatgames.movies.presentation.splash
 
 import android.content.Context
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.redcatgames.movies.domain.usecase.dictionary.DictionaryInfoUseCase
 import com.redcatgames.movies.domain.usecase.dictionary.LoadDictionaryUseCase
@@ -10,6 +9,9 @@ import com.redcatgmes.movies.baseui.BaseViewModelState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 @HiltViewModel
@@ -25,13 +27,11 @@ constructor(
         object Loading : State()
         object Failed : State()
         object Success : State()
-
-        inline fun onNotLoading(callback: () -> Unit) {
-            if (this !is Loading) callback()
-        }
     }
 
-    val state: MutableLiveData<State> = MutableLiveData(State.Loading)
+    private val _state = MutableStateFlow<State>(State.Loading)
+    val state: StateFlow<State> = _state.asStateFlow()
+
     val dictionaryInfo = dictionaryInfoUseCase()
 
     init {
@@ -40,10 +40,10 @@ constructor(
 
     fun loadDictionary() =
         viewModelScope.launch {
-            state.value?.onNotLoading { state.postValue(State.Loading) }
+            _state.value = State.Loading
 
             loadDictionaryUseCase().run {
-                state.postValue(if (isSuccess) State.Success else State.Failed)
+                _state.value = if (isSuccess) State.Success else State.Failed
             }
         }
 }

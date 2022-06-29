@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.AutoCompleteTextView
 import androidx.appcompat.app.AppCompatDelegate.*
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import com.redcatgames.movies.presentation.R
 import com.redcatgames.movies.presentation.databinding.SettingsFragmentBinding
 import com.redcatgmes.movies.baseui.BaseFragment
@@ -61,8 +60,6 @@ class SettingsFragment : BaseFragment() {
             viewModel.setUiDarkMode(value)
         }
 
-        lifecycleScope.launchWhenStarted { viewModel.state.collect { setState(it) } }
-
         setupObserver()
     }
 
@@ -90,5 +87,7 @@ class SettingsFragment : BaseFragment() {
             languageAdapter.clear()
             languageAdapter.addAll(it)
         }
+
+        viewModel.state.observe { state -> setState(state) }
     }
 }

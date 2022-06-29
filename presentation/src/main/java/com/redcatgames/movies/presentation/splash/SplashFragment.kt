@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import com.redcatgames.movies.presentation.databinding.SplashFragmentBinding
 import com.redcatgmes.movies.baseui.BaseFragment
 import com.redcatgmes.movies.baseui.util.autoCleared
@@ -29,11 +28,7 @@ class SplashFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.buttonRetry.setOnClickListener { viewModel.loadDictionary() }
-
-        lifecycleScope.launchWhenStarted { viewModel.state.collect { state -> setState(state) } }
-
         setupObserver()
     }
 
@@ -57,5 +52,7 @@ class SplashFragment : BaseFragment() {
 
     private fun setupObserver() {
         observe(viewModel.dictionaryInfo) { Timber.d("Dictionary info: $it") }
+
+        viewModel.state.observe { state -> setState(state) }
     }
 }

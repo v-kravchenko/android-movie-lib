@@ -35,4 +35,5 @@ dependencies {
     implementation(Dependencies.COIL)
     implementation(Dependencies.ANDROID_MATERIAL)
     implementation(Dependencies.TIMBER)
+    implementation(Dependencies.LIFECYCLE_RUNTIME)
 }

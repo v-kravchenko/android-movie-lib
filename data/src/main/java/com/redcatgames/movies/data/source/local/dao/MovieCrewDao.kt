@@ -24,10 +24,10 @@ interface MovieCrewDao {
 
     @Update suspend fun update(movieCrew: MovieCrewEntity)
 
-    @Query("SELECT * FROM movie_crews") fun getAll(): LiveData<List<MovieCrewEntity>>
+    @Query("SELECT * FROM movie_crews") fun all(): LiveData<List<MovieCrewEntity>>
 
     @Query("SELECT * FROM movie_crews WHERE movieId = :movieId")
-    fun getByMovie(movieId: Long): LiveData<List<MovieCrewEntity>>
+    fun byMovie(movieId: Long): LiveData<List<MovieCrewEntity>>
 
     @Query("SELECT COUNT(1) FROM movie_crews") suspend fun getCount(): Int
 

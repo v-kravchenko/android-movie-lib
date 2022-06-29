@@ -127,7 +127,7 @@ class MovieRepositoryImpl(
                 val movies = response.body.movies.map { it.toMovie() }
                 movieDao.replace(movies.map { it.toEntity() })
 
-                val genreList = genreDao.loadAll()
+                val genreList = genreDao.getAll()
                 val moveGenreList = mutableListOf<MovieGenre>()
                 response.body.movies.forEach { movie ->
                     moveGenreList.addAll(
@@ -152,33 +152,33 @@ class MovieRepositoryImpl(
     }
 
     override fun popularMovies(): LiveData<List<Movie>> {
-        return Transformations.map(movieDao.getPopular()) {
+        return Transformations.map(movieDao.popular()) {
             it.map { movieEntity -> movieEntity.toMovie() }
         }
     }
 
     override fun movie(movieId: Long): LiveData<Movie?> {
-        return Transformations.map(movieDao.getById(movieId)) { it?.toMovie() }
+        return Transformations.map(movieDao.byId(movieId)) { it?.toMovie() }
     }
 
     override fun movieInfo(movieId: Long): LiveData<MovieInfo?> {
-        return Transformations.map(movieDao.getInfoById(movieId)) { it?.fromEntity() }
+        return Transformations.map(movieDao.infoById(movieId)) { it?.fromEntity() }
     }
 
     override fun movieGenres(movieId: Long): LiveData<List<MovieGenre>> {
-        return Transformations.map(movieGenreDao.getByMovie(movieId)) {
+        return Transformations.map(movieGenreDao.byMovie(movieId)) {
             it.map { movieGenreEntity -> movieGenreEntity.toMovieGenre() }
         }
     }
 
     override fun movieCasts(movieId: Long): LiveData<List<MovieCast>> {
-        return Transformations.map(movieCastDao.getByMovie(movieId)) {
+        return Transformations.map(movieCastDao.byMovie(movieId)) {
             it.map { movieCastEntity -> movieCastEntity.toMovieCast() }
         }
     }
 
     override fun movieCrews(movieId: Long): LiveData<List<MovieCrew>> {
-        return Transformations.map(movieCrewDao.getByMovie(movieId)) {
+        return Transformations.map(movieCrewDao.byMovie(movieId)) {
             it.map { movieCrewEntity -> movieCrewEntity.toMovieCrew() }
         }
     }

@@ -8,7 +8,7 @@ import com.redcatgames.movies.domain.usecase.config.GetUserConfigUseCase
 import com.redcatgames.movies.domain.usecase.config.SetUserConfigApiLanguageUseCase
 import com.redcatgames.movies.domain.usecase.config.SetUserConfigUiDarkModeUseCase
 import com.redcatgames.movies.domain.usecase.dictionary.GetLanguageUseCase
-import com.redcatgames.movies.domain.usecase.dictionary.GetLanguagesUseCase
+import com.redcatgames.movies.domain.usecase.dictionary.LanguagesUseCase
 import com.redcatgmes.movies.baseui.BaseViewModel
 import com.redcatgmes.movies.baseui.BaseViewModelState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,7 +22,7 @@ class SettingsViewModel
 constructor(
     @ApplicationContext appContext: Context,
     userConfigUseCase: GetUserConfigUseCase,
-    languagesUseCase: GetLanguagesUseCase,
+    languagesUseCase: LanguagesUseCase,
     private val languageUseCase: GetLanguageUseCase,
     private val setUserConfigApiLanguageUseCase: SetUserConfigApiLanguageUseCase,
     private val setUserConfigUiDarkModeUseCase: SetUserConfigUiDarkModeUseCase
@@ -34,9 +34,7 @@ constructor(
         data class Saved(val language: Language?, val darkMode: Int) : State()
 
         inline fun onData(callback: (value: Data) -> Unit) {
-            if (this is Data) {
-                callback(this)
-            }
+            if (this is Data) callback(this)
         }
     }
 

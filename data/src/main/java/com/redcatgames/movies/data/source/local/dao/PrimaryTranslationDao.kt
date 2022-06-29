@@ -18,8 +18,7 @@ interface PrimaryTranslationDao {
 
     @Update suspend fun update(primaryTranslation: PrimaryTranslationEntity)
 
-    @Query("SELECT * FROM primary_translations")
-    fun getAll(): LiveData<List<PrimaryTranslationEntity>>
+    @Query("SELECT * FROM primary_translations") fun all(): LiveData<List<PrimaryTranslationEntity>>
 
     @Query("SELECT COUNT(1) FROM primary_translations") suspend fun getCount(): Int
 

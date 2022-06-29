@@ -24,10 +24,10 @@ interface MovieCastDao {
 
     @Update suspend fun update(movieCast: MovieCastEntity)
 
-    @Query("SELECT * FROM movie_casts") fun getAll(): LiveData<List<MovieCastEntity>>
+    @Query("SELECT * FROM movie_casts") fun getAllLive(): LiveData<List<MovieCastEntity>>
 
     @Query("SELECT * FROM movie_casts WHERE movieId = :movieId")
-    fun getByMovie(movieId: Long): LiveData<List<MovieCastEntity>>
+    fun byMovie(movieId: Long): LiveData<List<MovieCastEntity>>
 
     @Query("SELECT COUNT(1) FROM movie_casts") suspend fun getCount(): Int
 

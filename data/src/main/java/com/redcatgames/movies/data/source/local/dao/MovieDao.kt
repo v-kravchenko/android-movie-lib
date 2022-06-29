@@ -19,19 +19,16 @@ interface MovieDao {
     @Update suspend fun update(movie: MovieEntity)
 
     @Query("SELECT * FROM movies where id = :movieId")
-    fun getById(movieId: Long): LiveData<MovieEntity?>
+    fun byId(movieId: Long): LiveData<MovieEntity?>
 
     @Transaction
     @Query("SELECT * FROM movies where id = :movieId")
-    fun getInfoById(movieId: Long): LiveData<MovieInfoEntity?>
+    fun infoById(movieId: Long): LiveData<MovieInfoEntity?>
 
-    @Query("SELECT * FROM movies where title = :movieTitle")
-    fun getByTitle(movieTitle: String): LiveData<MovieEntity?>
-
-    @Query("SELECT * FROM movies") fun getAll(): LiveData<List<MovieEntity>>
+    @Query("SELECT * FROM movies") fun all(): LiveData<List<MovieEntity>>
 
     @Query("SELECT * FROM movies ORDER BY popularity DESC")
-    fun getPopular(): LiveData<List<MovieEntity>>
+    fun popular(): LiveData<List<MovieEntity>>
 
     @Query("SELECT COUNT(1) FROM movies") suspend fun getCount(): Int
 

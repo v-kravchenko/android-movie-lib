@@ -196,7 +196,7 @@ class DictionaryRepositoryImpl(
     override fun imageConfig(): LiveData<ImageConfig> = imageConfigPreferences.imageConfig
 
     override fun languages(): LiveData<List<Language>> =
-        Transformations.map(languageDao.getAll()) {
+        Transformations.map(languageDao.all()) {
             it.map { languageEntity -> languageEntity.toLanguage() }
         }
 

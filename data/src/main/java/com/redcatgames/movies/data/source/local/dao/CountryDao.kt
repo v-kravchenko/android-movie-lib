@@ -18,7 +18,7 @@ interface CountryDao {
 
     @Update suspend fun update(country: CountryEntity)
 
-    @Query("SELECT * FROM countries") fun getAll(): LiveData<List<CountryEntity>>
+    @Query("SELECT * FROM countries") fun all(): LiveData<List<CountryEntity>>
 
     @Query("SELECT COUNT(1) FROM countries") suspend fun getCount(): Int
 }

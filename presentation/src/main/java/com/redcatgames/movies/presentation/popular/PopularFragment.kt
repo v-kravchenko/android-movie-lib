@@ -46,12 +46,12 @@ class PopularFragment : BaseFragment() {
         observe(viewModel.loadPopularMoviesEvent) {
             it
                 .onSuccess { movies ->
-                    Toast.makeText(
-                            requireContext(),
-                            "Loaded ${movies.size} movies!",
-                            Toast.LENGTH_SHORT
-                        )
-                        .show()
+                    //                    Toast.makeText(
+                    //                            requireContext(),
+                    //                            "Loaded ${movies.size} movies!",
+                    //                            Toast.LENGTH_SHORT
+                    //                        )
+                    //                        .show()
                 }
                 .onFailure { errorMessage ->
                     Toast.makeText(

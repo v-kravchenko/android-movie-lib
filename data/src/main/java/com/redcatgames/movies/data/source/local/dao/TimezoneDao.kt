@@ -18,7 +18,7 @@ interface TimezoneDao {
 
     @Update suspend fun update(timezone: TimezoneEntity)
 
-    @Query("SELECT * FROM timezones") fun getAll(): LiveData<List<TimezoneEntity>>
+    @Query("SELECT * FROM timezones") fun all(): LiveData<List<TimezoneEntity>>
 
     @Query("SELECT COUNT(1) FROM timezones") suspend fun getCount(): Int
 }

@@ -15,9 +15,8 @@ constructor(
     override fun intercept(chain: Interceptor.Chain): Response {
 
         val language = runBlocking {
-            val apiLanguage = userConfigPreferences.readConfig().apiLanguage
-            apiLanguage
-            //            primaryTranslationDao.findByLanguage(apiLanguage)?.name ?: apiLanguage
+            val userConfig = userConfigPreferences.readConfig()
+            userConfig.apiLanguage
         }
 
         var request = chain.request()

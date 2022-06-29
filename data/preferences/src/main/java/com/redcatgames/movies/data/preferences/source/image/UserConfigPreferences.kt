@@ -11,6 +11,7 @@ class UserConfigPreferences(private val preferences: Preferences) {
 
     companion object {
         private const val API_LANGUAGE = "user_api_language"
+        private const val API_LANGUAGE_EX = "user_api_language_ex"
         private const val UI_DARK_MODE = "ui_dark_mode"
 
         private const val DEFAULT_API_LANGUAGE = "en"
@@ -20,10 +21,10 @@ class UserConfigPreferences(private val preferences: Preferences) {
     val userConfig: LiveData<UserConfig> =
         preferences.data.map {
             val keyApiLanguage = stringPreferencesKey(API_LANGUAGE)
-            val keyUiDarkMod = intPreferencesKey(UI_DARK_MODE)
+            val keyUiDarkMode = intPreferencesKey(UI_DARK_MODE)
             UserConfig(
                 it[keyApiLanguage] ?: DEFAULT_API_LANGUAGE,
-                it[keyUiDarkMod] ?: DEFAULT_UI_DARK_MODE
+                it[keyUiDarkMode] ?: DEFAULT_UI_DARK_MODE
             )
         }
 

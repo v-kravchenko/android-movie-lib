@@ -205,11 +205,15 @@ class DictionaryRepositoryImpl(
 
     override suspend fun putUserApiLanguage(language: Language) {
         val userConfig = userConfigPreferences.readConfig().copy(apiLanguage = language.iso)
-        userConfigPreferences.putConfig(userConfig)
+        putConfig(userConfig)
     }
 
     override suspend fun putUserUiDarkMode(darkMode: Int) {
         val userConfig = userConfigPreferences.readConfig().copy(uiDarkMode = darkMode)
+        putConfig(userConfig)
+    }
+
+    private suspend fun putConfig(userConfig: UserConfig) {
         userConfigPreferences.putConfig(userConfig)
     }
 }

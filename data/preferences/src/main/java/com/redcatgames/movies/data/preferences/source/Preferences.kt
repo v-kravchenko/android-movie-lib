@@ -43,4 +43,9 @@ class Preferences @Inject constructor(private val context: Context) {
         val preferences = context.dataStore.data.first()
         return preferences[preferencesKey]
     }
+
+    suspend fun removeKey(key: String) {
+        val preferencesKey = stringPreferencesKey(key)
+        context.dataStore.edit { preferences -> preferences.remove(preferencesKey) }
+    }
 }

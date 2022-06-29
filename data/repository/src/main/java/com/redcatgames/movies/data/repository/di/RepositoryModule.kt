@@ -23,6 +23,7 @@ class RepositoryModule {
     fun provideDictionaryRepository(
         userConfigPreferences: UserConfigPreferences,
         imageConfigPreferences: ImageConfigPreferences,
+        dictionaryDao: DictionaryDao,
         countryDao: CountryDao,
         languageDao: LanguageDao,
         primaryTranslationDao: PrimaryTranslationDao,
@@ -33,6 +34,7 @@ class RepositoryModule {
         return DictionaryRepositoryImpl(
             userConfigPreferences,
             imageConfigPreferences,
+            dictionaryDao,
             countryDao,
             languageDao,
             primaryTranslationDao,

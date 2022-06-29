@@ -6,6 +6,10 @@ import com.redcatgames.movies.domain.model.*
 import com.redcatgames.movies.util.empty
 import com.redcatgames.movies.util.now
 
+fun DictionaryInfo.toEntity() = DictionaryEntity(language, created)
+
+fun DictionaryEntity.toDictionaryInfo() = DictionaryInfo(language, created)
+
 fun Country.toEntity() = CountryEntity(iso, englishName, nativeName, now())
 
 fun CountryEntity.toCountry() = Country(iso, englishName, nativeName)

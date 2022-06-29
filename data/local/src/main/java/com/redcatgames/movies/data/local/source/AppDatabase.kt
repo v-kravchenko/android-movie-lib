@@ -13,6 +13,7 @@ import com.redcatgames.movies.data.local.source.entity.*
 @Database(
     entities =
         [
+            DictionaryEntity::class,
             CountryEntity::class,
             LanguageEntity::class,
             PrimaryTranslationEntity::class,
@@ -22,7 +23,7 @@ import com.redcatgames.movies.data.local.source.entity.*
             MovieGenreEntity::class,
             MovieCastEntity::class,
             MovieCrewEntity::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 @TypeConverters(
@@ -32,6 +33,7 @@ import com.redcatgames.movies.data.local.source.entity.*
     LongListConverter::class
 )
 abstract class AppDatabase : RoomDatabase() {
+    abstract val dictionaryDao: DictionaryDao
     abstract val countryDao: CountryDao
     abstract val languageDao: LanguageDao
     abstract val primaryTranslationDao: PrimaryTranslationDao

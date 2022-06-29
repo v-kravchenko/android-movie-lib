@@ -12,6 +12,7 @@ import com.redcatgames.movies.data.remote.source.adapter.NetworkResponse
 import com.redcatgames.movies.data.remote.source.mapper.*
 import com.redcatgames.movies.domain.model.*
 import com.redcatgames.movies.domain.repository.DictionaryRepository
+import com.redcatgames.movies.util.now
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
@@ -19,6 +20,7 @@ import kotlinx.coroutines.coroutineScope
 class DictionaryRepositoryImpl(
     private val userConfigPreferences: UserConfigPreferences,
     private val imageConfigPreferences: ImageConfigPreferences,
+    private val dictionaryDao: DictionaryDao,
     private val countryDao: CountryDao,
     private val languageDao: LanguageDao,
     private val primaryTranslationDao: PrimaryTranslationDao,
@@ -106,6 +108,8 @@ class DictionaryRepositoryImpl(
     }
 
     override suspend fun loadDictionary(): Result<Unit> = coroutineScope {
+        deleteDictionaryInfo()
+
         val jobList =
             listOf(
                     async { loadConfig() },
@@ -123,7 +127,13 @@ class DictionaryRepositoryImpl(
             }
         }
 
+        putDictionaryInfo(DictionaryInfo(getUserConfig().apiLanguage, now()))
+
         return@coroutineScope Result.success(Unit)
+    }
+
+    override suspend fun putDictionaryInfo(dictionaryInfo: DictionaryInfo) {
+        dictionaryDao.replace(dictionaryInfo.toEntity())
     }
 
     override suspend fun putCountries(countries: List<Country>) {
@@ -144,6 +154,12 @@ class DictionaryRepositoryImpl(
 
     override suspend fun putGenres(genres: List<Genre>) {
         genreDao.insertAll(genres.map { it.toEntity() })
+    }
+
+    override suspend fun deleteDictionaryInfo(): Result<Int> {
+        val rowCount = dictionaryDao.getCount()
+        dictionaryDao.deleteAll()
+        return Result.success(rowCount)
     }
 
     override suspend fun deleteAllCountries(): Result<Int> {

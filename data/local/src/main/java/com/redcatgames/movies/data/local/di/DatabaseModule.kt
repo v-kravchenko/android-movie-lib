@@ -27,6 +27,12 @@ class DatabaseModule {
 
     @Provides
     @Singleton
+    fun provideDictionaryDao(appDatabase: AppDatabase): DictionaryDao {
+        return appDatabase.dictionaryDao
+    }
+
+    @Provides
+    @Singleton
     fun provideCountryDao(appDatabase: AppDatabase): CountryDao {
         return appDatabase.countryDao
     }

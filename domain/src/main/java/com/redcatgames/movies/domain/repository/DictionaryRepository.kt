@@ -13,12 +13,14 @@ interface DictionaryRepository {
 
     suspend fun loadDictionary(): Result<Unit>
 
+    suspend fun putDictionaryInfo(dictionaryInfo: DictionaryInfo)
     suspend fun putCountries(countries: List<Country>)
     suspend fun putLanguages(languages: List<Language>)
     suspend fun putPrimaryTranslations(primaryTranslations: List<PrimaryTranslation>)
     suspend fun putTimezones(timezones: List<Timezone>)
     suspend fun putGenres(genres: List<Genre>)
 
+    suspend fun deleteDictionaryInfo(): Result<Int>
     suspend fun deleteAllCountries(): Result<Int>
     suspend fun deleteAllLanguages(): Result<Int>
     suspend fun deleteAllPrimaryTranslations(): Result<Int>

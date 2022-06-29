@@ -37,7 +37,7 @@ class MovieFragment : BaseFragment() {
 
     private fun setupObserver() {
 
-        observe(viewModel.movieInfo) { info ->
+        viewModel.movieInfo.observe { info ->
             info?.let { movieInfo ->
                 binding.topAppBar.title = movieInfo.movie.title
                 binding.text2.text = movieInfo.movie.overview
@@ -51,7 +51,7 @@ class MovieFragment : BaseFragment() {
             }
         }
 
-        observe(viewModel.loadMovieEvent) {
+        viewModel.loadMovieEvent.observe {
             it.onFailure { throwable ->
                 Toast.makeText(
                         requireContext(),

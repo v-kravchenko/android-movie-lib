@@ -83,7 +83,7 @@ class SettingsFragment : BaseFragment() {
 
     private fun setupObserver() {
 
-        observe(viewModel.languages) {
+        viewModel.languages.observe {
             languageAdapter.clear()
             languageAdapter.addAll(it)
         }

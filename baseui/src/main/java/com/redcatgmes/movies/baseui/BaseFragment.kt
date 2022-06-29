@@ -12,14 +12,18 @@ import kotlinx.coroutines.launch
 
 open class BaseFragment : Fragment() {
 
-    protected fun <T> observe(liveData: LiveData<T>, observer: Observer<in T>) {
-        liveData.observe(viewLifecycleOwner, observer)
+//    protected fun <T> observe(liveData: LiveData<T>, observer: Observer<in T>) {
+//        liveData.observe(viewLifecycleOwner, observer)
+//    }
+
+    fun <T> LiveData<T>.observe(observer: Observer<in T>) {
+//        observe(this, observer)
+        this.observe(viewLifecycleOwner, observer)
     }
 
     fun <T> Flow<T>.observe(
         state: Lifecycle.State = Lifecycle.State.STARTED,
         observer: (T) -> Unit
-
     ) {
         viewLifecycleOwner.lifecycleScope.launch {
             flowWithLifecycle(lifecycle, state)

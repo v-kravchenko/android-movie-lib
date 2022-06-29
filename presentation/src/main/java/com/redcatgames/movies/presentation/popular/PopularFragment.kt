@@ -31,36 +31,21 @@ class PopularFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.movieList.adapter = adapter
         binding.topAppBar.setNavigationOnClickListener { navigateBack() }
+        adapter.onItemClick = {
+            navigateTo(PopularFragmentDirections.actionPopularFragmentToMovieFragment(it.id))
+        }
         setupObserver()
     }
 
     private fun setupObserver() {
 
-        observe(viewModel.popularMovies) { adapter.setItems(it) }
+        viewModel.popularMovies.observe { adapter.setItems(it) }
 
-        adapter.onItemClick =
-            {
-                navigateTo(PopularFragmentDirections.actionPopularFragmentToMovieFragment(it.id))
+        viewModel.loadPopularMoviesEvent.observe {
+            it.onFailure { errorMessage ->
+                Toast.makeText(requireContext(), "Error loading: $errorMessage", Toast.LENGTH_SHORT)
+                    .show()
             }
-
-        observe(viewModel.loadPopularMoviesEvent) {
-            it
-                .onSuccess { movies ->
-                    //                    Toast.makeText(
-                    //                            requireContext(),
-                    //                            "Loaded ${movies.size} movies!",
-                    //                            Toast.LENGTH_SHORT
-                    //                        )
-                    //                        .show()
-                }
-                .onFailure { errorMessage ->
-                    Toast.makeText(
-                            requireContext(),
-                            "Error loading: $errorMessage",
-                            Toast.LENGTH_SHORT
-                        )
-                        .show()
-                }
         }
     }
 }

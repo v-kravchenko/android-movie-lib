@@ -17,4 +17,5 @@
     <style name="AppTheme.TextView" parent="Widget.MaterialComponents.TextView">
 
     </style>
+
 </resources>

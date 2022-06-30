@@ -10,6 +10,7 @@ import com.redcatgames.movies.data.remote.response.discover.movie.DiscoverMovieR
 import com.redcatgames.movies.data.remote.response.movie.GenreResult
 import com.redcatgames.movies.data.remote.response.movie.MovieResult
 import com.redcatgames.movies.data.remote.response.movie.credits.MovieCreditsResult
+import com.redcatgames.movies.data.remote.response.person.PersonResult
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -51,4 +52,9 @@ interface NetworkService {
     suspend fun getMovieCredits(
         @Path("movieId") movieId: Long
     ): NetworkResponse<MovieCreditsResult, BaseError>
+
+    @GET("person/{personId}")
+    suspend fun getPerson(
+        @Path("personId") personId: Long
+    ): NetworkResponse<PersonResult, BaseError>
 }

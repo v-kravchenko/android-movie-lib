@@ -146,3 +146,22 @@ fun MovieInfoEntity.fromEntity() =
         casts.map { it.toMovieCast() },
         crews.map { it.toMovieCrew() }
     )
+
+fun Person.toEntity() =
+    PersonEntity(
+        id,
+        isAdult,
+        alsoKnownAs,
+        biography,
+        birthDay,
+        deathDay,
+        gender,
+        homepage,
+        imdbId,
+        knownForDepartment,
+        name,
+        placeOfBirth,
+        popularity,
+        profilePath,
+        now()
+    )

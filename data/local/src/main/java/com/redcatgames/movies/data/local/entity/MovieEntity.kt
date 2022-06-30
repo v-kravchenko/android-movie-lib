@@ -6,7 +6,7 @@ import java.util.*
 
 @Entity(tableName = "movies")
 data class MovieEntity(
-    @PrimaryKey(autoGenerate = true) val id: Long,
+    @PrimaryKey val id: Long,
     val isAdult: Boolean,
     val backdropPath: String,
     val genreIds: List<Long>,

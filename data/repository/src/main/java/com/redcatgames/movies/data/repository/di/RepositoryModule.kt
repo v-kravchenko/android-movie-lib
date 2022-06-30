@@ -52,6 +52,7 @@ class RepositoryModule {
         movieCastDao: MovieCastDao,
         movieCrewDao: MovieCrewDao,
         genreDao: GenreDao,
+        personDao: PersonDao,
         networkService: NetworkService
     ): MovieRepository {
         return MovieRepositoryImpl(
@@ -60,6 +61,7 @@ class RepositoryModule {
             movieCastDao,
             movieCrewDao,
             genreDao,
+            personDao,
             networkService
         )
     }

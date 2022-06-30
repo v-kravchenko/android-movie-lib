@@ -7,11 +7,13 @@ interface MovieRepository {
     suspend fun deleteAllMovies(): Result<Int>
     suspend fun putMovie(movie: Movie)
     suspend fun putMovies(movies: List<Movie>)
+    suspend fun putPerson(person: Person)
 
     suspend fun loadPopularMovies(page: Int): Result<List<Movie>>
     suspend fun loadMovie(movieId: Long): Result<Unit>
     suspend fun loadMovieCredits(movieId: Long): Result<Unit>
     suspend fun loadMovieInfo(movieId: Long): Result<Unit>
+    suspend fun loadPerson(personId: Long): Result<Unit>
 
     fun popularMovies(): LiveData<List<Movie>>
     fun movie(movieId: Long): LiveData<Movie?>

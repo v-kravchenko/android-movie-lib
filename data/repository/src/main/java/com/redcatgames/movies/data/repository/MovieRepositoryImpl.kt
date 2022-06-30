@@ -7,10 +7,7 @@ import com.redcatgames.movies.data.local.dao.*
 import com.redcatgames.movies.data.local.mapper.*
 import com.redcatgames.movies.data.remote.NetworkService
 import com.redcatgames.movies.data.remote.adapter.NetworkResponse
-import com.redcatgames.movies.data.remote.mapper.toMovie
-import com.redcatgames.movies.data.remote.mapper.toMovieCastList
-import com.redcatgames.movies.data.remote.mapper.toMovieCrewList
-import com.redcatgames.movies.data.remote.mapper.toMovieGenre
+import com.redcatgames.movies.data.remote.mapper.*
 import com.redcatgames.movies.domain.model.*
 import com.redcatgames.movies.domain.repository.MovieRepository
 import com.redcatgames.movies.util.empty
@@ -26,6 +23,7 @@ class MovieRepositoryImpl(
     private val movieCastDao: MovieCastDao,
     private val movieCrewDao: MovieCrewDao,
     private val genreDao: GenreDao,
+    private val personDao: PersonDao,
     private val networkService: NetworkService
 ) : MovieRepository {
 
@@ -73,6 +71,10 @@ class MovieRepositoryImpl(
         }
     }
 
+    override suspend fun putPerson(person: Person) {
+        personDao.insert(person.toEntity())
+    }
+
     override suspend fun loadMovieInfo(movieId: Long): Result<Unit> {
         return coroutineScope {
             val jobList =
@@ -112,6 +114,19 @@ class MovieRepositoryImpl(
                 putMovie(movie)
                 putMovieGenres(movie, genres)
                 Result.success(Unit)
+            }
+            is NetworkResponse.ApiError -> Result.failure(Exception(response.body.statusMessage))
+            is NetworkResponse.NetworkError -> Result.failure(response.error)
+            is NetworkResponse.UnknownError -> Result.failure(response.error)
+        }
+    }
+
+    override suspend fun loadPerson(personId: Long): Result<Unit> {
+        return when (val response = networkService.getPerson(personId)) {
+            is NetworkResponse.Success -> {
+                val person = response.body.toPerson()
+                putPerson(person)
+                return Result.success(Unit)
             }
             is NetworkResponse.ApiError -> Result.failure(Exception(response.body.statusMessage))
             is NetworkResponse.NetworkError -> Result.failure(response.error)

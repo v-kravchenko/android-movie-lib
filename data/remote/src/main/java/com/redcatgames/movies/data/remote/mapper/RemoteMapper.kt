@@ -8,6 +8,7 @@ import com.redcatgames.movies.data.remote.response.discover.movie.DiscoverMovieR
 import com.redcatgames.movies.data.remote.response.movie.GenreResult
 import com.redcatgames.movies.data.remote.response.movie.MovieResult
 import com.redcatgames.movies.data.remote.response.movie.credits.MovieCreditsResult
+import com.redcatgames.movies.data.remote.response.person.PersonResult
 import com.redcatgames.movies.domain.model.*
 import com.redcatgames.movies.util.empty
 
@@ -125,3 +126,21 @@ fun MovieCreditsResult.toMovieCrewList(): List<MovieCrew> {
         }
         .toList()
 }
+
+fun PersonResult.toPerson() =
+    Person(
+        id,
+        isAdult,
+        alsoKnownAs,
+        biography,
+        birthDay,
+        deathDay,
+        gender,
+        homepage,
+        imdbId,
+        knownForDepartment,
+        name,
+        placeOfBirth,
+        popularity,
+        profilePath
+    )

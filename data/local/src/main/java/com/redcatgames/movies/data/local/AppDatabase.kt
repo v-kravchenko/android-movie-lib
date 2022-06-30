@@ -22,8 +22,9 @@ import com.redcatgames.movies.data.local.entity.*
             MovieEntity::class,
             MovieGenreEntity::class,
             MovieCastEntity::class,
-            MovieCrewEntity::class],
-    version = 2,
+            MovieCrewEntity::class,
+            PersonEntity::class],
+    version = 1,
     exportSchema = false
 )
 @TypeConverters(
@@ -43,6 +44,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract val movieGenreDao: MovieGenreDao
     abstract val movieCastDao: MovieCastDao
     abstract val movieCrewDao: MovieCrewDao
+    abstract val personDao: PersonDao
 
     companion object {
         const val DB_NAME = "MoviesDatabase.db"

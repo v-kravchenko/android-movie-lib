@@ -1,6 +1,6 @@
 package com.redcatgames.movies.data.remote.interceptor
 
-import com.redcatgames.movies.data.preferences.image.ImageConfigPreferences
+import com.redcatgames.movies.data.preferences.ImageConfigPreferences
 import javax.inject.Inject
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
@@ -14,12 +14,14 @@ constructor(private val imageConfigPreferences: ImageConfigPreferences) : Interc
     override fun intercept(chain: Interceptor.Chain): Response {
         var request: Request = chain.request()
 
-        val host = runBlocking { imageConfigPreferences.readConfig() }
+        val imageConfig = runBlocking { imageConfigPreferences.readConfig() }
 
         request =
             request
                 .newBuilder()
-                .url(request.url().toString().replace("https://localhost", host.secureBaseUrl))
+                .url(
+                    request.url().toString().replace("https://localhost", imageConfig.secureBaseUrl)
+                )
                 .build()
 
         return chain.proceed(request)

@@ -2,7 +2,7 @@ package com.redcatgames.movies.data.remote.di
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.redcatgames.movies.data.preferences.image.UserConfigPreferences
+import com.redcatgames.movies.data.preferences.UserConfigPreferences
 import com.redcatgames.movies.data.remote.NetworkService
 import com.redcatgames.movies.data.remote.adapter.NetworkResponseAdapterFactory
 import com.redcatgames.movies.data.remote.interceptor.BearerLoginInterceptor

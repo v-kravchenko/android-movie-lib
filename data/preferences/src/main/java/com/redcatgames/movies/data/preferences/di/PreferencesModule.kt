@@ -1,9 +1,9 @@
 package com.redcatgames.movies.data.preferences.di
 
 import android.content.Context
+import com.redcatgames.movies.data.preferences.ImageConfigPreferences
 import com.redcatgames.movies.data.preferences.Preferences
-import com.redcatgames.movies.data.preferences.image.ImageConfigPreferences
-import com.redcatgames.movies.data.preferences.image.UserConfigPreferences
+import com.redcatgames.movies.data.preferences.UserConfigPreferences
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

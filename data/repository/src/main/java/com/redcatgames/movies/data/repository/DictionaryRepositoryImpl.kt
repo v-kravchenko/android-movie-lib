@@ -6,8 +6,8 @@ import com.redcatgames.movies.data.local.dao.*
 import com.redcatgames.movies.data.local.mapper.toDictionaryInfo
 import com.redcatgames.movies.data.local.mapper.toEntity
 import com.redcatgames.movies.data.local.mapper.toLanguage
-import com.redcatgames.movies.data.preferences.image.ImageConfigPreferences
-import com.redcatgames.movies.data.preferences.image.UserConfigPreferences
+import com.redcatgames.movies.data.preferences.ImageConfigPreferences
+import com.redcatgames.movies.data.preferences.UserConfigPreferences
 import com.redcatgames.movies.data.remote.NetworkService
 import com.redcatgames.movies.data.remote.adapter.NetworkResponse
 import com.redcatgames.movies.data.remote.mapper.*
@@ -33,7 +33,8 @@ class DictionaryRepositoryImpl(
     override suspend fun loadConfig(): Result<Unit> {
         return when (val response = networkService.getConfiguration()) {
             is NetworkResponse.Success -> {
-                imageConfigPreferences.putConfig(response.body.images.toImageConfig())
+                val imageConfig = response.body.images.toImageConfig()
+                imageConfigPreferences.putConfig(imageConfig)
                 Result.success(Unit)
             }
             is NetworkResponse.ApiError -> Result.failure(Exception(response.body.statusMessage))

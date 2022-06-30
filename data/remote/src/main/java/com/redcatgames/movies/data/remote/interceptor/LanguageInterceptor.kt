@@ -1,6 +1,6 @@
 package com.redcatgames.movies.data.remote.interceptor
 
-import com.redcatgames.movies.data.preferences.image.UserConfigPreferences
+import com.redcatgames.movies.data.preferences.UserConfigPreferences
 import javax.inject.Inject
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor

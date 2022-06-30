@@ -1,8 +1,8 @@
 package com.redcatgames.movies.data.repository.di
 
 import com.redcatgames.movies.data.local.dao.*
-import com.redcatgames.movies.data.preferences.image.ImageConfigPreferences
-import com.redcatgames.movies.data.preferences.image.UserConfigPreferences
+import com.redcatgames.movies.data.preferences.ImageConfigPreferences
+import com.redcatgames.movies.data.preferences.UserConfigPreferences
 import com.redcatgames.movies.data.remote.NetworkService
 import com.redcatgames.movies.data.repository.DictionaryRepositoryImpl
 import com.redcatgames.movies.data.repository.MovieRepositoryImpl

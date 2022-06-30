@@ -1,10 +1,9 @@
-package com.redcatgames.movies.data.preferences.image
+package com.redcatgames.movies.data.preferences
 
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
-import com.redcatgames.movies.data.preferences.Preferences
 import com.redcatgames.movies.domain.model.UserConfig
 
 class UserConfigPreferences(private val preferences: Preferences) {

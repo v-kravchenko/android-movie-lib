@@ -1,5 +1,7 @@
 package com.redcatgames.movies.domain.model
 
+import com.redcatgames.movies.util.format
+
 data class Movie(
     val id: Long,
     val isAdult: Boolean,
@@ -15,4 +17,7 @@ data class Movie(
     val video: Boolean,
     val voteAverage: Double,
     val voteCount: Int
-)
+) {
+    val voteRating: String
+        get() = if (voteAverage > 0) voteAverage.format(1).replace(',', '.') else "n/a"
+}

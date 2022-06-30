@@ -12,4 +12,6 @@
     <string name="settings_title">Settings</string>
     <string name="settings_language_hint">Api language</string>
     <string name="settings_dark_mode_hint">Dark mode</string>
+    <string name="movie_backdrop_image">Movie backdrop image</string>
+    <string name="movie_poster_image">Movie poster image</string>
 </resources>

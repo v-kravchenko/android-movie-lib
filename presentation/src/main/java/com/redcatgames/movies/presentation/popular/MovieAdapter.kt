@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.redcatgames.movies.domain.model.Movie
 import com.redcatgames.movies.presentation.R
 import com.redcatgames.movies.presentation.databinding.LayoutMovieBinding
-import com.redcatgames.movies.util.format
 import com.redcatgmes.movies.baseui.util.loadByUrl
 
 class MovieAdapter : ListAdapter<Movie, Holder>(ItemDiffCallback()) {
@@ -36,8 +35,7 @@ class Holder(
     fun bind(item: Movie) {
         this.itemView.setOnClickListener { eventClickItem?.invoke(item) }
         itemBinding.textTitle.text = item.title
-        itemBinding.textRating.text =
-            if (item.voteAverage > 0) item.voteAverage.format(1).replace(',', '.') else "n/a"
+        itemBinding.textRating.text = item.voteRating
         itemBinding.posterImage.loadByUrl("w342${item.posterPath}") {
             placeholder(R.drawable.poster_placeholder_w342)
         }

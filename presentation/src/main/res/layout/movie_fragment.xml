@@ -28,7 +28,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
-                    tools:src="@drawable/poster_placeholder_w342" />
+                    tools:src="@drawable/poster_placeholder_w342"
+                    android:contentDescription="@string/movie_backdrop_image"/>
 
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="wrap_content"
@@ -43,7 +44,8 @@
                         android:layout_height="match_parent"
                         android:adjustViewBounds="true"
                         android:scaleType="fitStart"
-                        tools:src="@drawable/poster_placeholder_w342" />
+                        tools:src="@drawable/poster_placeholder_w342"
+                        android:contentDescription="@string/movie_poster_image" />
 
                 </com.google.android.material.card.MaterialCardView>
 

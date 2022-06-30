@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.redcatgames.movies.presentation.databinding.MovieFragmentBinding
-import com.redcatgames.movies.util.format
 import com.redcatgmes.movies.baseui.BaseFragment
 import com.redcatgmes.movies.baseui.util.autoCleared
 import com.redcatgmes.movies.baseui.util.loadByUrl
@@ -44,10 +43,7 @@ class MovieFragment : BaseFragment() {
             info?.let { movieInfo ->
                 binding.textTitle?.text = movieInfo.movie.title
 
-                binding.textRating?.text =
-                    if (movieInfo.movie.voteAverage > 0)
-                        movieInfo.movie.voteAverage.format(1).replace(',', '.')
-                    else "n/a"
+                binding.textRating.text = movieInfo.movie.voteRating
                 binding.text2.text = movieInfo.movie.overview
                 binding.posterImage.loadByUrl("w342${movieInfo.movie.posterPath}")
                 binding.text3.text = movieInfo.genres.joinToString { genre -> genre.genreName }

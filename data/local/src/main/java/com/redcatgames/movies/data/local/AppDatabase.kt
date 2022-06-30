@@ -5,10 +5,10 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.redcatgames.movies.data.local.converter.DateConverter
 import com.redcatgames.movies.data.local.converter.IntListConverter
-import com.redcatgames.movies.data.local.dao.*
-import com.redcatgames.movies.data.local.entity.*
 import com.redcatgames.movies.data.local.converter.LongListConverter
 import com.redcatgames.movies.data.local.converter.StringListConverter
+import com.redcatgames.movies.data.local.dao.*
+import com.redcatgames.movies.data.local.entity.*
 
 @Database(
     entities =

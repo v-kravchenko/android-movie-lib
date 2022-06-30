@@ -1,7 +1,6 @@
 plugins {
     id(BuildPlugins.ANDROID_LIB)
     id(BuildPlugins.KTFMT)
-    id(BuildPlugins.PARCELIZE)
     kotlin("android")
 }
 

@@ -1,9 +1,5 @@
 package com.redcatgames.movies.domain.model
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
-
-@Parcelize
 data class Movie(
     val id: Long,
     val isAdult: Boolean,
@@ -19,4 +15,4 @@ data class Movie(
     val video: Boolean,
     val voteAverage: Double,
     val voteCount: Int
-) : Parcelable
+)

@@ -1,6 +1,3 @@
 package com.redcatgames.movies.domain.model
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
-
-@Parcelize data class Timezone(val iso: String, val zoneName: String) : Parcelable
+data class Timezone(val iso: String, val zoneName: String)

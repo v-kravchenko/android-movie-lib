@@ -48,6 +48,8 @@ class MovieFragment : BaseFragment() {
                         cast.name
                     }
                 binding.text5.text = movieInfo.crews.joinToString(limit = 5) { crew -> crew.name }
+
+                binding.backdropImage?.loadByUrl("w780${movieInfo.movie.backdropPath}")
             }
         }
 

@@ -36,11 +36,11 @@ class Holder(
     fun bind(item: Movie) {
         this.itemView.setOnClickListener { eventClickItem?.invoke(item) }
         itemBinding.textTitle.text = item.title
-        itemBinding.textRating.text = item.voteAverage.format(1).replace(',', '.')
-        itemBinding.posterImage.loadByUrl(
-            "w342${item.posterPath}",
-            R.drawable.poster_placeholder_w342
-        )
+        itemBinding.textRating.text =
+            if (item.voteAverage > 0) item.voteAverage.format(1).replace(',', '.') else "n/a"
+        itemBinding.posterImage.loadByUrl("w342${item.posterPath}") {
+            placeholder(R.drawable.poster_placeholder_w342)
+        }
     }
 }
 

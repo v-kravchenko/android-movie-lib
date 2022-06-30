@@ -38,7 +38,6 @@
 
             <ImageView
                 android:id="@+id/poster_image"
-                android:src="@drawable/poster_placeholder_w500"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 

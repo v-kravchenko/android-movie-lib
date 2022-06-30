@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
-import com.redcatgames.movies.presentation.R
 import com.redcatgames.movies.presentation.databinding.MovieFragmentBinding
 import com.redcatgmes.movies.baseui.BaseFragment
 import com.redcatgmes.movies.baseui.util.autoCleared
@@ -42,10 +41,7 @@ class MovieFragment : BaseFragment() {
             info?.let { movieInfo ->
                 binding.topAppBar.title = movieInfo.movie.title
                 binding.text2.text = movieInfo.movie.overview
-                binding.posterImage.loadByUrl(
-                    "w500${movieInfo.movie.posterPath}",
-                    R.drawable.poster_placeholder_w500
-                )
+                binding.posterImage.loadByUrl("w342${movieInfo.movie.posterPath}")
                 binding.text3.text = movieInfo.genres.joinToString { genre -> genre.genreName }
                 binding.text4.text =
                     movieInfo.casts.sortedBy { it.order }.joinToString(limit = 5) { cast ->

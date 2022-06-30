@@ -2,8 +2,8 @@ package com.redcatgames.movies.di
 
 import android.content.Context
 import coil.ImageLoader
-import com.redcatgames.movies.data.preferences.source.image.ImageConfigPreferences
-import com.redcatgames.movies.data.remote.source.interceptor.ImageHostSelectionInterceptor
+import com.redcatgames.movies.data.preferences.image.ImageConfigPreferences
+import com.redcatgames.movies.data.remote.interceptor.ImageHostSelectionInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -2,15 +2,15 @@ package com.redcatgames.movies.data.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
-import com.redcatgames.movies.data.local.source.dao.*
-import com.redcatgames.movies.data.local.source.mapper.toDictionaryInfo
-import com.redcatgames.movies.data.local.source.mapper.toEntity
-import com.redcatgames.movies.data.local.source.mapper.toLanguage
-import com.redcatgames.movies.data.preferences.source.image.ImageConfigPreferences
-import com.redcatgames.movies.data.preferences.source.image.UserConfigPreferences
-import com.redcatgames.movies.data.remote.source.NetworkService
-import com.redcatgames.movies.data.remote.source.adapter.NetworkResponse
-import com.redcatgames.movies.data.remote.source.mapper.*
+import com.redcatgames.movies.data.local.dao.*
+import com.redcatgames.movies.data.local.mapper.toDictionaryInfo
+import com.redcatgames.movies.data.local.mapper.toEntity
+import com.redcatgames.movies.data.local.mapper.toLanguage
+import com.redcatgames.movies.data.preferences.image.ImageConfigPreferences
+import com.redcatgames.movies.data.preferences.image.UserConfigPreferences
+import com.redcatgames.movies.data.remote.NetworkService
+import com.redcatgames.movies.data.remote.adapter.NetworkResponse
+import com.redcatgames.movies.data.remote.mapper.*
 import com.redcatgames.movies.domain.model.*
 import com.redcatgames.movies.domain.repository.DictionaryRepository
 import com.redcatgames.movies.util.now

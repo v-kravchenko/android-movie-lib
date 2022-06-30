@@ -3,8 +3,8 @@ package com.redcatgames.movies.data.local.di
 import android.app.Application
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.redcatgames.movies.data.local.source.AppDatabase
-import com.redcatgames.movies.data.local.source.dao.*
+import com.redcatgames.movies.data.local.dao.*
+import com.redcatgames.movies.data.local.AppDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

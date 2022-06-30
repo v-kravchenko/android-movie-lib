@@ -2,11 +2,11 @@ package com.redcatgames.movies.data.remote.di
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.redcatgames.movies.data.preferences.source.image.UserConfigPreferences
-import com.redcatgames.movies.data.remote.source.NetworkService
-import com.redcatgames.movies.data.remote.source.adapter.NetworkResponseAdapterFactory
-import com.redcatgames.movies.data.remote.source.interceptor.BearerLoginInterceptor
-import com.redcatgames.movies.data.remote.source.interceptor.LanguageInterceptor
+import com.redcatgames.movies.data.preferences.image.UserConfigPreferences
+import com.redcatgames.movies.data.remote.NetworkService
+import com.redcatgames.movies.data.remote.adapter.NetworkResponseAdapterFactory
+import com.redcatgames.movies.data.remote.interceptor.BearerLoginInterceptor
+import com.redcatgames.movies.data.remote.interceptor.LanguageInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

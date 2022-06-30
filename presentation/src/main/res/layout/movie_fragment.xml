@@ -26,9 +26,9 @@
                 <ImageView
                     android:id="@+id/backdrop_image"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
+                    android:layout_height="match_parent"
                     android:scaleType="centerCrop"
-                    tools:src="@drawable/test_backdrop" />
+                    tools:src="@drawable/poster_placeholder_w342" />
 
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="wrap_content"
@@ -43,7 +43,7 @@
                         android:layout_height="match_parent"
                         android:adjustViewBounds="true"
                         android:scaleType="fitStart"
-                        tools:src="@drawable/test_poster" />
+                        tools:src="@drawable/poster_placeholder_w342" />
 
                 </com.google.android.material.card.MaterialCardView>
 

@@ -91,17 +91,28 @@ class MovieRepositoryImpl(
     }
 
     override suspend fun loadMovieCredits(movieId: Long): Result<Unit> {
-        return when (val response = networkService.getMovieCredits(movieId)) {
-            is NetworkResponse.Success -> {
-                val castList = response.body.toMovieCastList()
-                val crewList = response.body.toMovieCrewList()
-                putMovieCasts(movieId, castList)
-                putMovieCrews(movieId, crewList)
-                Result.success(Unit)
+        return coroutineScope {
+            when (val response = networkService.getMovieCredits(movieId)) {
+                is NetworkResponse.Success -> {
+                    listOf(
+                            async {
+                                val castList = response.body.toMovieCastList()
+                                putMovieCasts(movieId, castList)
+                            },
+                            async {
+                                val crewList = response.body.toMovieCrewList()
+                                putMovieCrews(movieId, crewList)
+                            }
+                        )
+                        .awaitAll()
+
+                    Result.success(Unit)
+                }
+                is NetworkResponse.ApiError ->
+                    Result.failure(Exception(response.body.statusMessage))
+                is NetworkResponse.NetworkError -> Result.failure(response.error)
+                is NetworkResponse.UnknownError -> Result.failure(response.error)
             }
-            is NetworkResponse.ApiError -> Result.failure(Exception(response.body.statusMessage))
-            is NetworkResponse.NetworkError -> Result.failure(response.error)
-            is NetworkResponse.UnknownError -> Result.failure(response.error)
         }
     }
 

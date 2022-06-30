@@ -32,7 +32,7 @@ constructor(
 
     fun loadNextPage() {
         viewModelScope.launch {
-            loadPopularMoviesUseCase((0..10).random()).run {
+            loadPopularMoviesUseCase((0..25).random()).run {
                 loadPopularMoviesEvent.postValue(this)
             }
         }

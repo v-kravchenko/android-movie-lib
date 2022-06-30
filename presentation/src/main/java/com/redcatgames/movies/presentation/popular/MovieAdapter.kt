@@ -1,14 +1,15 @@
 package com.redcatgames.movies.presentation.popular
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.redcatgames.movies.domain.model.Movie
-import com.redcatgames.movies.presentation.databinding.RowMovieBinding
+import com.redcatgames.movies.presentation.R
+import com.redcatgames.movies.presentation.databinding.LayoutMovieBinding
 import com.redcatgames.movies.util.format
+import com.redcatgmes.movies.baseui.util.loadByUrl
 
 class MovieAdapter : ListAdapter<Movie, Holder>(ItemDiffCallback()) {
 
@@ -19,8 +20,8 @@ class MovieAdapter : ListAdapter<Movie, Holder>(ItemDiffCallback()) {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        val binding: RowMovieBinding =
-            RowMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding: LayoutMovieBinding =
+            LayoutMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return Holder(binding, onItemClick)
     }
 
@@ -28,16 +29,18 @@ class MovieAdapter : ListAdapter<Movie, Holder>(ItemDiffCallback()) {
 }
 
 class Holder(
-    private val itemBinding: RowMovieBinding,
+    private val itemBinding: LayoutMovieBinding,
     private val eventClickItem: ((Movie) -> Unit)?
 ) : RecyclerView.ViewHolder(itemBinding.root) {
 
-    @SuppressLint("SetTextI18n")
     fun bind(item: Movie) {
         this.itemView.setOnClickListener { eventClickItem?.invoke(item) }
-        itemBinding.text1.text = item.title
-        itemBinding.text2.text = item.voteAverage.format(1)
-        itemBinding.text3.text = item.popularity.toString()
+        itemBinding.textTitle.text = item.title
+        itemBinding.textRating.text = item.voteAverage.format(1).replace(',', '.')
+        itemBinding.posterImage.loadByUrl(
+            "w342${item.posterPath}",
+            R.drawable.poster_placeholder_w342
+        )
     }
 }
 

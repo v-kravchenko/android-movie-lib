@@ -2,7 +2,6 @@ package com.redcatgames.movies.data.remote.interceptor
 
 import com.redcatgames.movies.data.preferences.ImageConfigPreferences
 import javax.inject.Inject
-import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
@@ -14,7 +13,7 @@ constructor(private val imageConfigPreferences: ImageConfigPreferences) : Interc
     override fun intercept(chain: Interceptor.Chain): Response {
         var request: Request = chain.request()
 
-        val imageConfig = runBlocking { imageConfigPreferences.readConfig() }
+        val imageConfig = imageConfigPreferences.currentConfig
 
         request =
             request

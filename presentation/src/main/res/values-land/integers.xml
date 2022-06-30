@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="grid_span_count" type="integer">2</item>
+    <item name="grid_span_count" type="integer">4</item>
 </resources>

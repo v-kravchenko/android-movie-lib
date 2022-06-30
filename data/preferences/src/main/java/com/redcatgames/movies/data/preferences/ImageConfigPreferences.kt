@@ -32,6 +32,9 @@ class ImageConfigPreferences(private val preferences: Preferences) {
         private const val DEFAULT_STILL_SIZES_VALUE = EMPTY_STRING
     }
 
+    var currentConfig: ImageConfig = ImageConfig.EMPTY
+        private set
+
     val imageConfig: LiveData<ImageConfig> =
         preferences.data.map {
             val keyBaseUrl = stringPreferencesKey(BASE_URL_KEY)
@@ -56,20 +59,25 @@ class ImageConfigPreferences(private val preferences: Preferences) {
 
     suspend fun readConfig(): ImageConfig {
         return ImageConfig(
-            preferences.getString(BASE_URL_KEY) ?: DEFAULT_BASE_URL_VALUE,
-            preferences.getString(SECURE_BASE_URL_KEY) ?: DEFAULT_SECURE_BASE_URL_VALUE,
-            (preferences.getString(BACKDROP_SIZES_KEY) ?: DEFAULT_BACKDROP_SIZES_VALUE).toList(
-                SEPARATOR
-            ),
-            (preferences.getString(LOGO_SIZES_KEY) ?: DEFAULT_LOGO_SIZES_VALUE).toList(SEPARATOR),
-            (preferences.getString(POSTER_SIZES_KEY) ?: DEFAULT_POSTER_SIZES_VALUE).toList(
-                SEPARATOR
-            ),
-            (preferences.getString(PROFILE_SIZES_KEY) ?: DEFAULT_PROFILE_SIZES_VALUE).toList(
-                SEPARATOR
-            ),
-            (preferences.getString(STILL_SIZES_KEY) ?: DEFAULT_STILL_SIZES_VALUE).toList(SEPARATOR)
-        )
+                preferences.getString(BASE_URL_KEY) ?: DEFAULT_BASE_URL_VALUE,
+                preferences.getString(SECURE_BASE_URL_KEY) ?: DEFAULT_SECURE_BASE_URL_VALUE,
+                (preferences.getString(BACKDROP_SIZES_KEY) ?: DEFAULT_BACKDROP_SIZES_VALUE).toList(
+                    SEPARATOR
+                ),
+                (preferences.getString(LOGO_SIZES_KEY) ?: DEFAULT_LOGO_SIZES_VALUE).toList(
+                    SEPARATOR
+                ),
+                (preferences.getString(POSTER_SIZES_KEY) ?: DEFAULT_POSTER_SIZES_VALUE).toList(
+                    SEPARATOR
+                ),
+                (preferences.getString(PROFILE_SIZES_KEY) ?: DEFAULT_PROFILE_SIZES_VALUE).toList(
+                    SEPARATOR
+                ),
+                (preferences.getString(STILL_SIZES_KEY) ?: DEFAULT_STILL_SIZES_VALUE).toList(
+                    SEPARATOR
+                )
+            )
+            .also { currentConfig = it }
     }
 
     suspend fun putConfig(imageConfig: ImageConfig) {
@@ -80,5 +88,6 @@ class ImageConfigPreferences(private val preferences: Preferences) {
         preferences.putString(POSTER_SIZES_KEY, imageConfig.posterSizes.fromList(SEPARATOR))
         preferences.putString(PROFILE_SIZES_KEY, imageConfig.profileSizes.fromList(SEPARATOR))
         preferences.putString(STILL_SIZES_KEY, imageConfig.stillSizes.fromList(SEPARATOR))
+        readConfig()
     }
 }

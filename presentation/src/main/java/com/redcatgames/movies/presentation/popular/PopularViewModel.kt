@@ -2,6 +2,7 @@ package com.redcatgames.movies.presentation.popular
 
 import android.content.Context
 import androidx.lifecycle.viewModelScope
+import com.redcatgames.movies.domain.model.ImageConfig
 import com.redcatgames.movies.domain.model.Movie
 import com.redcatgames.movies.domain.usecase.movie.GetPopularMoviesUseCase
 import com.redcatgames.movies.domain.usecase.movie.LoadPopularMoviesUseCase
@@ -18,7 +19,8 @@ class PopularViewModel
 constructor(
     @ApplicationContext appContext: Context,
     getPopularMoviesUseCase: GetPopularMoviesUseCase,
-    private val loadPopularMoviesUseCase: LoadPopularMoviesUseCase
+    private val loadPopularMoviesUseCase: LoadPopularMoviesUseCase,
+    private val imageConfig: ImageConfig
 ) : BaseViewModel(appContext) {
 
     val popularMovies = getPopularMoviesUseCase()

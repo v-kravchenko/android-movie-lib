@@ -3,7 +3,7 @@ package com.redcatgames.movies.presentation
 import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode
 import androidx.lifecycle.lifecycleScope
 import com.redcatgames.movies.domain.usecase.config.GetUserConfigUseCase
 import com.redcatgames.movies.presentation.databinding.ActivityMainBinding
@@ -23,9 +23,7 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        lifecycleScope.launch {
-            userConfigUseCase().run { AppCompatDelegate.setDefaultNightMode(uiDarkMode) }
-        }
+        lifecycleScope.launch { userConfigUseCase().run { setDefaultNightMode(uiDarkMode) } }
     }
 
     override fun onBackPressed() {

@@ -12,12 +12,7 @@ import kotlinx.coroutines.launch
 
 open class BaseFragment : Fragment() {
 
-//    protected fun <T> observe(liveData: LiveData<T>, observer: Observer<in T>) {
-//        liveData.observe(viewLifecycleOwner, observer)
-//    }
-
     fun <T> LiveData<T>.observe(observer: Observer<in T>) {
-//        observe(this, observer)
         this.observe(viewLifecycleOwner, observer)
     }
 
@@ -41,9 +36,4 @@ open class BaseFragment : Fragment() {
         findNavController().navigate(navDirections)
     }
 
-    protected fun isNightMode() = AppCompatDelegate.getDefaultNightMode() == MODE_NIGHT_YES
-
-    protected fun toggleNightMode() {
-        AppCompatDelegate.setDefaultNightMode(if (isNightMode()) MODE_NIGHT_NO else MODE_NIGHT_YES)
-    }
 }

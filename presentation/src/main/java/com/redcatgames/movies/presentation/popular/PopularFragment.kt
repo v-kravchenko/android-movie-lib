@@ -31,9 +31,10 @@ class PopularFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.movieList.adapter = adapter
         binding.topAppBar.setNavigationOnClickListener { navigateBack() }
-        adapter.onItemClick = {
-            navigateTo(PopularFragmentDirections.actionPopularFragmentToMovieFragment(it.id))
-        }
+        adapter.onItemClick =
+            {
+                navigateTo(PopularFragmentDirections.actionPopularFragmentToMovieFragment(it.id))
+            }
         setupObserver()
     }
 

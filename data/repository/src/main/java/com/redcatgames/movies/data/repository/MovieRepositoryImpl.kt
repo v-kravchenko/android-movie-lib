@@ -11,9 +11,7 @@ import com.redcatgames.movies.data.remote.mapper.*
 import com.redcatgames.movies.domain.model.*
 import com.redcatgames.movies.domain.repository.MovieRepository
 import com.redcatgames.movies.util.empty
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 
@@ -27,11 +25,12 @@ class MovieRepositoryImpl(
     private val networkService: NetworkService
 ) : MovieRepository {
 
-    override suspend fun deleteAllMovies(): Result<Int> {
-        val rowCount = movieDao.getCount()
-        movieDao.deleteAll()
-        return Result.success(rowCount)
-    }
+    override suspend fun deleteAllMovies(): Result<Int> =
+        withContext(Dispatchers.IO) {
+            val rowCount = movieDao.getCount()
+            movieDao.deleteAll()
+            Result.success(rowCount)
+        }
 
     override suspend fun putMovies(movies: List<Movie>) {
         movieDao.insertAll(movies.map { it.toEntity() })
@@ -75,20 +74,22 @@ class MovieRepositoryImpl(
         personDao.insert(person.toEntity())
     }
 
-    override suspend fun loadMovieInfo(movieId: Long): Result<Unit> {
-        return coroutineScope {
-            val jobList =
-                listOf(async { loadMovie(movieId) }, async { loadMovieCredits(movieId) }).awaitAll()
+    override suspend fun loadMovieInfo(movieId: Long): Result<Unit> =
+        withContext(Dispatchers.IO) {
+            coroutineScope {
+                val jobList =
+                    listOf(async { loadMovie(movieId) }, async { loadMovieCredits(movieId) })
+                        .awaitAll()
 
-            jobList.find { it.isFailure }?.let {
-                if (it.isFailure) {
-                    return@coroutineScope it
+                jobList.find { it.isFailure }?.let {
+                    if (it.isFailure) {
+                        return@coroutineScope it
+                    }
                 }
-            }
 
-            Result.success(Unit)
+                Result.success(Unit)
+            }
         }
-    }
 
     override suspend fun loadMovieCredits(movieId: Long): Result<Unit> {
         return coroutineScope {
@@ -145,37 +146,38 @@ class MovieRepositoryImpl(
         }
     }
 
-    override suspend fun loadPopularMovies(page: Int): Result<List<Movie>> {
+    override suspend fun loadPopularMovies(page: Int): Result<List<Movie>> =
+        withContext(Dispatchers.IO) {
+            when (val response = networkService.getPopularMovies(page)) {
+                is NetworkResponse.Success -> {
 
-        return when (val response = networkService.getPopularMovies(page)) {
-            is NetworkResponse.Success -> {
+                    val movies = response.body.movies.map { it.toMovie() }
+                    movieDao.replace(movies.map { it.toEntity() })
 
-                val movies = response.body.movies.map { it.toMovie() }
-                movieDao.replace(movies.map { it.toEntity() })
+                    val genreList = genreDao.getAll()
+                    val moveGenreList = mutableListOf<MovieGenre>()
+                    response.body.movies.forEach { movie ->
+                        moveGenreList.addAll(
+                            movie.genreIds.map {
+                                MovieGenre(
+                                    movieId = movie.id,
+                                    genreId = it,
+                                    genreName = genreList.find { genre -> genre.id == it }?.name
+                                            ?: String.empty
+                                )
+                            }
+                        )
+                    }
+                    putMoviesGenres(movies, moveGenreList)
 
-                val genreList = genreDao.getAll()
-                val moveGenreList = mutableListOf<MovieGenre>()
-                response.body.movies.forEach { movie ->
-                    moveGenreList.addAll(
-                        movie.genreIds.map {
-                            MovieGenre(
-                                movieId = movie.id,
-                                genreId = it,
-                                genreName = genreList.find { genre -> genre.id == it }?.name
-                                        ?: String.empty
-                            )
-                        }
-                    )
+                    Result.success(movies)
                 }
-                putMoviesGenres(movies, moveGenreList)
-
-                Result.success(movies)
+                is NetworkResponse.ApiError ->
+                    Result.failure(Exception(response.body.statusMessage))
+                is NetworkResponse.NetworkError -> Result.failure(response.error)
+                is NetworkResponse.UnknownError -> Result.failure(response.error)
             }
-            is NetworkResponse.ApiError -> Result.failure(Exception(response.body.statusMessage))
-            is NetworkResponse.NetworkError -> Result.failure(response.error)
-            is NetworkResponse.UnknownError -> Result.failure(response.error)
         }
-    }
 
     override fun popularMovies(): LiveData<List<Movie>> {
         return Transformations.map(movieDao.popular()) {

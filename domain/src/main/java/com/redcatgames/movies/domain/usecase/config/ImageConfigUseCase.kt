@@ -1,11 +1,10 @@
 package com.redcatgames.movies.domain.usecase.config
 
 import com.redcatgames.movies.domain.repository.DictionaryRepository
-import com.redcatgames.movies.domain.usecase.base.BaseUseCase
 import javax.inject.Inject
 
 class ImageConfigUseCase
 @Inject
-constructor(private val dictionaryRepository: DictionaryRepository) : BaseUseCase() {
+constructor(private val dictionaryRepository: DictionaryRepository) {
     operator fun invoke() = dictionaryRepository.imageConfig()
 }

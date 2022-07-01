@@ -14,9 +14,7 @@ import com.redcatgames.movies.data.remote.mapper.*
 import com.redcatgames.movies.domain.model.*
 import com.redcatgames.movies.domain.repository.DictionaryRepository
 import com.redcatgames.movies.util.now
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.*
 
 class DictionaryRepositoryImpl(
     private val userConfigPreferences: UserConfigPreferences,
@@ -109,31 +107,34 @@ class DictionaryRepositoryImpl(
         }
     }
 
-    override suspend fun loadDictionary(): Result<Unit> = coroutineScope {
-        deleteDictionaryInfo()
+    override suspend fun loadDictionary(): Result<Unit> =
+        withContext(Dispatchers.IO) {
+            coroutineScope {
+                deleteDictionaryInfo()
 
-        val jobList =
-            listOf(
-                    async { loadConfig() },
-                    async { loadCountries() },
-                    async { loadLanguages() },
-                    async { loadPrimaryTranslations() },
-                    async { loadTimezones() },
-                    async { loadGenres() }
-                )
-                .awaitAll()
+                val jobList =
+                    listOf(
+                            async { loadConfig() },
+                            async { loadCountries() },
+                            async { loadLanguages() },
+                            async { loadPrimaryTranslations() },
+                            async { loadTimezones() },
+                            async { loadGenres() }
+                        )
+                        .awaitAll()
 
-        jobList.find { job -> job.isFailure }?.let {
-            if (it.isFailure) {
-                return@coroutineScope it
+                jobList.find { job -> job.isFailure }?.let {
+                    if (it.isFailure) {
+                        return@coroutineScope it
+                    }
+                }
+
+                val row = DictionaryInfo(getUserConfig().apiLanguage, now())
+                putDictionaryInfo(row)
+
+                return@coroutineScope Result.success(Unit)
             }
         }
-
-        val row = DictionaryInfo(getUserConfig().apiLanguage, now())
-        putDictionaryInfo(row)
-
-        return@coroutineScope Result.success(Unit)
-    }
 
     override suspend fun putDictionaryInfo(dictionaryInfo: DictionaryInfo) {
         dictionaryDao.replace(dictionaryInfo.toEntity())
@@ -196,15 +197,17 @@ class DictionaryRepositoryImpl(
     }
 
     override suspend fun deleteAll() {
-        coroutineScope {
-            listOf(
-                    async { deleteAllCountries() },
-                    async { deleteAllLanguages() },
-                    async { deleteAllPrimaryTranslations() },
-                    async { deleteAllTimezones() },
-                    async { deleteAllGenres() }
-                )
-                .awaitAll()
+        withContext(Dispatchers.IO) {
+            coroutineScope {
+                listOf(
+                        async { deleteAllCountries() },
+                        async { deleteAllLanguages() },
+                        async { deleteAllPrimaryTranslations() },
+                        async { deleteAllTimezones() },
+                        async { deleteAllGenres() }
+                    )
+                    .awaitAll()
+            }
         }
     }
 
@@ -213,7 +216,8 @@ class DictionaryRepositoryImpl(
 
     override fun userConfig(): LiveData<UserConfig> = userConfigPreferences.userConfig
 
-    override suspend fun getUserConfig(): UserConfig = userConfigPreferences.readConfig()
+    override suspend fun getUserConfig(): UserConfig =
+        withContext(Dispatchers.IO) { userConfigPreferences.readConfig() }
 
     override fun imageConfig(): LiveData<ImageConfig> = imageConfigPreferences.imageConfig
 
@@ -223,19 +227,20 @@ class DictionaryRepositoryImpl(
         }
 
     override suspend fun getLanguage(iso: String): Language? =
-        languageDao.getByIso(iso)?.toLanguage()
+        withContext(Dispatchers.IO) { languageDao.getByIso(iso)?.toLanguage() }
 
-    override suspend fun putUserApiLanguage(language: Language) {
-        val userConfig = userConfigPreferences.readConfig().copy(apiLanguage = language.iso)
-        putConfig(userConfig)
-    }
+    override suspend fun putUserApiLanguage(language: Language) =
+        withContext(Dispatchers.IO) {
+            val userConfig = userConfigPreferences.readConfig().copy(apiLanguage = language.iso)
+            putConfig(userConfig)
+        }
 
-    override suspend fun putUserUiDarkMode(darkMode: Int) {
-        val userConfig = userConfigPreferences.readConfig().copy(uiDarkMode = darkMode)
-        putConfig(userConfig)
-    }
+    override suspend fun putUserUiDarkMode(darkMode: Int) =
+        withContext(Dispatchers.IO) {
+            val userConfig = userConfigPreferences.readConfig().copy(uiDarkMode = darkMode)
+            putConfig(userConfig)
+        }
 
-    private suspend fun putConfig(userConfig: UserConfig) {
-        userConfigPreferences.putConfig(userConfig)
-    }
+    private suspend fun putConfig(userConfig: UserConfig) =
+        withContext(Dispatchers.IO) { userConfigPreferences.putConfig(userConfig) }
 }

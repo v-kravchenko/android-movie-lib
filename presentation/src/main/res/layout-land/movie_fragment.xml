@@ -98,49 +98,44 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/text_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_marginTop="@dimen/dimen2"
+                android:text="@string/app_name"
+                android:textAppearance="@style/TextAppearance.Material3.TitleLarge" />
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+            <TextView
+                android:id="@+id/text3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen2"
+                android:text="@string/app_name"
+                android:textAppearance="@style/TextAppearance.Material3.LabelLarge" />
 
-                    <TextView
-                        android:id="@+id/text3"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/app_name"
-                        android:textAppearance="@style/TextAppearance.Material3.LabelLarge" />
+            <TextView
+                android:id="@+id/text2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name"
+                android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
 
-                    <TextView
-                        android:id="@+id/text2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/app_name"
-                        android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
+            <TextView
+                android:id="@+id/text4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen4"
+                android:text="@string/app_name"
+                android:textAppearance="@style/TextAppearance.Material3.LabelLarge" />
 
-                    <TextView
-                        android:id="@+id/text4"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/app_name"
-                        android:textAppearance="@style/TextAppearance.Material3.LabelLarge" />
-
-                    <TextView
-                        android:id="@+id/text5"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/app_name"
-                        android:textAppearance="@style/TextAppearance.Material3.LabelLarge" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
+            <TextView
+                android:id="@+id/text5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen4"
+                android:text="@string/app_name"
+                android:textAppearance="@style/TextAppearance.Material3.LabelLarge" />
 
         </LinearLayout>
 

@@ -55,7 +55,7 @@
                     android:layout_gravity="end"
                     android:layout_margin="@dimen/dimen2"
                     app:cardBackgroundColor="#A0311B92"
-                    app:cardCornerRadius="32dp">
+                    app:cardCornerRadius="16dp">
 
                     <TextView
                         android:id="@+id/text_rating"

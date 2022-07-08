@@ -41,7 +41,7 @@ class MovieFragment : BaseFragment() {
 
         viewModel.movieInfo.observe { info ->
             info?.let { movieInfo ->
-                binding.textTitle?.text = movieInfo.movie.title
+                binding.textTitle.text = movieInfo.movie.title
 
                 binding.textRating.text = movieInfo.movie.voteRating
                 binding.text2.text = movieInfo.movie.overview
@@ -51,7 +51,7 @@ class MovieFragment : BaseFragment() {
                     movieInfo.casts.sortedBy { it.order }.joinToString { cast -> cast.name }
                 binding.text5.text = movieInfo.crews.joinToString { crew -> crew.name }
 
-                binding.backdropImage?.loadByUrl("w780${movieInfo.movie.backdropPath}")
+                binding.backdropImage.loadByUrl("w780${movieInfo.movie.backdropPath}")
             }
         }
 

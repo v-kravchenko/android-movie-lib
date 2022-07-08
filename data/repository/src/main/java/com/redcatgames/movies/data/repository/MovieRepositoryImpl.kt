@@ -146,9 +146,9 @@ class MovieRepositoryImpl(
         }
     }
 
-    override suspend fun loadPopularMovies(page: Int): Result<List<Movie>> =
+    override suspend fun loadPopularMovies(): Result<List<Movie>> =
         withContext(Dispatchers.IO) {
-            when (val response = networkService.getPopularMovies(page)) {
+            when (val response = networkService.getPopularMovies(1)) {
                 is NetworkResponse.Success -> {
 
                     val movies = response.body.movies.map { it.toMovie() }

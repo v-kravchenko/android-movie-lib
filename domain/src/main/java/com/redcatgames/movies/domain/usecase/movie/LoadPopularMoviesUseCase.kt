@@ -4,5 +4,5 @@ import com.redcatgames.movies.domain.repository.MovieRepository
 import javax.inject.Inject
 
 class LoadPopularMoviesUseCase @Inject constructor(private val movieRepository: MovieRepository) {
-    suspend operator fun invoke(page: Int) = movieRepository.loadPopularMovies(page)
+    suspend operator fun invoke() = movieRepository.loadPopularMovies()
 }

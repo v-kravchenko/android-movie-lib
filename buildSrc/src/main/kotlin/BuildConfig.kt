@@ -12,10 +12,10 @@ object AppConfig {
 
 object Versions {
     const val gradleVersion = "7.2.1"
-    const val kotlinVersion = "1.7.0"
+    const val kotlinVersion = "1.7.10"
     const val hiltVersion = "2.42"
     const val roomVersion = "2.4.2"
-    const val kspVersion = "1.7.0-1.0.6"
+    const val kspVersion = "1.7.10-1.0.6"
     const val coroutines = "1.6.3"
     const val gradleVersions = "0.41.0"
     const val ktFmt = "0.8.0"

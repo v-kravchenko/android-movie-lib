@@ -22,6 +22,9 @@ class MovieFragment : BaseFragment() {
     private val castAdapter: CastAdapter by lazy {
         CastAdapter()
     }
+    private val crewAdapter: CrewAdapter by lazy {
+        CrewAdapter()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,6 +40,7 @@ class MovieFragment : BaseFragment() {
         binding.topAppBar.setNavigationOnClickListener { navigateBack() }
         binding.topAppBar.title = args.movieTitle
         binding.castList.adapter = castAdapter
+        binding.crewList.adapter = crewAdapter
 
         setupObserver()
     }
@@ -53,6 +57,7 @@ class MovieFragment : BaseFragment() {
                 binding.textGenres.text = movieInfo.genres.joinToString { genre -> genre.genreName }
 
                 castAdapter.setItems(movieInfo.casts.sortedBy { it.order })
+                crewAdapter.setItems(movieInfo.crews)
 
 //                binding.text4.text =
 //                    movieInfo.casts.sortedBy { it.order }.joinToString { cast -> cast.name }

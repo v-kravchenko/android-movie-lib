@@ -43,7 +43,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:adjustViewBounds="true"
-                        android:scaleType="fitStart"
+                        android:scaleType="fitXY"
                         tools:src="@drawable/poster_placeholder_w342"
                         android:contentDescription="@string/movie_poster_image" />
 
@@ -120,6 +120,13 @@
                 tools:text="Overview"
                 android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen2"
+                android:text="Cast list"
+                android:textAppearance="?attr/textAppearanceSubtitle1"/>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/cast_list"
                 android:layout_width="match_parent"
@@ -130,12 +137,20 @@
                 tools:listitem="@layout/layout_cast" />
 
             <TextView
-                android:id="@+id/text5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen4"
-                android:text="@string/app_name"
-                android:textAppearance="@style/TextAppearance.Material3.LabelLarge" />
+                android:layout_marginTop="@dimen/dimen2"
+                android:text="Crew list"
+                android:textAppearance="?attr/textAppearanceSubtitle1"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/crew_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                tools:listitem="@layout/layout_cast" />
 
         </LinearLayout>
 

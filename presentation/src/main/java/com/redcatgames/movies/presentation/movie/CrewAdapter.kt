@@ -5,37 +5,37 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.redcatgames.movies.domain.model.MovieCast
+import com.redcatgames.movies.domain.model.MovieCrew
 import com.redcatgames.movies.presentation.R
 import com.redcatgames.movies.presentation.databinding.LayoutCastBinding
 import com.redcatgmes.movies.baseui.util.loadByUrl
 
-class CastAdapter : ListAdapter<MovieCast, CastHolder>(CastDiffCallback()) {
+class CrewAdapter : ListAdapter<MovieCrew, CrewHolder>(CrewDiffCallback()) {
 
-    var onItemClick: ((MovieCast) -> Unit)? = null
+    var onItemClick: ((MovieCrew) -> Unit)? = null
 
-    fun setItems(list: List<MovieCast>) {
+    fun setItems(list: List<MovieCrew>) {
         submitList(list)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CastHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CrewHolder {
         val binding: LayoutCastBinding =
             LayoutCastBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return CastHolder(binding, onItemClick)
+        return CrewHolder(binding, onItemClick)
     }
 
-    override fun onBindViewHolder(castHolder: CastHolder, position: Int) = castHolder.bind(getItem(position))
+    override fun onBindViewHolder(CrewHolder: CrewHolder, position: Int) = CrewHolder.bind(getItem(position))
 }
 
-class CastHolder(
+class CrewHolder(
     private val itemBinding: LayoutCastBinding,
-    private val eventClickItem: ((MovieCast) -> Unit)?
+    private val eventClickItem: ((MovieCrew) -> Unit)?
 ) : RecyclerView.ViewHolder(itemBinding.root) {
 
-    fun bind(item: MovieCast) {
+    fun bind(item: MovieCrew) {
         this.itemView.setOnClickListener { eventClickItem?.invoke(item) }
         itemBinding.textTitle.text = item.name
-        itemBinding.textSubtitle.text = item.character
+        itemBinding.textSubtitle.text = item.job
         itemBinding.castImage.loadByUrl("w154${item.profilePath}") {
             placeholder(R.drawable.person_placeholder_w154)
             error(R.drawable.person_placeholder_w154)
@@ -43,12 +43,12 @@ class CastHolder(
     }
 }
 
-private class CastDiffCallback : DiffUtil.ItemCallback<MovieCast>() {
-    override fun areItemsTheSame(oldItem: MovieCast, newItem: MovieCast): Boolean {
+private class CrewDiffCallback : DiffUtil.ItemCallback<MovieCrew>() {
+    override fun areItemsTheSame(oldItem: MovieCrew, newItem: MovieCrew): Boolean {
         return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: MovieCast, newItem: MovieCast): Boolean {
+    override fun areContentsTheSame(oldItem: MovieCrew, newItem: MovieCrew): Boolean {
         return oldItem == newItem
     }
 }

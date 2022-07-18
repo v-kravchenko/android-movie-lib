@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.redcatgames.movies.domain.model.MovieCast
+import com.redcatgames.movies.presentation.R
 import com.redcatgames.movies.presentation.databinding.LayoutCastBinding
 import com.redcatgmes.movies.baseui.util.loadByUrl
 
@@ -34,8 +35,11 @@ class Holder(
     fun bind(item: MovieCast) {
         this.itemView.setOnClickListener { eventClickItem?.invoke(item) }
         itemBinding.textTitle.text = item.name
-        itemBinding.castImage.loadByUrl("w92${item.profilePath}")
-            //placeholder(R.drawable.poster_placeholder_w342)
+        itemBinding.textSubtitle.text = item.character
+        itemBinding.castImage.loadByUrl("w154${item.profilePath}") {
+            placeholder(R.drawable.person_placeholder_w154)
+            error(R.drawable.person_placeholder_w154)
+        }
     }
 }
 

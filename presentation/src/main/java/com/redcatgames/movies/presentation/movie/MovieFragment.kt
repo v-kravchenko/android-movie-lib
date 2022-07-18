@@ -52,7 +52,7 @@ class MovieFragment : BaseFragment() {
                 binding.posterImage.loadByUrl("w342${movieInfo.movie.posterPath}")
                 binding.textGenres.text = movieInfo.genres.joinToString { genre -> genre.genreName }
 
-                castAdapter.setItems(movieInfo.casts)
+                castAdapter.setItems(movieInfo.casts.sortedBy { it.order })
 
 //                binding.text4.text =
 //                    movieInfo.casts.sortedBy { it.order }.joinToString { cast -> cast.name }

@@ -35,8 +35,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_margin="@dimen/dimen2"
-                    android:elevation="8dp"
-                    app:cardCornerRadius="8dp">
+                    android:elevation="@dimen/dimen2"
+                    app:cardCornerRadius="@dimen/dimen2">
 
                     <ImageView
                         android:id="@+id/poster_image"
@@ -86,7 +86,7 @@
     <androidx.core.widget.NestedScrollView
         android:id="@+id/chapter_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:paddingStart="@dimen/dimen2"
         android:paddingEnd="@dimen/dimen2"
         android:paddingBottom="@dimen/dimen2"
@@ -102,56 +102,61 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen2"
-                android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+                android:textAppearance="?attr/textAppearanceTitleLarge"
                 tools:text="Movie title" />
 
             <TextView
                 android:id="@+id/text_genres"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen2"
-                android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
-                tools:text="Genre list" />
+                android:text="@string/movie_genre_list_title"
+                android:textAppearance="?attr/textAppearanceBody1" />
+
+            <TextView
+                android:id="@+id/text_release_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/movie_release_date_title"
+                android:textAppearance="?attr/textAppearanceBody1" />
 
             <TextView
                 android:id="@+id/text_overview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                android:layout_marginTop="@dimen/dimen2"
+                android:textAppearance="?attr/textAppearanceBody1"
                 tools:text="Overview" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen2"
-                android:text="Cast list"
+                android:text="@string/movie_cast_list_title"
                 android:textAppearance="?attr/textAppearanceSubtitle1" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/cast_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:nestedScrollingEnabled="true"
+                android:nestedScrollingEnabled="false"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 tools:listitem="@layout/layout_cast_crew" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen2"
-                android:text="Crew list"
+                android:text="@string/movie_crew_list_title"
                 android:textAppearance="?attr/textAppearanceSubtitle1" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/crew_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:nestedScrollingEnabled="true"
+                android:nestedScrollingEnabled="false"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 tools:listitem="@layout/layout_cast_crew" />
 
         </LinearLayout>

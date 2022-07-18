@@ -5,8 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.text.bold
+import androidx.core.text.buildSpannedString
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import com.redcatgames.movies.presentation.R
 import com.redcatgames.movies.presentation.databinding.MovieFragmentBinding
 import com.redcatgmes.movies.baseui.BaseFragment
 import com.redcatgmes.movies.baseui.util.autoCleared
@@ -61,7 +64,19 @@ class MovieFragment : BaseFragment() {
                 binding.textRating.text = movieInfo.movie.voteRating
                 binding.textOverview.text = movieInfo.movie.overview
                 binding.posterImage.loadByUrl("w342${movieInfo.movie.posterPath}")
-                binding.textGenres.text = movieInfo.genres.joinToString { genre -> genre.genreName }
+
+                binding.textGenres.text = buildSpannedString {
+                    bold {
+                        append(getString(R.string.movie_genre_list_title))
+                    }
+                    append(" ${movieInfo.genres.joinToString { genre -> genre.genreName }}")
+                }
+                binding.textReleaseDate.text = buildSpannedString {
+                    bold {
+                        append(getString(R.string.movie_release_date_title))
+                    }
+                    append(" ${movieInfo.movie.releaseDate}")
+                }
 
                 castAdapter.setItems(movieInfo.casts.sortedBy { it.order })
                 crewAdapter.setItems(movieInfo.crews)
@@ -73,10 +88,10 @@ class MovieFragment : BaseFragment() {
         viewModel.loadMovieEvent.observe {
             it.onFailure { throwable ->
                 Toast.makeText(
-                        requireContext(),
-                        "Error loading: ${throwable.localizedMessage}",
-                        Toast.LENGTH_SHORT
-                    )
+                    requireContext(),
+                    "Error loading: ${throwable.localizedMessage}",
+                    Toast.LENGTH_SHORT
+                )
                     .show()
             }
         }

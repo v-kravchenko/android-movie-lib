@@ -17,4 +17,8 @@
     <string name="person_birthday_title">Birthday:</string>
     <string name="person_original_name_title">Original name:</string>
     <string name="person_biography_title">Biography</string>
+    <string name="movie_genre_list_title">Genre list:</string>
+    <string name="movie_release_date_title">Release date:</string>
+    <string name="movie_cast_list_title">Cast list</string>
+    <string name="movie_crew_list_title">Crew list</string>
 </resources>

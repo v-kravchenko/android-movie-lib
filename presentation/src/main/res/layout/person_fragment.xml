@@ -67,7 +67,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dimen2"
-                        android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                        android:textAppearance="?attr/textAppearanceBody1"
                         android:text="@string/person_original_name_title" />
 
 
@@ -76,7 +76,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dimen2"
-                        android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                        android:textAppearance="?attr/textAppearanceBody1"
                         android:text="@string/person_birthday_title" />
 
                 </LinearLayout>
@@ -88,14 +88,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                android:textAppearance="?attr/textAppearanceBody1"
                 android:text="@string/person_biography_title" />
 
             <TextView
                 android:id="@+id/text_overview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                android:textAppearance="?attr/textAppearanceBody1"
                 tools:text="Overview" />
 
 

@@ -42,6 +42,13 @@ class MovieFragment : BaseFragment() {
         binding.castList.adapter = castAdapter
         binding.crewList.adapter = crewAdapter
 
+        castAdapter.onItemClick = {
+            navigateTo(MovieFragmentDirections.actionMovieFragmentToPersonFragment(it.id, it.name))
+        }
+        crewAdapter.onItemClick = {
+            navigateTo(MovieFragmentDirections.actionMovieFragmentToPersonFragment(it.id, it.name))
+        }
+
         setupObserver()
     }
 
@@ -58,10 +65,6 @@ class MovieFragment : BaseFragment() {
 
                 castAdapter.setItems(movieInfo.casts.sortedBy { it.order })
                 crewAdapter.setItems(movieInfo.crews)
-
-//                binding.text4.text =
-//                    movieInfo.casts.sortedBy { it.order }.joinToString { cast -> cast.name }
-//                binding.text5.text = movieInfo.crews.joinToString { crew -> crew.name }
 
                 binding.backdropImage.loadByUrl("w780${movieInfo.movie.backdropPath}")
             }

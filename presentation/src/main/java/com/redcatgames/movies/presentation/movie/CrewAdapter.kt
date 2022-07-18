@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.redcatgames.movies.domain.model.MovieCrew
 import com.redcatgames.movies.presentation.R
-import com.redcatgames.movies.presentation.databinding.LayoutCastBinding
+import com.redcatgames.movies.presentation.databinding.LayoutCastCrewBinding
 import com.redcatgmes.movies.baseui.util.loadByUrl
 
 class CrewAdapter : ListAdapter<MovieCrew, CrewHolder>(CrewDiffCallback()) {
@@ -19,8 +19,8 @@ class CrewAdapter : ListAdapter<MovieCrew, CrewHolder>(CrewDiffCallback()) {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CrewHolder {
-        val binding: LayoutCastBinding =
-            LayoutCastBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding: LayoutCastCrewBinding =
+            LayoutCastCrewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return CrewHolder(binding, onItemClick)
     }
 
@@ -28,7 +28,7 @@ class CrewAdapter : ListAdapter<MovieCrew, CrewHolder>(CrewDiffCallback()) {
 }
 
 class CrewHolder(
-    private val itemBinding: LayoutCastBinding,
+    private val itemBinding: LayoutCastCrewBinding,
     private val eventClickItem: ((MovieCrew) -> Unit)?
 ) : RecyclerView.ViewHolder(itemBinding.root) {
 

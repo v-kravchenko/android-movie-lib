@@ -165,3 +165,6 @@ fun Person.toEntity() =
         profilePath,
         now()
     )
+
+fun PersonEntity.toPerson() =
+    Person(id, isAdult, alsoKnownAs, biography, birthDay, deathDay, gender, homepage, imdbId, knownForDepartment, name, placeOfBirth, popularity, profilePath)

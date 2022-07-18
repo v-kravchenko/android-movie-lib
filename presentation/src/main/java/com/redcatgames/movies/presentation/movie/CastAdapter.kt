@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.redcatgames.movies.domain.model.MovieCast
 import com.redcatgames.movies.presentation.R
-import com.redcatgames.movies.presentation.databinding.LayoutCastBinding
+import com.redcatgames.movies.presentation.databinding.LayoutCastCrewBinding
 import com.redcatgmes.movies.baseui.util.loadByUrl
 
 class CastAdapter : ListAdapter<MovieCast, CastHolder>(CastDiffCallback()) {
@@ -19,8 +19,8 @@ class CastAdapter : ListAdapter<MovieCast, CastHolder>(CastDiffCallback()) {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CastHolder {
-        val binding: LayoutCastBinding =
-            LayoutCastBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding: LayoutCastCrewBinding =
+            LayoutCastCrewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return CastHolder(binding, onItemClick)
     }
 
@@ -28,7 +28,7 @@ class CastAdapter : ListAdapter<MovieCast, CastHolder>(CastDiffCallback()) {
 }
 
 class CastHolder(
-    private val itemBinding: LayoutCastBinding,
+    private val itemBinding: LayoutCastCrewBinding,
     private val eventClickItem: ((MovieCast) -> Unit)?
 ) : RecyclerView.ViewHolder(itemBinding.root) {
 

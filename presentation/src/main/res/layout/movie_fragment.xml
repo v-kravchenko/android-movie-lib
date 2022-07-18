@@ -27,9 +27,9 @@
                     android:id="@+id/backdrop_image"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:contentDescription="@string/movie_backdrop_image"
                     android:scaleType="centerCrop"
-                    tools:src="@drawable/poster_placeholder_w342"
-                    android:contentDescription="@string/movie_backdrop_image"/>
+                    tools:src="@drawable/poster_placeholder_w342" />
 
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="wrap_content"
@@ -43,9 +43,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:adjustViewBounds="true"
+                        android:contentDescription="@string/movie_poster_image"
                         android:scaleType="fitXY"
-                        tools:src="@drawable/poster_placeholder_w342"
-                        android:contentDescription="@string/movie_poster_image" />
+                        tools:src="@drawable/poster_placeholder_w342" />
 
                 </com.google.android.material.card.MaterialCardView>
 
@@ -102,55 +102,57 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen2"
-                tools:text="Movie title"
-                android:textAppearance="@style/TextAppearance.Material3.TitleLarge" />
+                android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+                tools:text="Movie title" />
 
             <TextView
                 android:id="@+id/text_genres"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen2"
-                tools:text="Genre list"
-                android:textAppearance="@style/TextAppearance.Material3.LabelLarge" />
+                android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
+                tools:text="Genre list" />
 
             <TextView
                 android:id="@+id/text_overview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:text="Overview"
-                android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
+                android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                tools:text="Overview" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen2"
                 android:text="Cast list"
-                android:textAppearance="?attr/textAppearanceSubtitle1"/>
+                android:textAppearance="?attr/textAppearanceSubtitle1" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/cast_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:nestedScrollingEnabled="true"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                tools:listitem="@layout/layout_cast" />
+                tools:listitem="@layout/layout_cast_crew" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen2"
                 android:text="Crew list"
-                android:textAppearance="?attr/textAppearanceSubtitle1"/>
+                android:textAppearance="?attr/textAppearanceSubtitle1" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/crew_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:nestedScrollingEnabled="true"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                tools:listitem="@layout/layout_cast" />
+                tools:listitem="@layout/layout_cast_crew" />
 
         </LinearLayout>
 

@@ -212,4 +212,8 @@ class MovieRepositoryImpl(
             it.map { movieCrewEntity -> movieCrewEntity.toMovieCrew() }
         }
     }
+
+    override fun person(personId: Long): LiveData<Person?> {
+        return Transformations.map(personDao.byId(personId)) { it?.toPerson() }
+    }
 }

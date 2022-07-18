@@ -52,6 +52,9 @@
         <argument
             android:name="movieTitle"
             app:argType="string" />
+        <action
+            android:id="@+id/action_movieFragment_to_personFragment"
+            app:destination="@id/personFragment" />
     </fragment>
 
     <fragment
@@ -65,5 +68,16 @@
             app:destination="@id/splashFragment"
             app:popUpTo="@id/homeFragment"
             app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/personFragment"
+        android:name="com.redcatgames.movies.presentation.person.PersonFragment"
+        android:label="PersonFragment" >
+        <argument
+            android:name="personId"
+            app:argType="long" />
+        <argument
+            android:name="personTitle"
+            app:argType="string" />
     </fragment>
 </navigation>

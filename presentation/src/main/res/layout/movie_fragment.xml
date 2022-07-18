@@ -102,31 +102,32 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen2"
-                android:text="@string/app_name"
+                tools:text="Movie title"
                 android:textAppearance="@style/TextAppearance.Material3.TitleLarge" />
 
             <TextView
-                android:id="@+id/text3"
+                android:id="@+id/text_genres"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen2"
-                android:text="@string/app_name"
+                tools:text="Genre list"
                 android:textAppearance="@style/TextAppearance.Material3.LabelLarge" />
 
             <TextView
-                android:id="@+id/text2"
+                android:id="@+id/text_overview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/app_name"
+                tools:text="Overview"
                 android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
 
-            <TextView
-                android:id="@+id/text4"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/cast_list"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen4"
-                android:text="@string/app_name"
-                android:textAppearance="@style/TextAppearance.Material3.LabelLarge" />
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                tools:listitem="@layout/layout_cast" />
 
             <TextView
                 android:id="@+id/text5"

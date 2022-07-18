@@ -19,6 +19,9 @@ class MovieFragment : BaseFragment() {
     private val args by navArgs<MovieFragmentArgs>()
     private val viewModel: MovieViewModel by viewModels()
     private var binding: MovieFragmentBinding by autoCleared()
+    private val castAdapter: CastAdapter by lazy {
+        CastAdapter()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,6 +36,7 @@ class MovieFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.topAppBar.setNavigationOnClickListener { navigateBack() }
         binding.topAppBar.title = args.movieTitle
+        binding.castList.adapter = castAdapter
 
         setupObserver()
     }
@@ -44,12 +48,15 @@ class MovieFragment : BaseFragment() {
                 binding.textTitle.text = movieInfo.movie.title
 
                 binding.textRating.text = movieInfo.movie.voteRating
-                binding.text2.text = movieInfo.movie.overview
+                binding.textOverview.text = movieInfo.movie.overview
                 binding.posterImage.loadByUrl("w342${movieInfo.movie.posterPath}")
-                binding.text3.text = movieInfo.genres.joinToString { genre -> genre.genreName }
-                binding.text4.text =
-                    movieInfo.casts.sortedBy { it.order }.joinToString { cast -> cast.name }
-                binding.text5.text = movieInfo.crews.joinToString { crew -> crew.name }
+                binding.textGenres.text = movieInfo.genres.joinToString { genre -> genre.genreName }
+
+                castAdapter.setItems(movieInfo.casts)
+
+//                binding.text4.text =
+//                    movieInfo.casts.sortedBy { it.order }.joinToString { cast -> cast.name }
+//                binding.text5.text = movieInfo.crews.joinToString { crew -> crew.name }
 
                 binding.backdropImage.loadByUrl("w780${movieInfo.movie.backdropPath}")
             }

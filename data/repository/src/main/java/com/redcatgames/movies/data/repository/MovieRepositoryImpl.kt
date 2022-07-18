@@ -1,5 +1,6 @@
 package com.redcatgames.movies.data.repository
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.asFlow
@@ -16,6 +17,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 
 class MovieRepositoryImpl(
+    appContext: Context,
     private val movieDao: MovieDao,
     private val movieGenreDao: MovieGenreDao,
     private val movieCastDao: MovieCastDao,
@@ -23,7 +25,7 @@ class MovieRepositoryImpl(
     private val genreDao: GenreDao,
     private val personDao: PersonDao,
     private val networkService: NetworkService
-) : MovieRepository {
+) : MovieRepository, BaseRepository(appContext) {
 
     override suspend fun deleteAllMovies(): Result<Int> =
         withContext(Dispatchers.IO) {

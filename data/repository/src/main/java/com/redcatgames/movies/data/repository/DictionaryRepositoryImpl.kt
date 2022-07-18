@@ -1,5 +1,6 @@
 package com.redcatgames.movies.data.repository
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import com.redcatgames.movies.data.local.dao.*
@@ -17,6 +18,7 @@ import com.redcatgames.movies.util.now
 import kotlinx.coroutines.*
 
 class DictionaryRepositoryImpl(
+    appContext: Context,
     private val userConfigPreferences: UserConfigPreferences,
     private val imageConfigPreferences: ImageConfigPreferences,
     private val dictionaryDao: DictionaryDao,
@@ -26,7 +28,7 @@ class DictionaryRepositoryImpl(
     private val timezoneDao: TimezoneDao,
     private val genreDao: GenreDao,
     private val networkService: NetworkService
-) : DictionaryRepository {
+) : DictionaryRepository, BaseRepository(appContext) {
 
     override suspend fun loadConfig(): Result<Unit> {
         return when (val response = networkService.getConfiguration()) {

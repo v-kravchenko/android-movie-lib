@@ -1,5 +1,6 @@
 package com.redcatgames.movies.data.repository.di
 
+import android.content.Context
 import com.redcatgames.movies.data.local.dao.*
 import com.redcatgames.movies.data.preferences.ImageConfigPreferences
 import com.redcatgames.movies.data.preferences.UserConfigPreferences
@@ -11,6 +12,7 @@ import com.redcatgames.movies.domain.repository.MovieRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
@@ -21,6 +23,7 @@ class RepositoryModule {
     @Singleton
     @Provides
     fun provideDictionaryRepository(
+        @ApplicationContext appContext: Context,
         userConfigPreferences: UserConfigPreferences,
         imageConfigPreferences: ImageConfigPreferences,
         dictionaryDao: DictionaryDao,
@@ -32,6 +35,7 @@ class RepositoryModule {
         networkService: NetworkService
     ): DictionaryRepository {
         return DictionaryRepositoryImpl(
+            appContext,
             userConfigPreferences,
             imageConfigPreferences,
             dictionaryDao,
@@ -47,6 +51,7 @@ class RepositoryModule {
     @Singleton
     @Provides
     fun provideMovieRepository(
+        @ApplicationContext appContext: Context,
         movieDao: MovieDao,
         movieGenreDao: MovieGenreDao,
         movieCastDao: MovieCastDao,
@@ -56,6 +61,7 @@ class RepositoryModule {
         networkService: NetworkService
     ): MovieRepository {
         return MovieRepositoryImpl(
+            appContext,
             movieDao,
             movieGenreDao,
             movieCastDao,

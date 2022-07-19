@@ -37,7 +37,7 @@ class Holder(
         itemBinding.textTitle.text = item.title
         itemBinding.textRating.text = item.voteRating
         itemBinding.posterImage.loadByUrl("w342${item.posterPath}") {
-            placeholder(R.drawable.poster_placeholder_w342)
+            placeholder(R.drawable.poster_placeholder_medium)
         }
     }
 }

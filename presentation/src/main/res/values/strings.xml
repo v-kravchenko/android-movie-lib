@@ -21,9 +21,10 @@
     <string name="movie_cast_list_title">Cast list</string>
     <string name="movie_crew_list_title">Crew list</string>
     <string name="home_popular_title">Popular movies</string>
-    <string name="home_button_popular">View more popular movies</string>
+    <string name="home_button_popular">View all</string>
     <string name="settings_dark_mode_title">Dark mode</string>
     <string name="settings_dark_mode_system">As system</string>
     <string name="settings_dark_mode_yes">Yes</string>
     <string name="settings_dark_mode_no">No</string>
+    <string name="home_most_votes_title">Movies with the most votes</string>
 </resources>

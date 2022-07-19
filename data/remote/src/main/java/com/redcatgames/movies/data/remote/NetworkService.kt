@@ -45,6 +45,11 @@ interface NetworkService {
         @Query("page") page: Int
     ): NetworkResponse<DiscoverMovieResult, BaseError>
 
+    @GET("discover/movie?sort_by=vote_count.desc")
+    suspend fun getMostVotesMovies(
+        @Query("page") page: Int
+    ): NetworkResponse<DiscoverMovieResult, BaseError>
+
     @GET("movie/{movieId}")
     suspend fun getMovie(@Path("movieId") movieId: Long): NetworkResponse<MovieResult, BaseError>
 

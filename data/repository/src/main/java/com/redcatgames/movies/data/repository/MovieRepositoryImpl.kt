@@ -181,8 +181,47 @@ class MovieRepositoryImpl(
             }
         }
 
+    override suspend fun loadMostVotesMovies(): Result<List<Movie>> =
+        withContext(Dispatchers.IO) {
+            when (val response = networkService.getMostVotesMovies(1)) {
+                is NetworkResponse.Success -> {
+
+                    val movies = response.body.movies.map { it.toMovie() }
+                    movieDao.replace(movies.map { it.toEntity() })
+
+                    val genreList = genreDao.getAll()
+                    val moveGenreList = mutableListOf<MovieGenre>()
+                    response.body.movies.forEach { movie ->
+                        moveGenreList.addAll(
+                            movie.genreIds.map {
+                                MovieGenre(
+                                    movieId = movie.id,
+                                    genreId = it,
+                                    genreName = genreList.find { genre -> genre.id == it }?.name
+                                        ?: String.empty
+                                )
+                            }
+                        )
+                    }
+                    putMoviesGenres(movies, moveGenreList)
+
+                    Result.success(movies)
+                }
+                is NetworkResponse.ApiError ->
+                    Result.failure(Exception(response.body.statusMessage))
+                is NetworkResponse.NetworkError -> Result.failure(response.error)
+                is NetworkResponse.UnknownError -> Result.failure(response.error)
+            }
+        }
+
     override fun popularMovies(): LiveData<List<Movie>> {
         return Transformations.map(movieDao.popular()) {
+            it.map { movieEntity -> movieEntity.toMovie() }
+        }
+    }
+
+    override fun mostVotesMovies(): LiveData<List<Movie>> {
+        return Transformations.map(movieDao.mostVotes()) {
             it.map { movieEntity -> movieEntity.toMovie() }
         }
     }

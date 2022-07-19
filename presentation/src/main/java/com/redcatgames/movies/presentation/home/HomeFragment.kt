@@ -19,8 +19,12 @@ class HomeFragment : BaseFragment() {
     private val viewModel: HomeViewModel by viewModels()
     private var binding: HomeFragmentBinding by autoCleared {
         it.popularList.adapter = null
+        it.mostVotesList.adapter = null
     }
     private val popularAdapter: MovieAdapter by lazy {
+        MovieAdapter()
+    }
+    private val mostVotesAdapter: MovieAdapter by lazy {
         MovieAdapter()
     }
 
@@ -37,7 +41,15 @@ class HomeFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.popularList.adapter = popularAdapter
+        binding.mostVotesList.adapter = mostVotesAdapter
+
         popularAdapter.onItemClick =
+            {
+                navigateTo(
+                    HomeFragmentDirections.actionHomeFragmentToMovieFragment(it.id, it.title)
+                )
+            }
+        mostVotesAdapter.onItemClick =
             {
                 navigateTo(
                     HomeFragmentDirections.actionHomeFragmentToMovieFragment(it.id, it.title)
@@ -63,8 +75,16 @@ class HomeFragment : BaseFragment() {
 
     private fun setupObserver() {
         viewModel.popularMovies.observe { popularAdapter.setItems(it) }
+        viewModel.mostVotesMovies.observe { mostVotesAdapter.setItems(it) }
 
         viewModel.loadPopularMoviesEvent.observe {
+            it.onFailure { errorMessage ->
+                Toast.makeText(requireContext(), "Error loading: $errorMessage", Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }
+
+        viewModel.loadMostVotesMoviesEvent.observe {
             it.onFailure { errorMessage ->
                 Toast.makeText(requireContext(), "Error loading: $errorMessage", Toast.LENGTH_SHORT)
                     .show()

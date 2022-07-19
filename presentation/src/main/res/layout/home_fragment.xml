@@ -16,8 +16,8 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:layout_scrollFlags="scroll|snap"
-            app:navigationIcon="@drawable/ic_menu_home_32"
             app:menu="@menu/home_menu"
+            app:navigationIcon="@drawable/ic_menu_home_32"
             app:title="@string/home_title" />
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -35,13 +35,26 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/text_title"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen1"
-                android:textAppearance="?attr/textAppearanceTitleLarge"
-                android:text="@string/home_popular_title" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/home_popular_title"
+                    android:layout_gravity="center_vertical"
+                    android:textAppearance="?attr/textAppearanceTitleLarge" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/button_popular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/home_button_popular" />
+
+            </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/popular_list"
@@ -52,12 +65,21 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/layout_movie_horizontal" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_popular"
-                android:layout_width="wrap_content"
+            <TextView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/home_button_popular"
-                android:layout_marginTop="@dimen/dimen2" />
+                android:layout_marginTop="@dimen/dimen1"
+                android:text="@string/home_most_votes_title"
+                android:textAppearance="?attr/textAppearanceTitleLarge" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/most_votes_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:nestedScrollingEnabled="false"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/layout_movie_horizontal" />
 
         </LinearLayout>
 

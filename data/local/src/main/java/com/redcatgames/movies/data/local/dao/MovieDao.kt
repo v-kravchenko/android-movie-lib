@@ -30,11 +30,14 @@ interface MovieDao {
     @Query("SELECT * FROM movies ORDER BY popularity DESC")
     fun popular(): LiveData<List<MovieEntity>>
 
+    @Query("SELECT * FROM movies ORDER BY voteCount DESC")
+    fun mostVotes(): LiveData<List<MovieEntity>>
+
     @Query("SELECT COUNT(1) FROM movies") suspend fun getCount(): Int
 
     @Transaction
     suspend fun replace(movies: List<MovieEntity>) {
-        deleteAll()
+        //deleteAll()
         insertAll(movies)
     }
 }

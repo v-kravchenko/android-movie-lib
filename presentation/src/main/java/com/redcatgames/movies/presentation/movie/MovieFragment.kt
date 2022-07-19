@@ -63,7 +63,10 @@ class MovieFragment : BaseFragment() {
 
                 binding.textRating.text = movieInfo.movie.voteRating
                 binding.textOverview.text = movieInfo.movie.overview
-                binding.posterImage.loadByUrl(movieInfo.movie.getPosterUri(PosterSize.SMALL))
+                binding.posterImage.loadByUrl(movieInfo.movie.getPosterUri(PosterSize.SMALL)) {
+                    placeholder(R.drawable.poster_placeholder_medium)
+                    error(R.drawable.poster_placeholder_medium)
+                }
 
                 binding.textGenres.text = buildSpannedString {
                     bold {

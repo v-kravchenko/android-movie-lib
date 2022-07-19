@@ -40,6 +40,7 @@ class Holder(
         itemBinding.textRating.text = item.voteRating
         itemBinding.posterImage.loadByUrl(item.getPosterUri(PosterSize.MEDIUM)) {
             placeholder(R.drawable.poster_placeholder_medium)
+            error(R.drawable.poster_placeholder_medium)
         }
     }
 }

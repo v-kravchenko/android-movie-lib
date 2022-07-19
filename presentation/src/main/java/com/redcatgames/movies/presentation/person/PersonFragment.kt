@@ -42,7 +42,7 @@ class PersonFragment : BaseFragment() {
         binding.personPhoto.setImageDrawable(
             ContextCompat.getDrawable(
                 requireContext(),
-                if (args.gender == 2) R.drawable.person_placeholder_medium_male else R.drawable.person_placeholder_w154_female
+                if (args.gender == 2) R.drawable.person_placeholder_medium_male else R.drawable.person_placeholder_medium_female
             )
         )
         setupObserver()
@@ -70,7 +70,7 @@ class PersonFragment : BaseFragment() {
                 }
                 binding.personPhoto.loadByUrl(personInfo.getProfileUri(ProfileSize.MEDIUM)) {
                     val resId = if (personInfo.gender == 2) R.drawable.person_placeholder_medium_male
-                    else R.drawable.person_placeholder_w154_female
+                    else R.drawable.person_placeholder_medium_female
 
                     placeholder(resId)
                     error(resId)

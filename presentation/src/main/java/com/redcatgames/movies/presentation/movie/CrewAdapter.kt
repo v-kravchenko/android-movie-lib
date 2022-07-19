@@ -40,7 +40,7 @@ class CrewHolder(
         itemBinding.textSubtitle.text = item.job
         itemBinding.castImage.loadByUrl(item.getProfileUri(ProfileSize.MEDIUM)) {
             val resId = if (item.gender == 2) R.drawable.person_placeholder_medium_male
-            else R.drawable.person_placeholder_w154_female
+            else R.drawable.person_placeholder_medium_female
 
             placeholder(resId)
             error(resId)

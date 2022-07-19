@@ -7,13 +7,21 @@
     <item name="backdrop_large_w" type="dimen">1280dp</item>
     <item name="backdrop_large_h" type="dimen">720dp</item>
 
+    <item name="poster_extra_small_w" type="dimen">154dp</item>
+    <item name="poster_extra_small_h" type="dimen">231dp</item>
     <item name="poster_small_w" type="dimen">185dp</item>
     <item name="poster_small_h" type="dimen">278dp</item>
     <item name="poster_medium_w" type="dimen">342dp</item>
-    <item name="poster_medium_h" type="dimen">507dp</item>
+    <item name="poster_medium_h" type="dimen">513dp</item>
+    <item name="poster_large_w" type="dimen">500dp</item>
+    <item name="poster_large_h" type="dimen">750dp</item>
+    <item name="poster_extra_large_w" type="dimen">780dp</item>
+    <item name="poster_extra_large_h" type="dimen">1170dp</item>
 
-    <item name="profile_medium_w" type="dimen">154dp</item>
-    <item name="profile_medium_h" type="dimen">231dp</item>
-
-    <item name="movie_backdrop_height" type="dimen">250dp</item>
+    <item name="profile_small_w" type="dimen">45dp</item>
+    <item name="profile_small_h" type="dimen">68dp</item>
+    <item name="profile_medium_w" type="dimen">185dp</item>
+    <item name="profile_medium_h" type="dimen">278dp</item>
+    <item name="profile_large_w" type="dimen">421dp</item>
+    <item name="profile_large_h" type="dimen">632dp</item>
 </resources>

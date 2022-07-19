@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="backdrop_height" type="dimen">250dp</item>
+    <dimen name="cast_photo_height">150dp</dimen>
+    <dimen name="movie_photo_height">150dp</dimen>
+</resources>

@@ -13,9 +13,9 @@
         <ImageView
             android:id="@+id/cast_image"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="@dimen/cast_photo_height"
             android:scaleType="centerCrop"
-            android:src="@drawable/person_placeholder_w154_male"
+            android:src="@drawable/person_placeholder_medium_male"
             tools:ignore="ContentDescription" />
 
         <LinearLayout

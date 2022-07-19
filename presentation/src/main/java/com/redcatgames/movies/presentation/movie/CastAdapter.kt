@@ -6,8 +6,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.redcatgames.movies.domain.model.MovieCast
+import com.redcatgames.movies.presentation.ProfileSize
 import com.redcatgames.movies.presentation.R
 import com.redcatgames.movies.presentation.databinding.LayoutCastCrewBinding
+import com.redcatgames.movies.presentation.getProfileUri
 import com.redcatgmes.movies.baseui.util.loadByUrl
 
 class CastAdapter : ListAdapter<MovieCast, CastHolder>(CastDiffCallback()) {
@@ -37,7 +39,7 @@ class CastHolder(
         this.itemView.setOnClickListener { eventClickItem?.invoke(item) }
         itemBinding.textTitle.text = item.name
         itemBinding.textSubtitle.text = item.character
-        itemBinding.castImage.loadByUrl("w154${item.profilePath}") {
+        itemBinding.castImage.loadByUrl(item.getProfileUri(ProfileSize.MEDIUM)) {
 
             val resId = if (item.gender == 2) R.drawable.person_placeholder_w154_male
             else R.drawable.person_placeholder_w154_female

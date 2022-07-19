@@ -9,7 +9,7 @@ import androidx.core.text.bold
 import androidx.core.text.buildSpannedString
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
-import com.redcatgames.movies.presentation.R
+import com.redcatgames.movies.presentation.*
 import com.redcatgames.movies.presentation.databinding.MovieFragmentBinding
 import com.redcatgmes.movies.baseui.BaseFragment
 import com.redcatgmes.movies.baseui.util.autoCleared
@@ -63,7 +63,7 @@ class MovieFragment : BaseFragment() {
 
                 binding.textRating.text = movieInfo.movie.voteRating
                 binding.textOverview.text = movieInfo.movie.overview
-                binding.posterImage.loadByUrl("w185${movieInfo.movie.posterPath}")
+                binding.posterImage.loadByUrl(movieInfo.movie.getPosterUri(PosterSize.SMALL))
 
                 binding.textGenres.text = buildSpannedString {
                     bold {
@@ -81,7 +81,7 @@ class MovieFragment : BaseFragment() {
                 castAdapter.setItems(movieInfo.casts.sortedBy { it.order })
                 crewAdapter.setItems(movieInfo.crews)
 
-                binding.backdropImage.loadByUrl("w780${movieInfo.movie.backdropPath}")
+                binding.backdropImage.loadByUrl(movieInfo.movie.getBackdropUri(BackdropSize.MEDIUM))
             }
         }
 

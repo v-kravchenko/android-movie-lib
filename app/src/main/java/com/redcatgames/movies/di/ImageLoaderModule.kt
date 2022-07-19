@@ -36,8 +36,8 @@ class ImageLoaderModule {
         val builder = ImageLoader.Builder(context).crossfade(true).okHttpClient(httpClient)
 
         if (BuildConfig.DEBUG) {
-            //            builder.diskCache(null)
-            //            builder.memoryCache(null)
+                        builder.diskCache(null)
+                        builder.memoryCache(null)
         }
 
         return builder.build()

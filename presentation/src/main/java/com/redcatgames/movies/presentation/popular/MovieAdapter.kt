@@ -6,8 +6,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.redcatgames.movies.domain.model.Movie
+import com.redcatgames.movies.presentation.PosterSize
 import com.redcatgames.movies.presentation.R
 import com.redcatgames.movies.presentation.databinding.LayoutMovieBinding
+import com.redcatgames.movies.presentation.getPosterUri
 import com.redcatgmes.movies.baseui.util.loadByUrl
 
 class MovieAdapter : ListAdapter<Movie, Holder>(ItemDiffCallback()) {
@@ -36,7 +38,7 @@ class Holder(
         this.itemView.setOnClickListener { eventClickItem?.invoke(item) }
         itemBinding.textTitle.text = item.title
         itemBinding.textRating.text = item.voteRating
-        itemBinding.posterImage.loadByUrl("w342${item.posterPath}") {
+        itemBinding.posterImage.loadByUrl(item.getPosterUri(PosterSize.MEDIUM)) {
             placeholder(R.drawable.poster_placeholder_medium)
         }
     }

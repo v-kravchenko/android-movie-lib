@@ -10,8 +10,10 @@ import androidx.core.text.bold
 import androidx.core.text.buildSpannedString
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import com.redcatgames.movies.presentation.ProfileSize
 import com.redcatgames.movies.presentation.R
 import com.redcatgames.movies.presentation.databinding.PersonFragmentBinding
+import com.redcatgames.movies.presentation.getProfileUri
 import com.redcatgmes.movies.baseui.BaseFragment
 import com.redcatgmes.movies.baseui.util.autoCleared
 import com.redcatgmes.movies.baseui.util.loadByUrl
@@ -66,7 +68,7 @@ class PersonFragment : BaseFragment() {
                 binding.textOverview.text = personInfo.biography.ifEmpty {
                     "-"
                 }
-                binding.personPhoto.loadByUrl("w154${personInfo.profilePath}") {
+                binding.personPhoto.loadByUrl(personInfo.getProfileUri(ProfileSize.MEDIUM)) {
                     val resId = if (personInfo.gender == 2) R.drawable.person_placeholder_w154_male
                     else R.drawable.person_placeholder_w154_female
 

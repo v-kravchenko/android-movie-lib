@@ -14,6 +14,7 @@
     <string name="movie_backdrop_image">Movie backdrop image</string>
     <string name="movie_poster_image">Movie poster image</string>
     <string name="person_birthday_title">Birthday:</string>
+    <string name="person_death_title">Day of death:</string>
     <string name="person_original_name_title">Original name:</string>
     <string name="person_biography_title">Biography</string>
     <string name="movie_genre_list_title">Genre list:</string>

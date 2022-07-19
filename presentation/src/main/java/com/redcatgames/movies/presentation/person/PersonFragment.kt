@@ -18,6 +18,7 @@ import com.redcatgmes.movies.baseui.BaseFragment
 import com.redcatgmes.movies.baseui.util.autoCleared
 import com.redcatgmes.movies.baseui.util.loadByUrl
 import dagger.hilt.android.AndroidEntryPoint
+import java.text.SimpleDateFormat
 
 @AndroidEntryPoint
 class PersonFragment : BaseFragment() {
@@ -25,6 +26,7 @@ class PersonFragment : BaseFragment() {
     private val args by navArgs<PersonFragmentArgs>()
     private val viewModel: PersonViewModel by viewModels()
     private var binding: PersonFragmentBinding by autoCleared()
+    private val dateFormat: SimpleDateFormat = SimpleDateFormat("dd.MM.yyyy")
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -62,7 +64,22 @@ class PersonFragment : BaseFragment() {
                     bold {
                         append(getString(R.string.person_birthday_title))
                     }
-                    append(" ${(personInfo.birthDay ?: "-")}")
+                    val birthDay = personInfo.birthDay
+                    if (birthDay == null) {
+                        append(" -")
+                    } else {
+                        append(" ${dateFormat.format(birthDay)}")
+                    }
+                }
+
+                binding.textDeathday.text = buildSpannedString {
+                    val deathDay = personInfo.deathDay
+                    if (deathDay != null) {
+                        bold {
+                            append(getString(R.string.person_death_title))
+                        }
+                        append(" ${dateFormat.format(deathDay)}")
+                    }
                 }
 
                 binding.textOverview.text = personInfo.biography.ifEmpty {

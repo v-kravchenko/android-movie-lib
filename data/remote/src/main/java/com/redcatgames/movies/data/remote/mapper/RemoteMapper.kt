@@ -128,19 +128,4 @@ fun MovieCreditsResult.toMovieCrewList(): List<MovieCrew> {
 }
 
 fun PersonResult.toPerson() =
-    Person(
-        id,
-        isAdult,
-        alsoKnownAs,
-        biography,
-        birthDay,
-        deathDay,
-        gender,
-        homepage,
-        imdbId,
-        knownForDepartment,
-        name,
-        placeOfBirth,
-        popularity,
-        profilePath
-    )
+    Person(id, isAdult, alsoKnownAs, biography, birthDay, deathDay, gender, homepage, imdbId, knownForDepartment, name, placeOfBirth, popularity, profilePath)

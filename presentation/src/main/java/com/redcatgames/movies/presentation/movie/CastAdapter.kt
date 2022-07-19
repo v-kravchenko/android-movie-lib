@@ -24,7 +24,8 @@ class CastAdapter : ListAdapter<MovieCast, CastHolder>(CastDiffCallback()) {
         return CastHolder(binding, onItemClick)
     }
 
-    override fun onBindViewHolder(castHolder: CastHolder, position: Int) = castHolder.bind(getItem(position))
+    override fun onBindViewHolder(castHolder: CastHolder, position: Int) =
+        castHolder.bind(getItem(position))
 }
 
 class CastHolder(
@@ -37,8 +38,12 @@ class CastHolder(
         itemBinding.textTitle.text = item.name
         itemBinding.textSubtitle.text = item.character
         itemBinding.castImage.loadByUrl("w154${item.profilePath}") {
-            placeholder(R.drawable.person_placeholder_w154)
-            error(R.drawable.person_placeholder_w154)
+
+            val resId = if (item.gender == 2) R.drawable.person_placeholder_w154_male
+            else R.drawable.person_placeholder_w154_female
+
+            placeholder(resId)
+            error(resId)
         }
     }
 }

@@ -79,5 +79,8 @@
         <argument
             android:name="personTitle"
             app:argType="string" />
+        <argument
+            android:name="gender"
+            app:argType="integer" />
     </fragment>
 </navigation>

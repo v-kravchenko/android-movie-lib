@@ -1,12 +1,11 @@
 package com.redcatgames.movies.presentation.person
 
 import android.os.Bundle
-import android.text.SpannableString
-import android.text.SpannedString
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.text.bold
 import androidx.core.text.buildSpannedString
 import androidx.fragment.app.viewModels
@@ -38,6 +37,12 @@ class PersonFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.topAppBar.setNavigationOnClickListener { navigateBack() }
         binding.topAppBar.title = args.personTitle
+        binding.personPhoto.setImageDrawable(
+            ContextCompat.getDrawable(
+                requireContext(),
+                if (args.gender == 2) R.drawable.person_placeholder_w154_male else R.drawable.person_placeholder_w154_female
+            )
+        )
         setupObserver()
     }
 
@@ -62,8 +67,11 @@ class PersonFragment : BaseFragment() {
                     "-"
                 }
                 binding.personPhoto.loadByUrl("w154${personInfo.profilePath}") {
-                    placeholder(R.drawable.person_placeholder_w154)
-                    error(R.drawable.person_placeholder_w154)
+                    val resId = if (personInfo.gender == 2) R.drawable.person_placeholder_w154_male
+                    else R.drawable.person_placeholder_w154_female
+
+                    placeholder(resId)
+                    error(resId)
                 }
             }
         }

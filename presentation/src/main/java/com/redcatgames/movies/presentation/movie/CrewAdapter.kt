@@ -37,8 +37,11 @@ class CrewHolder(
         itemBinding.textTitle.text = item.name
         itemBinding.textSubtitle.text = item.job
         itemBinding.castImage.loadByUrl("w154${item.profilePath}") {
-            placeholder(R.drawable.person_placeholder_w154)
-            error(R.drawable.person_placeholder_w154)
+            val resId = if (item.gender == 2) R.drawable.person_placeholder_w154_male
+            else R.drawable.person_placeholder_w154_female
+
+            placeholder(resId)
+            error(resId)
         }
     }
 }

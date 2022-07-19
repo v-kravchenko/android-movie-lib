@@ -22,12 +22,8 @@ class MovieFragment : BaseFragment() {
     private val args by navArgs<MovieFragmentArgs>()
     private val viewModel: MovieViewModel by viewModels()
     private var binding: MovieFragmentBinding by autoCleared()
-    private val castAdapter: CastAdapter by lazy {
-        CastAdapter()
-    }
-    private val crewAdapter: CrewAdapter by lazy {
-        CrewAdapter()
-    }
+    private val castAdapter: CastAdapter = CastAdapter()
+    private val crewAdapter: CrewAdapter = CrewAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,16 +36,17 @@ class MovieFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         binding.topAppBar.setNavigationOnClickListener { navigateBack() }
         binding.topAppBar.title = args.movieTitle
         binding.castList.adapter = castAdapter
         binding.crewList.adapter = crewAdapter
 
         castAdapter.onItemClick = {
-            navigateTo(MovieFragmentDirections.actionMovieFragmentToPersonFragment(it.id, it.name))
+            navigateTo(MovieFragmentDirections.actionMovieFragmentToPersonFragment(it.id, it.name, it.gender))
         }
         crewAdapter.onItemClick = {
-            navigateTo(MovieFragmentDirections.actionMovieFragmentToPersonFragment(it.id, it.name))
+            navigateTo(MovieFragmentDirections.actionMovieFragmentToPersonFragment(it.id, it.name, it.gender))
         }
 
         setupObserver()

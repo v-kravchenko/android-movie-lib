@@ -52,7 +52,7 @@
                         android:layout_height="wrap_content"
                         android:scaleType="fitCenter"
                         android:adjustViewBounds="true"
-                        android:src="@drawable/person_placeholder_w154"
+                        android:src="@drawable/person_placeholder_w154_male"
                         tools:ignore="ContentDescription" />
 
                 </com.google.android.material.card.MaterialCardView>

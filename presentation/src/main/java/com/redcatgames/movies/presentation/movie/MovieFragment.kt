@@ -15,6 +15,7 @@ import com.redcatgmes.movies.baseui.BaseFragment
 import com.redcatgmes.movies.baseui.util.autoCleared
 import com.redcatgmes.movies.baseui.util.loadByUrl
 import dagger.hilt.android.AndroidEntryPoint
+import java.text.SimpleDateFormat
 
 @AndroidEntryPoint
 class MovieFragment : BaseFragment() {
@@ -27,6 +28,7 @@ class MovieFragment : BaseFragment() {
     }
     private val castAdapter: CastAdapter = CastAdapter()
     private val crewAdapter: CrewAdapter = CrewAdapter()
+    private val dateFormat: SimpleDateFormat = SimpleDateFormat("dd.MM.yyyy")
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -78,7 +80,12 @@ class MovieFragment : BaseFragment() {
                     bold {
                         append(getString(R.string.movie_release_date_title))
                     }
-                    append(" ${movieInfo.movie.releaseDate}")
+                    val releaseDate = movieInfo.movie.releaseDate
+                    if (releaseDate == null) {
+                        append(" -")
+                    } else {
+                        append(" ${dateFormat.format(releaseDate)}")
+                    }
                 }
 
                 castAdapter.setItems(movieInfo.casts.sortedBy { it.order })

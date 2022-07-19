@@ -21,7 +21,13 @@ import retrofit2.converter.gson.GsonConverterFactory
 @Module
 class NetworkModule {
 
-    @Provides fun provideGson(): Gson = GsonBuilder().create()
+    companion object {
+        private const val TmdbDateFormat = "YYYY-MM-DD"
+    }
+
+    @Provides fun provideGson(): Gson = GsonBuilder()
+        .setDateFormat(TmdbDateFormat)
+        .create()
 
     @Singleton
     @Provides

@@ -1,6 +1,7 @@
 package com.redcatgames.movies.data.remote.response.movie
 
 import com.google.gson.annotations.SerializedName
+import java.util.*
 
 data class MovieResult(
     @SerializedName("adult") val isAdult: Boolean,
@@ -12,7 +13,7 @@ data class MovieResult(
     @SerializedName("overview") val overview: String?,
     @SerializedName("popularity") val popularity: Double,
     @SerializedName("poster_path") val posterPath: String?,
-    @SerializedName("release_date") val releaseDate: String?,
+    @SerializedName("release_date") val releaseDate: Date?,
     @SerializedName("title") val title: String?,
     @SerializedName("video") val video: Boolean,
     @SerializedName("vote_average") val voteAverage: Double,

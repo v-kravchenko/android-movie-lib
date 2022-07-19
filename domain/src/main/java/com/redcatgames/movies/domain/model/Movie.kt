@@ -1,6 +1,7 @@
 package com.redcatgames.movies.domain.model
 
 import com.redcatgames.movies.util.format
+import java.util.*
 
 data class Movie(
     val id: Long,
@@ -12,7 +13,7 @@ data class Movie(
     val overview: String,
     val popularity: Double,
     val posterPath: String,
-    val releaseDate: String,
+    val releaseDate: Date?,
     val title: String,
     val video: Boolean,
     val voteAverage: Double,

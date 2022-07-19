@@ -50,8 +50,8 @@
             android:id="@+id/text_dark_mode_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen2"
-            android:text="Dark mode"
+            android:layout_marginTop="@dimen/dimen1"
+            android:text="@string/settings_dark_mode_title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/spinner_language" />
 
@@ -66,19 +66,19 @@
                 android:id="@+id/radio_dark_system"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="As system" />
+                android:text="@string/settings_dark_mode_system" />
 
             <com.google.android.material.radiobutton.MaterialRadioButton
                 android:id="@+id/radio_dark_yes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Yes" />
+                android:text="@string/settings_dark_mode_yes" />
 
             <com.google.android.material.radiobutton.MaterialRadioButton
                 android:id="@+id/radio_dark_no"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="No" />
+                android:text="@string/settings_dark_mode_no" />
 
         </RadioGroup>
 

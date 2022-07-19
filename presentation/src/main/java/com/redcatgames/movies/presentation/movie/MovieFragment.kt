@@ -21,7 +21,10 @@ class MovieFragment : BaseFragment() {
 
     private val args by navArgs<MovieFragmentArgs>()
     private val viewModel: MovieViewModel by viewModels()
-    private var binding: MovieFragmentBinding by autoCleared()
+    private var binding: MovieFragmentBinding by autoCleared {
+        it.castList.adapter = null
+        it.crewList.adapter = null
+    }
     private val castAdapter: CastAdapter = CastAdapter()
     private val crewAdapter: CrewAdapter = CrewAdapter()
 

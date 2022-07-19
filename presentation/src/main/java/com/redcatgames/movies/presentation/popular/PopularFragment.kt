@@ -15,7 +15,9 @@ import dagger.hilt.android.AndroidEntryPoint
 class PopularFragment : BaseFragment() {
 
     private val viewModel: PopularViewModel by viewModels()
-    private var binding: PopularFragmentBinding by autoCleared()
+    private var binding: PopularFragmentBinding by autoCleared {
+        it.movieList.adapter = null
+    }
     private val adapter by lazy { MovieAdapter() }
 
     override fun onCreateView(
@@ -51,4 +53,6 @@ class PopularFragment : BaseFragment() {
             }
         }
     }
+
+
 }

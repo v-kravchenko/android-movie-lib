@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">presentation</string>
     <string name="home_title">Movie library</string>
-    <string name="home_button_popular">Popular movies</string>
+    <string name="home_button_popular">View more popular movies</string>
     <string name="popular_title">Popular movies</string>
     <string name="movie_title">Movie details</string>
     <string name="home_button_settings">Settings</string>
@@ -21,4 +21,5 @@
     <string name="movie_release_date_title">Release date:</string>
     <string name="movie_cast_list_title">Cast list</string>
     <string name="movie_crew_list_title">Crew list</string>
+    <string name="home_popular_title">Popular movies</string>
 </resources>

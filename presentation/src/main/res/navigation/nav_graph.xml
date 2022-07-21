@@ -75,7 +75,8 @@
     <fragment
         android:id="@+id/personFragment"
         android:name="com.redcatgames.movies.presentation.person.PersonFragment"
-        android:label="PersonFragment" >
+        android:label="PersonFragment"
+        tools:layout="@layout/person_fragment">
         <argument
             android:name="personId"
             app:argType="long" />

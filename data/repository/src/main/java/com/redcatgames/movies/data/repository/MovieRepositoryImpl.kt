@@ -15,6 +15,8 @@ import com.redcatgames.movies.util.empty
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 
 class MovieRepositoryImpl(
     appContext: Context,
@@ -98,15 +100,15 @@ class MovieRepositoryImpl(
             when (val response = networkService.getMovieCredits(movieId)) {
                 is NetworkResponse.Success -> {
                     listOf(
-                            async {
-                                val castList = response.body.toMovieCastList()
-                                putMovieCasts(movieId, castList)
-                            },
-                            async {
-                                val crewList = response.body.toMovieCrewList()
-                                putMovieCrews(movieId, crewList)
-                            }
-                        )
+                        async {
+                            val castList = response.body.toMovieCastList()
+                            putMovieCasts(movieId, castList)
+                        },
+                        async {
+                            val crewList = response.body.toMovieCrewList()
+                            putMovieCrews(movieId, crewList)
+                        }
+                    )
                         .awaitAll()
 
                     Result.success(Unit)
@@ -165,7 +167,7 @@ class MovieRepositoryImpl(
                                     movieId = movie.id,
                                     genreId = it,
                                     genreName = genreList.find { genre -> genre.id == it }?.name
-                                            ?: String.empty
+                                        ?: String.empty
                                 )
                             }
                         )
@@ -219,6 +221,9 @@ class MovieRepositoryImpl(
             it.map { movieEntity -> movieEntity.toMovie() }
         }
     }
+
+    override fun popularMoviesFlow() =
+        movieDao.popularFlow().map { it.map { entity -> entity.toMovie() } }
 
     override fun mostVotesMovies(): LiveData<List<Movie>> {
         return Transformations.map(movieDao.mostVotes()) {

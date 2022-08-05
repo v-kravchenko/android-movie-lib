@@ -1,8 +1,5 @@
 package com.redcatgmes.movies.baseui
 
-import androidx.appcompat.app.AppCompatDelegate
-import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
-import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
 import androidx.navigation.NavDirections
@@ -29,7 +26,7 @@ open class BaseFragment : Fragment() {
     }
 
     protected fun navigateBack() {
-        findNavController().popBackStack()
+        findNavController().navigateUp()
     }
 
     protected fun navigateTo(navDirections: NavDirections) {

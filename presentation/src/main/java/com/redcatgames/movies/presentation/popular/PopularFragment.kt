@@ -6,10 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.redcatgames.movies.presentation.databinding.PopularFragmentBinding
 import com.redcatgmes.movies.baseui.BaseFragment
 import com.redcatgmes.movies.baseui.util.autoCleared
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class PopularFragment : BaseFragment() {
@@ -40,6 +43,24 @@ class PopularFragment : BaseFragment() {
                 )
             }
         setupObserver()
+
+        binding.movieList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                (binding.movieList.layoutManager as? GridLayoutManager)?.let { gridLayoutManager ->
+                    val visibleItemCount: Int = gridLayoutManager.childCount
+                    val totalItemCount: Int = gridLayoutManager.itemCount
+                    val firstVisibleItemPosition = gridLayoutManager.findFirstVisibleItemPosition()
+
+                    if (visibleItemCount + firstVisibleItemPosition >= totalItemCount
+                        && firstVisibleItemPosition >= 0
+                    ) {
+                        Timber.d("Load next page request!")
+                    }
+                }
+            }
+        })
     }
 
     private fun setupObserver() {

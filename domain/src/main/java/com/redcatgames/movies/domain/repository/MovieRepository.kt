@@ -2,6 +2,7 @@ package com.redcatgames.movies.domain.repository
 
 import androidx.lifecycle.LiveData
 import com.redcatgames.movies.domain.model.*
+import kotlinx.coroutines.flow.Flow
 
 interface MovieRepository {
     suspend fun deleteAllMovies(): Result<Int>
@@ -17,6 +18,7 @@ interface MovieRepository {
     suspend fun loadPerson(personId: Long): Result<Unit>
 
     fun popularMovies(): LiveData<List<Movie>>
+    fun popularMoviesFlow(): Flow<List<Movie>>
     fun mostVotesMovies(): LiveData<List<Movie>>
     fun movie(movieId: Long): LiveData<Movie?>
     fun movieInfo(movieId: Long): LiveData<MovieInfo?>

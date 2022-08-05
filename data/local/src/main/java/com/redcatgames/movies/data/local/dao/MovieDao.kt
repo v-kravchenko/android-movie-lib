@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.redcatgames.movies.data.local.embedded.MovieInfoEntity
 import com.redcatgames.movies.data.local.entity.MovieEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface MovieDao {
@@ -29,6 +30,9 @@ interface MovieDao {
 
     @Query("SELECT * FROM movies ORDER BY popularity DESC")
     fun popular(): LiveData<List<MovieEntity>>
+
+    @Query("SELECT * FROM movies ORDER BY popularity DESC")
+    fun popularFlow(): Flow<List<MovieEntity>>
 
     @Query("SELECT * FROM movies ORDER BY voteCount DESC")
     fun mostVotes(): LiveData<List<MovieEntity>>

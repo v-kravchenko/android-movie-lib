@@ -11,9 +11,9 @@ object AppConfig {
 }
 
 object Versions {
-    const val gradleVersion = "7.2.1"
+    const val gradleVersion = "7.2.2"
     const val kotlinVersion = "1.7.10"
-    const val hiltVersion = "2.42"
+    const val hiltVersion = "2.43.2"
     const val roomVersion = "2.4.2"
     const val kspVersion = "1.7.10-1.0.6"
     const val coroutines = "1.6.3"
@@ -25,7 +25,7 @@ object Versions {
     const val material = "1.6.1"
     const val constraint = "2.1.4"
     const val lifecycle = "2.4.1"
-    const val navigation = "2.4.2"
+    const val navigation = "2.5.1"
     const val timber = "5.0.1"
     const val leakCanary = "2.9.1"
     const val retrofit2 = "2.9.0"

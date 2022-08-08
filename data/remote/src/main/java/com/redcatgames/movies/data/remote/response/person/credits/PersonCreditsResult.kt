@@ -33,7 +33,7 @@ data class PersonCreditsResult(
         @SerializedName("adult") val isAdult: Boolean,
         @SerializedName("backdrop_path") val backdropPath: String?,
         @SerializedName("genre_ids") val genreIds: List<Long>,
-        @SerializedName("id") val movieId: Int,
+        @SerializedName("id") val movieId: Long,
         @SerializedName("original_language") val originalLanguage: String,
         @SerializedName("original_title") val originalTitle: String,
         @SerializedName("overview") val overview: String,

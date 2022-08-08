@@ -1,8 +1,12 @@
-package com.redcatgames.movies.domain.model
+package com.redcatgames.movies.data.local.entity
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import java.util.*
 
-data class PersonCrew(
+@Entity(tableName = "person_casts")
+data class PersonCastEntity(
+    @PrimaryKey
     val creditId: String,
     val personId: Long,
     val isAdult: Boolean,
@@ -19,6 +23,7 @@ data class PersonCrew(
     val isVideo: Boolean,
     val voteAverage: Double,
     val voteCount: Int,
-    val department: String,
-    val job: String
+    val character: String,
+    val order: Int,
+    val created: Date
 )

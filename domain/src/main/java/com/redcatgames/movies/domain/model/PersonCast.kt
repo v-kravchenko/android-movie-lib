@@ -4,6 +4,7 @@ import java.util.*
 
 data class PersonCast(
     val creditId: String,
+    val personId: Long,
     val isAdult: Boolean,
     val backdropPath: String?,
     val genreIds: List<Long>,

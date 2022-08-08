@@ -9,6 +9,7 @@ import com.redcatgames.movies.data.remote.response.movie.GenreResult
 import com.redcatgames.movies.data.remote.response.movie.MovieResult
 import com.redcatgames.movies.data.remote.response.movie.credits.MovieCreditsResult
 import com.redcatgames.movies.data.remote.response.person.PersonResult
+import com.redcatgames.movies.data.remote.response.person.credits.PersonCreditsResult
 import com.redcatgames.movies.domain.model.*
 import com.redcatgames.movies.util.empty
 
@@ -76,6 +77,36 @@ fun MovieResult.toMovie() =
 fun MovieResult.Genre.toMovieGenre(movie: Movie) =
     MovieGenre(movieId = movie.id, genreId = id, genreName = name ?: String.empty)
 
+fun PersonCreditsResult.toPersonCastList(): List<PersonCast> {
+    return mutableListOf<PersonCast>()
+        .apply {
+            addAll(
+                castList.map {
+                    PersonCast(
+                        creditId = it.creditId,
+                        personId = this@toPersonCastList.personId,
+                        isAdult = it.isAdult,
+                        backdropPath = it.backdropPath,
+                        genreIds = it.genreIds,
+                        movieId = it.movieId,
+                        originalLanguage = it.originalLanguage,
+                        originalTitle = it.originalTitle,
+                        overview = it.overview,
+                        popularity = it.popularity,
+                        posterPath = it.posterPath,
+                        releaseDate = it.releaseDate,
+                        title = it.title,
+                        isVideo = it.isVideo,
+                        voteAverage = it.voteAverage,
+                        voteCount = it.voteCount,
+                        character = it.character,
+                        order = it.order
+                    )
+                }
+            )
+        }
+}
+
 fun MovieCreditsResult.toMovieCastList(): List<MovieCast> {
     return mutableListOf<MovieCast>()
         .apply {
@@ -100,6 +131,36 @@ fun MovieCreditsResult.toMovieCastList(): List<MovieCast> {
             )
         }
         .toList()
+}
+
+fun PersonCreditsResult.toPersonCrewList(): List<PersonCrew> {
+    return mutableListOf<PersonCrew>()
+        .apply {
+            addAll(
+                crewList.map {
+                    PersonCrew(
+                        creditId = it.creditId,
+                        personId = this@toPersonCrewList.personId,
+                        isAdult = it.isAdult,
+                        backdropPath = it.backdropPath,
+                        genreIds = it.genreIds,
+                        movieId = it.movieId,
+                        originalLanguage = it.originalLanguage,
+                        originalTitle = it.originalTitle,
+                        overview = it.overview,
+                        popularity = it.popularity,
+                        posterPath = it.posterPath,
+                        releaseDate = it.releaseDate,
+                        title = it.title,
+                        isVideo = it.isVideo,
+                        voteAverage = it.voteAverage,
+                        voteCount = it.voteCount,
+                        department = it.department,
+                        job = it.job
+                    )
+                }
+            )
+        }
 }
 
 fun MovieCreditsResult.toMovieCrewList(): List<MovieCrew> {
@@ -128,4 +189,19 @@ fun MovieCreditsResult.toMovieCrewList(): List<MovieCrew> {
 }
 
 fun PersonResult.toPerson() =
-    Person(id, isAdult, alsoKnownAs, biography, birthDay, deathDay, gender, homepage, imdbId, knownForDepartment, name, placeOfBirth, popularity, profilePath)
+    Person(
+        id,
+        isAdult,
+        alsoKnownAs,
+        biography,
+        birthDay,
+        deathDay,
+        gender,
+        homepage,
+        imdbId,
+        knownForDepartment,
+        name,
+        placeOfBirth,
+        popularity,
+        profilePath
+    )

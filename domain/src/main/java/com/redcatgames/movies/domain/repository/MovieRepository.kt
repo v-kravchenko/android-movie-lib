@@ -30,4 +30,5 @@ interface MovieRepository {
     fun person(personId: Long): LiveData<Person?>
     fun personCasts(personId: Long): LiveData<List<PersonCast>>
     fun personCrews(personId: Long): LiveData<List<PersonCrew>>
+    fun personInfo(personId: Long): LiveData<PersonInfo?>
 }

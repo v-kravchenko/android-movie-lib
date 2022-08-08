@@ -1,6 +1,7 @@
 package com.redcatgames.movies.data.local.mapper
 
 import com.redcatgames.movies.data.local.embedded.MovieInfoEntity
+import com.redcatgames.movies.data.local.embedded.PersonInfoEntity
 import com.redcatgames.movies.data.local.entity.*
 import com.redcatgames.movies.domain.model.*
 import com.redcatgames.movies.util.empty
@@ -235,6 +236,13 @@ fun MovieInfoEntity.fromEntity() =
         genres.map { it.toMovieGenre() },
         casts.map { it.toMovieCast() },
         crews.map { it.toMovieCrew() }
+    )
+
+fun PersonInfoEntity.fromEntity() =
+    PersonInfo(
+        person.toPerson(),
+        casts.map { it.toPersonCast() },
+        crews.map { it.toPersonCrew() }
     )
 
 fun Person.toEntity() =

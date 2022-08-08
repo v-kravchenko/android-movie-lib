@@ -33,7 +33,7 @@ class PersonFragment : BaseFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = PersonFragmentBinding.inflate(inflater, container, false)
         return binding.root
@@ -60,13 +60,13 @@ class PersonFragment : BaseFragment() {
                     bold {
                         append(getString(R.string.person_original_name_title))
                     }
-                    append(" ${personInfo.name}")
+                    append(" ${personInfo.person.name}")
                 }
                 binding.textBirthday.text = buildSpannedString {
                     bold {
                         append(getString(R.string.person_birthday_title))
                     }
-                    val birthDay = personInfo.birthDay
+                    val birthDay = personInfo.person.birthDay
                     if (birthDay == null) {
                         append(" -")
                     } else {
@@ -75,7 +75,7 @@ class PersonFragment : BaseFragment() {
                 }
 
                 binding.textDeathday.text = buildSpannedString {
-                    val deathDay = personInfo.deathDay
+                    val deathDay = personInfo.person.deathDay
                     if (deathDay != null) {
                         bold {
                             append(getString(R.string.person_death_title))
@@ -84,12 +84,12 @@ class PersonFragment : BaseFragment() {
                     }
                 }
 
-                binding.textOverview.text = personInfo.biography.ifEmpty {
+                binding.textOverview.text = personInfo.person.biography.ifEmpty {
                     "-"
                 }
-                binding.personPhoto.loadByUrl(personInfo.getProfileUri(ProfileSize.MEDIUM)) {
+                binding.personPhoto.loadByUrl(personInfo.person.getProfileUri(ProfileSize.MEDIUM)) {
                     val resId =
-                        if (personInfo.gender == 2) R.drawable.person_placeholder_medium_male
+                        if (personInfo.person.gender == 2) R.drawable.person_placeholder_medium_male
                         else R.drawable.person_placeholder_medium_female
 
                     placeholder(resId)

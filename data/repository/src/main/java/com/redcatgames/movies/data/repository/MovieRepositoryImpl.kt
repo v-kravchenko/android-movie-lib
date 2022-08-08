@@ -151,7 +151,7 @@ class MovieRepositoryImpl(
 
                 jobList.find { it.isFailure }?.let {
                     if (it.isFailure) {
-                        Timber.e(it.exceptionOrNull(),"loadPersonInfo($personId) ERROR")
+                        Timber.e(it.exceptionOrNull(), "loadPersonInfo($personId) ERROR")
                         return@coroutineScope it
                     }
                 }
@@ -303,7 +303,15 @@ class MovieRepositoryImpl(
     }
 
     override fun movieInfo(movieId: Long): LiveData<MovieInfo?> {
-        return Transformations.map(movieDao.infoById(movieId)) { it?.fromEntity() }
+        return Transformations.map(movieDao.infoById(movieId)) {
+            it?.fromEntity()
+        }
+    }
+
+    override fun personInfo(personId: Long): LiveData<PersonInfo?> {
+        return Transformations.map(personDao.infoById(personId)) {
+            it?.fromEntity()
+        }
     }
 
     override fun movieGenres(movieId: Long): LiveData<List<MovieGenre>> {

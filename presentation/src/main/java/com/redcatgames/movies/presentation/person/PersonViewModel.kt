@@ -3,7 +3,7 @@ package com.redcatgames.movies.presentation.person
 import android.content.Context
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.redcatgames.movies.domain.usecase.person.GetPersonUseCase
+import com.redcatgames.movies.domain.usecase.person.GetPersonInfoUseCase
 import com.redcatgames.movies.domain.usecase.person.LoadPersonUseCase
 import com.redcatgmes.movies.baseui.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,7 +20,7 @@ class PersonViewModel
 constructor(
     @ApplicationContext appContext: Context,
     savedStateHandle: SavedStateHandle,
-    getPersonUseCase: GetPersonUseCase,
+    getPersonInfoUseCase: GetPersonInfoUseCase,
     private val loadPersonUseCase: LoadPersonUseCase
 ) : BaseViewModel(appContext) {
 
@@ -29,7 +29,7 @@ constructor(
     }
 
     private val args = PersonFragmentArgs.fromSavedStateHandle(savedStateHandle)
-    val personInfo = getPersonUseCase(args.personId)
+    val personInfo = getPersonInfoUseCase(args.personId)
 
     private val eventChannel = Channel<Event>(Channel.BUFFERED)
     val events = eventChannel.receiveAsFlow()

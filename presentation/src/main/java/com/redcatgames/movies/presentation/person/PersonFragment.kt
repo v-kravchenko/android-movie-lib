@@ -113,7 +113,9 @@ class PersonFragment : BaseFragment() {
                     error(resId)
                 }
 
-                moviesAdapter.setItems(personInfo.casts)
+                moviesAdapter.setItems(personInfo.casts.sortedByDescending {
+                    it.popularity
+                })
             }
         }
 

@@ -19,13 +19,15 @@ import kotlinx.coroutines.flow.map
 
 class MovieRepositoryImpl(
     appContext: Context,
+    private val networkService: NetworkService,
     private val movieDao: MovieDao,
     private val movieGenreDao: MovieGenreDao,
     private val movieCastDao: MovieCastDao,
     private val movieCrewDao: MovieCrewDao,
     private val genreDao: GenreDao,
     private val personDao: PersonDao,
-    private val networkService: NetworkService
+    private val personCastDao: PersonCastDao,
+    private val personCrewDao: PersonCrewDao,
 ) : MovieRepository, BaseRepository(appContext) {
 
     override suspend fun deleteAllMovies(): Result<Int> =
@@ -60,9 +62,23 @@ class MovieRepositoryImpl(
         }
     }
 
+    private suspend fun putPersonCasts(personId: Long, casts: List<PersonCast>) {
+        val localCasts = personCasts(personId).asFlow().first()
+        if (localCasts.sortedBy { it.movieId } != casts.sortedBy { it.movieId }) {
+            personCastDao.replace(personId, casts.map { it.toEntity() })
+        }
+    }
+
+    private suspend fun putPersonCrews(personId: Long, crews: List<PersonCrew>) {
+        val localCrews = personCrews(personId).asFlow().first()
+        if (localCrews.sortedBy { it.movieId } != crews.sortedBy { it.movieId }) {
+            personCrewDao.replace(personId, crews.map { it.toEntity() })
+        }
+    }
+
     private suspend fun putMoviesGenres(
         movies: List<Movie>,
-        moviesGenres: MutableList<MovieGenre>
+        moviesGenres: MutableList<MovieGenre>,
     ) {
         movieGenreDao.replace(movies.map { it.id }, moviesGenres.map { it.toEntity() })
     }
@@ -82,6 +98,54 @@ class MovieRepositoryImpl(
             coroutineScope {
                 val jobList =
                     listOf(async { loadMovie(movieId) }, async { loadMovieCredits(movieId) })
+                        .awaitAll()
+
+                jobList.find { it.isFailure }?.let {
+                    if (it.isFailure) {
+                        return@coroutineScope it
+                    }
+                }
+
+                Result.success(Unit)
+            }
+        }
+
+    override suspend fun loadPersonCredits(personId: Long): Result<Unit> {
+        return coroutineScope {
+            when (val response = networkService.getPersonCredits(personId)) {
+                is NetworkResponse.Success -> {
+                    listOf(
+                        async {
+                            val castList = response.body.toPersonCastList()
+                            putPersonCasts(personId, castList)
+                        },
+                        async {
+                            val crewList = response.body.toPersonCrewList()
+                            putPersonCrews(personId, crewList)
+                        }
+                    ).awaitAll()
+
+                    Result.success(Unit)
+                }
+                is NetworkResponse.ApiError -> {
+                    Result.failure(Exception(response.body.statusMessage))
+                }
+                is NetworkResponse.NetworkError -> {
+                    Result.failure(response.error)
+                }
+                is NetworkResponse.UnknownError -> {
+                    Result.failure(response.error)
+                }
+            }
+        }
+    }
+
+    override suspend fun loadPersonInfo(personId: Long): Result<Unit> =
+        withContext(Dispatchers.IO) {
+            coroutineScope {
+
+                val jobList =
+                    listOf(async { loadPerson(personId) }, async { loadPersonCredits(personId) })
                         .awaitAll()
 
                 jobList.find { it.isFailure }?.let {
@@ -258,5 +322,17 @@ class MovieRepositoryImpl(
 
     override fun person(personId: Long): LiveData<Person?> {
         return Transformations.map(personDao.byId(personId)) { it?.toPerson() }
+    }
+
+    override fun personCasts(personId: Long): LiveData<List<PersonCast>> {
+        return Transformations.map(personCastDao.byPerson(personId)) {
+            it.map { personCastEntity -> personCastEntity.toPersonCast() }
+        }
+    }
+
+    override fun personCrews(personId: Long): LiveData<List<PersonCrew>> {
+        return Transformations.map(personCrewDao.byPerson(personId)) {
+            it.map { personCrewEntity -> personCrewEntity.toPersonCrew() }
+        }
     }
 }

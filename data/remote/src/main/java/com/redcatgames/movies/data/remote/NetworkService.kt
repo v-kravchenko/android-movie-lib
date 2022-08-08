@@ -66,7 +66,7 @@ interface NetworkService {
     ): NetworkResponse<PersonResult, BaseError>
 
     @GET("person/{personId}/movie_credits")
-    suspend fun getPersonMovieCredits(
+    suspend fun getPersonCredits(
         @Path("personId") personId: Long
     ): NetworkResponse<PersonCreditsResult, BaseError>
 }

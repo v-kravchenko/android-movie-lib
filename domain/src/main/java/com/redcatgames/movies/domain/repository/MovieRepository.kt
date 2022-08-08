@@ -16,6 +16,8 @@ interface MovieRepository {
     suspend fun loadMovieCredits(movieId: Long): Result<Unit>
     suspend fun loadMovieInfo(movieId: Long): Result<Unit>
     suspend fun loadPerson(personId: Long): Result<Unit>
+    suspend fun loadPersonCredits(personId: Long): Result<Unit>
+    suspend fun loadPersonInfo(personId: Long): Result<Unit>
 
     fun popularMovies(): LiveData<List<Movie>>
     fun popularMoviesFlow(): Flow<List<Movie>>
@@ -26,4 +28,6 @@ interface MovieRepository {
     fun movieCasts(movieId: Long): LiveData<List<MovieCast>>
     fun movieCrews(movieId: Long): LiveData<List<MovieCrew>>
     fun person(personId: Long): LiveData<Person?>
+    fun personCasts(personId: Long): LiveData<List<PersonCast>>
+    fun personCrews(personId: Long): LiveData<List<PersonCrew>>
 }

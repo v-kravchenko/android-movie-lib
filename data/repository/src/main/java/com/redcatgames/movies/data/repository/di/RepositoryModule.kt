@@ -52,23 +52,26 @@ class RepositoryModule {
     @Provides
     fun provideMovieRepository(
         @ApplicationContext appContext: Context,
+        networkService: NetworkService,
         movieDao: MovieDao,
         movieGenreDao: MovieGenreDao,
         movieCastDao: MovieCastDao,
         movieCrewDao: MovieCrewDao,
         genreDao: GenreDao,
         personDao: PersonDao,
-        networkService: NetworkService
+        personCastDao: PersonCastDao,
+        personCrewDao: PersonCrewDao
     ): MovieRepository {
         return MovieRepositoryImpl(
             appContext,
+            networkService,
             movieDao,
             movieGenreDao,
             movieCastDao,
             movieCrewDao,
             genreDao,
             personDao,
-            networkService
+            personCastDao, personCrewDao
         )
     }
 }

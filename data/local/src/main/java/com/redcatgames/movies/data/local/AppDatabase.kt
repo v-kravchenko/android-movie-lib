@@ -12,19 +12,21 @@ import com.redcatgames.movies.data.local.entity.*
 
 @Database(
     entities =
-        [
-            DictionaryEntity::class,
-            CountryEntity::class,
-            LanguageEntity::class,
-            PrimaryTranslationEntity::class,
-            TimezoneEntity::class,
-            GenreEntity::class,
-            MovieEntity::class,
-            MovieGenreEntity::class,
-            MovieCastEntity::class,
-            MovieCrewEntity::class,
-            PersonEntity::class],
-    version = 1,
+    [
+        DictionaryEntity::class,
+        CountryEntity::class,
+        LanguageEntity::class,
+        PrimaryTranslationEntity::class,
+        TimezoneEntity::class,
+        GenreEntity::class,
+        MovieEntity::class,
+        MovieGenreEntity::class,
+        MovieCastEntity::class,
+        MovieCrewEntity::class,
+        PersonEntity::class,
+        PersonCastEntity::class,
+        PersonCrewEntity::class],
+    version = 2,
     exportSchema = false
 )
 @TypeConverters(
@@ -45,6 +47,8 @@ abstract class AppDatabase : RoomDatabase() {
     abstract val movieCastDao: MovieCastDao
     abstract val movieCrewDao: MovieCrewDao
     abstract val personDao: PersonDao
+    abstract val personCastDao: PersonCastDao
+    abstract val personCrewDao: PersonCrewDao
 
     companion object {
         const val DB_NAME = "MoviesDatabase.db"

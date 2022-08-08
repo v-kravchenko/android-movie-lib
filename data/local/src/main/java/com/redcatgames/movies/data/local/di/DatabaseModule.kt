@@ -90,4 +90,16 @@ class DatabaseModule {
     fun providePersonDao(appDatabase: AppDatabase): PersonDao {
         return appDatabase.personDao
     }
+
+    @Provides
+    @Singleton
+    fun providePersonCastDao(appDatabase: AppDatabase): PersonCastDao {
+        return appDatabase.personCastDao
+    }
+
+    @Provides
+    @Singleton
+    fun providePersonCrewDao(appDatabase: AppDatabase): PersonCrewDao {
+        return appDatabase.personCrewDao
+    }
 }

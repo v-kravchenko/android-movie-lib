@@ -82,7 +82,7 @@ fun MovieCreditsResult.toMovieCastList(): List<MovieCast> {
             addAll(
                 castList.map {
                     MovieCast(
-                        personId = it.id,
+                        personId = it.personId,
                         movieId = this@toMovieCastList.movieId,
                         adult = it.adult,
                         gender = it.gender,
@@ -93,7 +93,7 @@ fun MovieCreditsResult.toMovieCastList(): List<MovieCast> {
                         profilePath = it.profilePath,
                         castId = it.castId,
                         character = it.character ?: String.empty,
-                        creditId = it.creditId ?: String.empty,
+                        creditId = it.creditId,
                         order = it.order
                     )
                 }
@@ -108,7 +108,7 @@ fun MovieCreditsResult.toMovieCrewList(): List<MovieCrew> {
             addAll(
                 crewList.map {
                     MovieCrew(
-                        personId = it.id,
+                        personId = it.personId,
                         movieId = this@toMovieCrewList.movieId,
                         adult = it.adult,
                         gender = it.gender,
@@ -117,9 +117,9 @@ fun MovieCreditsResult.toMovieCrewList(): List<MovieCrew> {
                         originalName = it.originalName ?: String.empty,
                         popularity = it.popularity,
                         profilePath = it.profilePath,
-                        creditId = it.creditId ?: String.empty,
+                        creditId = it.creditId,
                         department = it.department ?: String.empty,
-                        job = it.job ?: String.empty
+                        job = it.job
                     )
                 }
             )

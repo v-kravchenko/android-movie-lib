@@ -9,8 +9,8 @@ data class PersonMovieCreditsResult(
 ) {
     data class Cast(
         @SerializedName("adult") val adult : Boolean,
-        @SerializedName("backdrop_path") val backdrop_path : String,
-        @SerializedName("genre_ids") val genre_ids : List<Int>,
+        @SerializedName("backdrop_path") val backdropPath : String,
+//        @SerializedName("genre_ids") val genre_ids : List<Int>,
         @SerializedName("id") val id : Int,
         @SerializedName("original_language") val original_language : String,
         @SerializedName("original_title") val original_title : String,

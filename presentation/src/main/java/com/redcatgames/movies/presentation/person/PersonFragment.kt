@@ -15,6 +15,7 @@ import com.redcatgames.movies.presentation.databinding.PersonFragmentBinding
 import com.redcatgames.movies.presentation.getProfileUri
 import com.redcatgmes.movies.baseui.BaseFragment
 import com.redcatgmes.movies.baseui.util.autoCleared
+import com.redcatgmes.movies.baseui.util.currentLocale
 import com.redcatgmes.movies.baseui.util.loadByUrl
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
@@ -25,7 +26,9 @@ class PersonFragment : BaseFragment() {
     private val args by navArgs<PersonFragmentArgs>()
     private val viewModel: PersonViewModel by viewModels()
     private var binding: PersonFragmentBinding by autoCleared()
-    private val dateFormat: SimpleDateFormat = SimpleDateFormat("dd.MM.yyyy")
+    private val dateFormat: SimpleDateFormat by lazy {
+        SimpleDateFormat("dd.MM.yyyy", requireContext().currentLocale)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

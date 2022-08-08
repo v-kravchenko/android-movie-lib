@@ -12,6 +12,7 @@ import com.redcatgames.movies.presentation.*
 import com.redcatgames.movies.presentation.databinding.MovieFragmentBinding
 import com.redcatgmes.movies.baseui.BaseFragment
 import com.redcatgmes.movies.baseui.util.autoCleared
+import com.redcatgmes.movies.baseui.util.currentLocale
 import com.redcatgmes.movies.baseui.util.loadByUrl
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
@@ -27,7 +28,9 @@ class MovieFragment : BaseFragment() {
     }
     private val castAdapter: CastAdapter = CastAdapter()
     private val crewAdapter: CrewAdapter = CrewAdapter()
-    private val dateFormat: SimpleDateFormat = SimpleDateFormat("dd.MM.yyyy")
+    private val dateFormat: SimpleDateFormat by lazy {
+        SimpleDateFormat("dd.MM.yyyy", requireContext().currentLocale)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

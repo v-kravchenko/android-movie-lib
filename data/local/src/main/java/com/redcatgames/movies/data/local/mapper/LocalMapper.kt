@@ -71,6 +71,29 @@ fun MovieGenre.toEntity() = MovieGenreEntity(movieId, genreId, genreName, now())
 
 fun MovieGenreEntity.toMovieGenre() = MovieGenre(movieId, genreId, genreName)
 
+fun PersonCast.toEntity() =
+    PersonCastEntity(
+        creditId,
+        personId,
+        isAdult,
+        backdropPath,
+        genreIds,
+        movieId,
+        originalLanguage,
+        originalTitle,
+        overview,
+        popularity,
+        posterPath,
+        releaseDate,
+        title,
+        isVideo,
+        voteAverage,
+        voteCount,
+        character,
+        order,
+        now()
+    )
+
 fun MovieCast.toEntity() =
     MovieCastEntity(
         creditId,
@@ -87,6 +110,28 @@ fun MovieCast.toEntity() =
         character,
         order,
         now()
+    )
+
+fun PersonCastEntity.toPersonCast() =
+    PersonCast(
+        creditId,
+        personId,
+        isAdult,
+        backdropPath,
+        genreIds,
+        movieId,
+        originalLanguage,
+        originalTitle,
+        overview,
+        popularity,
+        posterPath,
+        releaseDate,
+        title,
+        isVideo,
+        voteAverage,
+        voteCount,
+        character,
+        order
     )
 
 fun MovieCastEntity.toMovieCast() =
@@ -106,6 +151,29 @@ fun MovieCastEntity.toMovieCast() =
         order
     )
 
+fun PersonCrew.toEntity() =
+    PersonCrewEntity(
+        creditId,
+        personId,
+        isAdult,
+        backdropPath,
+        genreIds,
+        movieId,
+        originalLanguage,
+        originalTitle,
+        overview,
+        popularity,
+        posterPath,
+        releaseDate,
+        title,
+        isVideo,
+        voteAverage,
+        voteCount,
+        department,
+        job,
+        now()
+    )
+
 fun MovieCrew.toEntity() =
     MovieCrewEntity(
         creditId,
@@ -121,6 +189,28 @@ fun MovieCrew.toEntity() =
         department,
         job,
         now()
+    )
+
+fun PersonCrewEntity.toPersonCrew() =
+    PersonCrew(
+        creditId,
+        personId,
+        isAdult,
+        backdropPath,
+        genreIds,
+        movieId,
+        originalLanguage,
+        originalTitle,
+        overview,
+        popularity,
+        posterPath,
+        releaseDate,
+        title,
+        isVideo,
+        voteAverage,
+        voteCount,
+        department,
+        job
     )
 
 fun MovieCrewEntity.toMovieCrew() =
@@ -167,4 +257,19 @@ fun Person.toEntity() =
     )
 
 fun PersonEntity.toPerson() =
-    Person(id, isAdult, alsoKnownAs, biography, birthDay, deathDay, gender, homepage, imdbId, knownForDepartment, name, placeOfBirth, popularity, profilePath)
+    Person(
+        id,
+        isAdult,
+        alsoKnownAs,
+        biography,
+        birthDay,
+        deathDay,
+        gender,
+        homepage,
+        imdbId,
+        knownForDepartment,
+        name,
+        placeOfBirth,
+        popularity,
+        profilePath
+    )

@@ -26,13 +26,8 @@ android {
 
 dependencies {
     implementation(project(":util"))
-    implementation(project(":domain"))
-    implementation(project(":data:preferences"))
-    implementation(project(":data:device"))
 
     hilt()
-    retrofit()
-    coroutines()
 }
 
 ktfmt {

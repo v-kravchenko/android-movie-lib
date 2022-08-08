@@ -14,6 +14,7 @@ buildscript {
         classpath(BuildClass.SAFEARGS)
         classpath(BuildClass.GRADLEVERSION)
         classpath(BuildClass.KTFMT)
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.10")
     }
 }
 

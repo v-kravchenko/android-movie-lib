@@ -31,6 +31,7 @@ object Versions {
     const val retrofit2 = "2.9.0"
     const val dataStore = "1.0.0"
     const val coil = "2.1.0"
+    const val okHttp = "5.0.0-alpha.5"
 }
 
 object BuildPlugins {
@@ -82,6 +83,7 @@ object Dependencies {
 
     const val RETROFIT = "com.squareup.retrofit2:retrofit:${Versions.retrofit2}"
     const val RETROFIT_GSON = "com.squareup.retrofit2:converter-gson:${Versions.retrofit2}"
+    const val OKHTTP_LOGGING = "com.squareup.okhttp3:logging-interceptor:${Versions.okHttp}"
 
     const val LEAKCANARY = "com.squareup.leakcanary:leakcanary-android:${Versions.leakCanary}"
     const val CONSTRAINT_LAYOUT = "androidx.constraintlayout:constraintlayout:${Versions.constraint}"
@@ -94,6 +96,7 @@ object Dependencies {
 fun DependencyHandler.retrofit() {
     implementation(Dependencies.RETROFIT)
     implementation(Dependencies.RETROFIT_GSON)
+    implementation(Dependencies.OKHTTP_LOGGING)
 }
 
 fun DependencyHandler.navigation() {

@@ -24,6 +24,7 @@ android {
 dependencies {
     implementation(project(":util"))
     implementation(project(":domain"))
+    implementation(project(":data:device"))
     implementation(project(":data:local"))
     implementation(project(":data:remote"))
     implementation(project(":data:preferences"))

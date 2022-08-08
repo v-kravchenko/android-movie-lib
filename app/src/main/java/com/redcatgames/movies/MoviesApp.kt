@@ -23,7 +23,7 @@ class MoviesApp : Application(), ImageLoaderFactory {
     }
 
     private fun loadTimber() {
-        if (BuildConfig.DEBUG) {
+//        if (BuildConfig.DEBUG) {
             Timber.plant(
                 object : Timber.DebugTree() {
                     override fun createStackElementTag(element: StackTraceElement): String {
@@ -39,7 +39,7 @@ class MoviesApp : Application(), ImageLoaderFactory {
                     }
                 }
             )
-        }
+//        }
 
         Timber.d(
             "Start application version: ${BuildConfig.VERSION_NAME} (code: ${BuildConfig.VERSION_CODE}) ${if (BuildConfig.DEBUG) "DEBUG" else "RELEASE"}\""

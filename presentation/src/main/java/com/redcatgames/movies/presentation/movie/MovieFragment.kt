@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.text.bold
 import androidx.core.text.buildSpannedString
 import androidx.fragment.app.viewModels
@@ -48,10 +47,22 @@ class MovieFragment : BaseFragment() {
         binding.crewList.adapter = crewAdapter
 
         castAdapter.onItemClick = {
-            navigateTo(MovieFragmentDirections.actionMovieFragmentToPersonFragment(it.id, it.name, it.gender))
+            navigateTo(
+                MovieFragmentDirections.actionMovieFragmentToPersonFragment(
+                    it.id,
+                    it.name,
+                    it.gender
+                )
+            )
         }
         crewAdapter.onItemClick = {
-            navigateTo(MovieFragmentDirections.actionMovieFragmentToPersonFragment(it.id, it.name, it.gender))
+            navigateTo(
+                MovieFragmentDirections.actionMovieFragmentToPersonFragment(
+                    it.id,
+                    it.name,
+                    it.gender
+                )
+            )
         }
 
         setupObserver()
@@ -96,13 +107,8 @@ class MovieFragment : BaseFragment() {
         }
 
         viewModel.loadMovieEvent.observe {
-            it.onFailure { throwable ->
-                Toast.makeText(
-                    requireContext(),
-                    "Error loading: ${throwable.localizedMessage}",
-                    Toast.LENGTH_SHORT
-                )
-                    .show()
+            it.onFailure { error ->
+                showToast("Error loading: ${error.message}")
             }
         }
     }

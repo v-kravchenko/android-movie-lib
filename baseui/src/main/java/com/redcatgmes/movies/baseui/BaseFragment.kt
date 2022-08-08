@@ -1,5 +1,6 @@
 package com.redcatgmes.movies.baseui
 
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
 import androidx.navigation.NavDirections
@@ -32,5 +33,8 @@ open class BaseFragment : Fragment() {
     protected fun navigateTo(navDirections: NavDirections) {
         findNavController().navigate(navDirections)
     }
+
+    protected fun showToast(text: String) =
+        Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT).show()
 
 }

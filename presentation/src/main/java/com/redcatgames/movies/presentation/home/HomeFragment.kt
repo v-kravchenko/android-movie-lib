@@ -4,11 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.redcatgames.movies.presentation.R
 import com.redcatgames.movies.presentation.databinding.HomeFragmentBinding
-import com.redcatgames.movies.presentation.popular.PopularFragmentDirections
 import com.redcatgmes.movies.baseui.BaseFragment
 import com.redcatgmes.movies.baseui.util.autoCleared
 import dagger.hilt.android.AndroidEntryPoint
@@ -78,16 +76,14 @@ class HomeFragment : BaseFragment() {
         viewModel.mostVotesMovies.observe { mostVotesAdapter.setItems(it) }
 
         viewModel.loadPopularMoviesEvent.observe {
-            it.onFailure { errorMessage ->
-                Toast.makeText(requireContext(), "Error loading: $errorMessage", Toast.LENGTH_SHORT)
-                    .show()
+            it.onFailure { error ->
+                showToast("Error loading: ${error.message}")
             }
         }
 
         viewModel.loadMostVotesMoviesEvent.observe {
-            it.onFailure { errorMessage ->
-                Toast.makeText(requireContext(), "Error loading: $errorMessage", Toast.LENGTH_SHORT)
-                    .show()
+            it.onFailure { error ->
+                showToast("Error loading: ${error.message}")
             }
         }
     }

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.text.bold
 import androidx.core.text.buildSpannedString
@@ -86,8 +85,9 @@ class PersonFragment : BaseFragment() {
                     "-"
                 }
                 binding.personPhoto.loadByUrl(personInfo.getProfileUri(ProfileSize.MEDIUM)) {
-                    val resId = if (personInfo.gender == 2) R.drawable.person_placeholder_medium_male
-                    else R.drawable.person_placeholder_medium_female
+                    val resId =
+                        if (personInfo.gender == 2) R.drawable.person_placeholder_medium_male
+                        else R.drawable.person_placeholder_medium_female
 
                     placeholder(resId)
                     error(resId)
@@ -96,13 +96,8 @@ class PersonFragment : BaseFragment() {
         }
 
         viewModel.loadPersonEvent.observe {
-            it.onFailure { throwable ->
-                Toast.makeText(
-                    requireContext(),
-                    "Error loading: ${throwable.localizedMessage}",
-                    Toast.LENGTH_SHORT
-                )
-                    .show()
+            it.onFailure { error ->
+                showToast("Error loading: ${error.message}")
             }
         }
     }

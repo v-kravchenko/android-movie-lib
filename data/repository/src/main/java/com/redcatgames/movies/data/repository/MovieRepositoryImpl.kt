@@ -16,6 +16,7 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
+import timber.log.Timber
 
 class MovieRepositoryImpl(
     appContext: Context,
@@ -150,9 +151,12 @@ class MovieRepositoryImpl(
 
                 jobList.find { it.isFailure }?.let {
                     if (it.isFailure) {
+                        Timber.e(it.exceptionOrNull(),"loadPersonInfo($personId) ERROR")
                         return@coroutineScope it
                     }
                 }
+
+                Timber.d("loadPersonInfo($personId) OK")
 
                 Result.success(Unit)
             }

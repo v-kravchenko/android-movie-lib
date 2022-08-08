@@ -14,6 +14,7 @@ import dagger.hilt.components.SingletonComponent
 import javax.inject.Named
 import javax.inject.Singleton
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -33,7 +34,12 @@ class NetworkModule {
     @Provides
     @Named("TMDBHttp")
     fun provideHttpClient(userConfigPreferences: UserConfigPreferences): OkHttpClient {
+
+        val interceptor = HttpLoggingInterceptor()
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+
         return OkHttpClient.Builder()
+            .addInterceptor(interceptor)
             .addInterceptor(BearerLoginInterceptor(NetworkService.TOKEN))
             .addInterceptor(LanguageInterceptor(userConfigPreferences))
             .build()

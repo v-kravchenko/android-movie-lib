@@ -20,7 +20,7 @@ constructor(
         }
 
         var request = chain.request()
-        val url = request.url().newBuilder().addQueryParameter("language", language).build()
+        val url = request.url.newBuilder().addQueryParameter("language", language).build()
         request = request.newBuilder().url(url).build()
         return chain.proceed(request)
     }

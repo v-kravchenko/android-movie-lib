@@ -26,7 +26,7 @@ import com.redcatgames.movies.data.local.entity.*
         PersonEntity::class,
         PersonCastEntity::class,
         PersonCrewEntity::class],
-    version = 2,
+    version = 1,
     exportSchema = false
 )
 @TypeConverters(

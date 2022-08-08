@@ -1,7 +1,7 @@
 package com.redcatgames.movies.domain.model
 
 data class MovieCrew(
-    val id: Long,
+    val personId: Long,
     val movieId: Long,
     val adult: Boolean,
     val gender: Int,

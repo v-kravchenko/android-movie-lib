@@ -52,7 +52,7 @@ class MovieFragment : BaseFragment() {
         castAdapter.onItemClick = {
             navigateTo(
                 MovieFragmentDirections.actionMovieFragmentToPersonFragment(
-                    it.id,
+                    it.personId,
                     it.name,
                     it.gender
                 )
@@ -61,7 +61,7 @@ class MovieFragment : BaseFragment() {
         crewAdapter.onItemClick = {
             navigateTo(
                 MovieFragmentDirections.actionMovieFragmentToPersonFragment(
-                    it.id,
+                    it.personId,
                     it.name,
                     it.gender
                 )

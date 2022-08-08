@@ -82,7 +82,7 @@ fun MovieCreditsResult.toMovieCastList(): List<MovieCast> {
             addAll(
                 castList.map {
                     MovieCast(
-                        id = it.id,
+                        personId = it.id,
                         movieId = this@toMovieCastList.movieId,
                         adult = it.adult,
                         gender = it.gender,
@@ -108,7 +108,7 @@ fun MovieCreditsResult.toMovieCrewList(): List<MovieCrew> {
             addAll(
                 crewList.map {
                     MovieCrew(
-                        id = it.id,
+                        personId = it.id,
                         movieId = this@toMovieCrewList.movieId,
                         adult = it.adult,
                         gender = it.gender,

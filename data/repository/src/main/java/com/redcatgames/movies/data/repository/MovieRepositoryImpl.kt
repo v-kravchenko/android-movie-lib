@@ -15,7 +15,6 @@ import com.redcatgames.movies.util.empty
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 
 class MovieRepositoryImpl(
@@ -49,14 +48,14 @@ class MovieRepositoryImpl(
 
     private suspend fun putMovieCasts(movieId: Long, casts: List<MovieCast>) {
         val localCasts = movieCasts(movieId).asFlow().first()
-        if (localCasts.sortedBy { it.id } != casts.sortedBy { it.id }) {
+        if (localCasts.sortedBy { it.personId } != casts.sortedBy { it.personId }) {
             movieCastDao.replace(movieId, casts.map { it.toEntity() })
         }
     }
 
     private suspend fun putMovieCrews(movieId: Long, crews: List<MovieCrew>) {
         val localCrews = movieCrews(movieId).asFlow().first()
-        if (localCrews.sortedBy { it.id } != crews.sortedBy { it.id }) {
+        if (localCrews.sortedBy { it.personId } != crews.sortedBy { it.personId }) {
             movieCrewDao.replace(movieId, crews.map { it.toEntity() })
         }
     }

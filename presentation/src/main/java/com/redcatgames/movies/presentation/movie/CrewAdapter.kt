@@ -50,7 +50,7 @@ class CrewHolder(
 
 private class CrewDiffCallback : DiffUtil.ItemCallback<MovieCrew>() {
     override fun areItemsTheSame(oldItem: MovieCrew, newItem: MovieCrew): Boolean {
-        return oldItem.id == newItem.id
+        return oldItem.personId == newItem.personId
     }
 
     override fun areContentsTheSame(oldItem: MovieCrew, newItem: MovieCrew): Boolean {

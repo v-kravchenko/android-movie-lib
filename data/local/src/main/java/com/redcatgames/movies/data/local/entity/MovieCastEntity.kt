@@ -6,7 +6,9 @@ import java.util.*
 
 @Entity(tableName = "movie_casts")
 data class MovieCastEntity(
-    @PrimaryKey val id: Long,
+    @PrimaryKey
+    val creditId: String,
+    val personId: Long,
     val movieId: Long,
     val adult: Boolean,
     val gender: Int,
@@ -17,7 +19,6 @@ data class MovieCastEntity(
     val profilePath: String,
     val castId: Long,
     val character: String,
-    val creditId: String,
     val order: Int,
     val created: Date
 )

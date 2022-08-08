@@ -52,7 +52,7 @@ class CastHolder(
 
 private class CastDiffCallback : DiffUtil.ItemCallback<MovieCast>() {
     override fun areItemsTheSame(oldItem: MovieCast, newItem: MovieCast): Boolean {
-        return oldItem.id == newItem.id
+        return oldItem.personId == newItem.personId
     }
 
     override fun areContentsTheSame(oldItem: MovieCast, newItem: MovieCast): Boolean {

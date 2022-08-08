@@ -73,7 +73,8 @@ fun MovieGenreEntity.toMovieGenre() = MovieGenre(movieId, genreId, genreName)
 
 fun MovieCast.toEntity() =
     MovieCastEntity(
-        id,
+        creditId,
+        personId,
         movieId,
         adult,
         gender,
@@ -84,14 +85,13 @@ fun MovieCast.toEntity() =
         profilePath ?: String.empty,
         castId,
         character,
-        creditId,
         order,
         now()
     )
 
 fun MovieCastEntity.toMovieCast() =
     MovieCast(
-        id,
+        personId,
         movieId,
         adult,
         gender,
@@ -108,7 +108,8 @@ fun MovieCastEntity.toMovieCast() =
 
 fun MovieCrew.toEntity() =
     MovieCrewEntity(
-        id,
+        creditId,
+        personId,
         movieId,
         adult,
         gender,
@@ -117,7 +118,6 @@ fun MovieCrew.toEntity() =
         originalName,
         popularity,
         profilePath ?: String.empty,
-        creditId,
         department,
         job,
         now()
@@ -125,7 +125,7 @@ fun MovieCrew.toEntity() =
 
 fun MovieCrewEntity.toMovieCrew() =
     MovieCrew(
-        id,
+        personId,
         movieId,
         adult,
         gender,

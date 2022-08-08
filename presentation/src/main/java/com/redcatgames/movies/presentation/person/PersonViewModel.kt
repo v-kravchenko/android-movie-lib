@@ -6,9 +6,10 @@ import androidx.lifecycle.viewModelScope
 import com.redcatgames.movies.domain.usecase.person.GetPersonUseCase
 import com.redcatgames.movies.domain.usecase.person.LoadPersonUseCase
 import com.redcatgmes.movies.baseui.BaseViewModel
-import com.redcatgmes.movies.baseui.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,9 +23,15 @@ constructor(
     private val loadPersonUseCase: LoadPersonUseCase
 ) : BaseViewModel(appContext) {
 
+    sealed class Event {
+        data class PersonLoaded(val result: Result<Unit>) : Event()
+    }
+
     private val args = PersonFragmentArgs.fromSavedStateHandle(savedStateHandle)
     val personInfo = getPersonUseCase(args.personId)
-    val loadPersonEvent = SingleLiveEvent<Result<Unit>>()
+
+    private val eventChannel = Channel<Event>(Channel.BUFFERED)
+    val events = eventChannel.receiveAsFlow()
 
     init {
         loadPersonUseCase()
@@ -32,6 +39,8 @@ constructor(
 
     private fun loadPersonUseCase() =
         viewModelScope.launch {
-            loadPersonUseCase(args.personId).run { loadPersonEvent.postValue(this) }
+            loadPersonUseCase(args.personId).run {
+                eventChannel.send(Event.PersonLoaded(this))
+            }
         }
 }

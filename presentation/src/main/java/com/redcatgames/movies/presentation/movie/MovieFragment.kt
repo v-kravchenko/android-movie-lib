@@ -109,9 +109,11 @@ class MovieFragment : BaseFragment() {
             }
         }
 
-        viewModel.loadMovieEvent.observe {
-            it.onFailure { error ->
-                showToast("Error loading: ${error.message}")
+        viewModel.events.observe { event ->
+            when (event) {
+                is MovieViewModel.Event.MovieInfoLoaded -> event.result.onFailure {
+                    showToast("Error loading: ${it.message}")
+                }
             }
         }
     }

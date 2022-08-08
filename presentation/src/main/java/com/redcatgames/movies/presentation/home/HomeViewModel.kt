@@ -8,9 +8,10 @@ import com.redcatgames.movies.domain.usecase.movie.GetPopularMoviesUseCase
 import com.redcatgames.movies.domain.usecase.movie.LoadMostVotesMoviesUseCase
 import com.redcatgames.movies.domain.usecase.movie.LoadPopularMoviesUseCase
 import com.redcatgmes.movies.baseui.BaseViewModel
-import com.redcatgmes.movies.baseui.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,15 +24,25 @@ class HomeViewModel @Inject constructor(
     private val loadMostVotesMoviesUseCase: LoadMostVotesMoviesUseCase
 ) : BaseViewModel(appContext) {
 
+    sealed class Event {
+        data class PopularMoviesLoaded(val result: Result<List<Movie>>) : Event()
+        data class MostVotesMoviesLoaded(val result: Result<List<Movie>>) : Event()
+    }
+
     val popularMovies = getPopularMoviesUseCase()
     val mostVotesMovies = getMostVotesMoviesUseCase()
-    val loadPopularMoviesEvent = SingleLiveEvent<Result<List<Movie>>>()
-    val loadMostVotesMoviesEvent = SingleLiveEvent<Result<List<Movie>>>()
+
+    private val eventChannel = Channel<Event>(Channel.BUFFERED)
+    val events = eventChannel.receiveAsFlow()
 
     init {
         viewModelScope.launch {
-            loadPopularMoviesUseCase().run { loadPopularMoviesEvent.postValue(this) }
-            loadMostVotesMoviesUseCase().run { loadMostVotesMoviesEvent.postValue(this) }
+            loadPopularMoviesUseCase().run {
+                eventChannel.send(Event.PopularMoviesLoaded(this))
+            }
+            loadMostVotesMoviesUseCase().run {
+                eventChannel.send(Event.MostVotesMoviesLoaded(this))
+            }
         }
     }
 }

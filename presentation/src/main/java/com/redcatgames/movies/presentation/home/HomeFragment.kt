@@ -75,15 +75,17 @@ class HomeFragment : BaseFragment() {
         viewModel.popularMovies.observe { popularAdapter.setItems(it) }
         viewModel.mostVotesMovies.observe { mostVotesAdapter.setItems(it) }
 
-        viewModel.loadPopularMoviesEvent.observe {
-            it.onFailure { error ->
-                showToast("Error loading: ${error.message}")
-            }
-        }
-
-        viewModel.loadMostVotesMoviesEvent.observe {
-            it.onFailure { error ->
-                showToast("Error loading: ${error.message}")
+        viewModel.events.observe { event ->
+            when (event) {
+                is HomeViewModel.Event.MostVotesMoviesLoaded ->
+                    event.result.onFailure {
+                        showToast("Error loading: ${it.message}")
+                    }
+                is HomeViewModel.Event.PopularMoviesLoaded -> {
+                    event.result.onFailure {
+                        showToast("Error loading: ${it.message}")
+                    }
+                }
             }
         }
     }

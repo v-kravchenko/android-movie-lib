@@ -98,9 +98,11 @@ class PersonFragment : BaseFragment() {
             }
         }
 
-        viewModel.loadPersonEvent.observe {
-            it.onFailure { error ->
-                showToast("Error loading: ${error.message}")
+        viewModel.events.observe { event ->
+            when (event) {
+                is PersonViewModel.Event.PersonLoaded -> event.result.onFailure {
+                    showToast("Error loading: ${it.message}")
+                }
             }
         }
     }

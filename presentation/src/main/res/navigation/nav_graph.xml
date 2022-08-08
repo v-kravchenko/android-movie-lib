@@ -86,5 +86,8 @@
         <argument
             android:name="gender"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_personFragment_to_movieFragment"
+            app:destination="@id/movieFragment" />
     </fragment>
 </navigation>

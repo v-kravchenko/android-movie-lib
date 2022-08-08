@@ -1,5 +1,6 @@
 package com.redcatgames.movies.domain.model
 
+import com.redcatgames.movies.util.format
 import java.util.*
 
 data class PersonCrew(
@@ -21,4 +22,7 @@ data class PersonCrew(
     val voteCount: Int,
     val department: String,
     val job: String
-)
+) {
+    val voteRating: String
+        get() = if (voteAverage > 0) voteAverage.format(1).replace(',', '.') else "n/a"
+}

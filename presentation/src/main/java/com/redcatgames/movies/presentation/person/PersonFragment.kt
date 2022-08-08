@@ -25,9 +25,15 @@ class PersonFragment : BaseFragment() {
 
     private val args by navArgs<PersonFragmentArgs>()
     private val viewModel: PersonViewModel by viewModels()
-    private var binding: PersonFragmentBinding by autoCleared()
+    private var binding: PersonFragmentBinding by autoCleared {
+        it.movieList.adapter = null
+    }
     private val dateFormat: SimpleDateFormat by lazy {
         SimpleDateFormat("dd.MM.yyyy", requireContext().currentLocale)
+    }
+
+    private val moviesAdapter: MovieAdapter by lazy {
+        MovieAdapter()
     }
 
     override fun onCreateView(
@@ -41,6 +47,17 @@ class PersonFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.movieList.adapter = moviesAdapter
+
+        moviesAdapter.onItemClick =
+            {
+                navigateTo(
+                    PersonFragmentDirections.actionPersonFragmentToMovieFragment(it.movieId,
+                        it.title)
+                )
+            }
+
         binding.topAppBar.setNavigationOnClickListener { navigateBack() }
         binding.topAppBar.title = args.personTitle
         binding.personPhoto.setImageDrawable(
@@ -95,6 +112,8 @@ class PersonFragment : BaseFragment() {
                     placeholder(resId)
                     error(resId)
                 }
+
+                moviesAdapter.setItems(personInfo.casts)
             }
         }
 

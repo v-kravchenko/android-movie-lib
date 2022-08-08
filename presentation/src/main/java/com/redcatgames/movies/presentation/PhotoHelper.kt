@@ -1,10 +1,7 @@
 package com.redcatgames.movies.presentation
 
 import android.graphics.Point
-import com.redcatgames.movies.domain.model.Movie
-import com.redcatgames.movies.domain.model.MovieCast
-import com.redcatgames.movies.domain.model.MovieCrew
-import com.redcatgames.movies.domain.model.Person
+import com.redcatgames.movies.domain.model.*
 
 private fun interface IPhotoSize {
     fun toUriPath(): String
@@ -73,3 +70,7 @@ fun Movie.getBackdropUri(backdropSize: BackdropSize): String =
     backdropSize.toUriPath() + backdropPath
 
 fun Person.getProfileUri(profileSize: ProfileSize): String = profileSize.toUriPath() + profilePath
+
+fun PersonCast.getPosterUri(posterSize: PosterSize): String = posterSize.toUriPath() + posterPath
+
+fun PersonCrew.getPosterUri(posterSize: PosterSize): String = posterSize.toUriPath() + posterPath

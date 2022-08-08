@@ -84,7 +84,7 @@ fun MovieCreditsResult.toMovieCastList(): List<MovieCast> {
                     MovieCast(
                         personId = it.personId,
                         movieId = this@toMovieCastList.movieId,
-                        adult = it.adult,
+                        adult = it.isAdult,
                         gender = it.gender,
                         knownForDepartment = it.knownForDepartment,
                         name = it.name ?: String.empty,
@@ -110,7 +110,7 @@ fun MovieCreditsResult.toMovieCrewList(): List<MovieCrew> {
                     MovieCrew(
                         personId = it.personId,
                         movieId = this@toMovieCrewList.movieId,
-                        adult = it.adult,
+                        adult = it.isAdult,
                         gender = it.gender,
                         knownForDepartment = it.knownForDepartment,
                         name = it.name ?: String.empty,

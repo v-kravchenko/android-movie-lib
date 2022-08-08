@@ -10,7 +10,7 @@ data class MovieCreditsResult(
     data class Cast(
         @SerializedName("credit_id") val creditId: String,
         @SerializedName("id") val personId: Long,
-        @SerializedName("adult") val adult: Boolean,
+        @SerializedName("adult") val isAdult: Boolean,
         @SerializedName("gender") val gender: Int,
         @SerializedName("known_for_department") val knownForDepartment: String?,
         @SerializedName("name") val name: String?,
@@ -24,7 +24,7 @@ data class MovieCreditsResult(
     data class Crew(
         @SerializedName("credit_id") val creditId: String,
         @SerializedName("id") val personId: Long,
-        @SerializedName("adult") val adult: Boolean,
+        @SerializedName("adult") val isAdult: Boolean,
         @SerializedName("gender") val gender: Int,
         @SerializedName("known_for_department") val knownForDepartment: String?,
         @SerializedName("name") val name: String?,

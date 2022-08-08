@@ -73,6 +73,7 @@ dependencies {
     implementation(project(":util"))
     implementation(project(":baseui"))
     implementation(project(":data"))
+    implementation(project(":data:device"))
     implementation(project(":data:local"))
     implementation(project(":data:remote"))
     implementation(project(":data:preferences"))

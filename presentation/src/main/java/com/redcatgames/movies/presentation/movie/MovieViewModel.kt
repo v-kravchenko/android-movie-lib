@@ -8,11 +8,11 @@ import com.redcatgames.movies.domain.usecase.movie.LoadMovieInfoUseCase
 import com.redcatgmes.movies.baseui.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
-import javax.inject.Inject
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import javax.inject.Inject
 
 @HiltViewModel
 class MovieViewModel

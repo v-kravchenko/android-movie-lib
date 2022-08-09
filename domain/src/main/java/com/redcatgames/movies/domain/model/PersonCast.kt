@@ -20,7 +20,7 @@ data class PersonCast(
     val isVideo: Boolean,
     val voteAverage: Double,
     val voteCount: Int,
-    val character: String,
+    val character: String?,
     val order: Int
 ) {
     val voteRating: String

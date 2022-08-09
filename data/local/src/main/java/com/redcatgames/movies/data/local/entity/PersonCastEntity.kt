@@ -22,7 +22,7 @@ data class PersonCastEntity(
     val isVideo: Boolean,
     val voteAverage: Double,
     val voteCount: Int,
-    val character: String,
+    val character: String?,
     val order: Int,
     val created: Date
 )

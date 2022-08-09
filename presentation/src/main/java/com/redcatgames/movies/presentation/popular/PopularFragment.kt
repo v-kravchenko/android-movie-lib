@@ -17,9 +17,7 @@ import timber.log.Timber
 class PopularFragment : BaseFragment() {
 
     private val viewModel: PopularViewModel by viewModels()
-    private var binding: PopularFragmentBinding by autoCleared {
-        it.movieList.adapter = null
-    }
+    private var binding: PopularFragmentBinding by autoCleared { it.movieList.adapter = null }
     private val adapter by lazy { MovieAdapter() }
 
     override fun onCreateView(
@@ -38,28 +36,29 @@ class PopularFragment : BaseFragment() {
         adapter.onItemClick =
             {
                 navigateTo(
-                    PopularFragmentDirections.actionPopularFragmentToMovieFragment(it.id, it.title)
-                )
+                    PopularFragmentDirections.actionPopularFragmentToMovieFragment(it.id, it.title))
             }
         setupObserver()
 
-        binding.movieList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
+        binding.movieList.addOnScrollListener(
+            object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
 
-                (binding.movieList.layoutManager as? GridLayoutManager)?.let { gridLayoutManager ->
-                    val visibleItemCount: Int = gridLayoutManager.childCount
-                    val totalItemCount: Int = gridLayoutManager.itemCount
-                    val firstVisibleItemPosition = gridLayoutManager.findFirstVisibleItemPosition()
+                    (binding.movieList.layoutManager as? GridLayoutManager)?.let { gridLayoutManager
+                        ->
+                        val visibleItemCount: Int = gridLayoutManager.childCount
+                        val totalItemCount: Int = gridLayoutManager.itemCount
+                        val firstVisibleItemPosition =
+                            gridLayoutManager.findFirstVisibleItemPosition()
 
-                    if (visibleItemCount + firstVisibleItemPosition >= totalItemCount
-                        && firstVisibleItemPosition >= 0
-                    ) {
-                        Timber.d("Load next page request!")
+                        if (visibleItemCount + firstVisibleItemPosition >= totalItemCount &&
+                            firstVisibleItemPosition >= 0) {
+                            Timber.d("Load next page request!")
+                        }
                     }
                 }
-            }
-        })
+            })
     }
 
     private fun setupObserver() {
@@ -69,15 +68,12 @@ class PopularFragment : BaseFragment() {
         viewModel.events.observe { event ->
             when (event) {
                 is PopularViewModel.Event.MoviesLoaded -> {
-                    event.result.onSuccess {
-                        showToast("Loaded ${it.size} movies")
-                    }.onFailure { error ->
+                    event.result.onSuccess { showToast("Loaded ${it.size} movies") }.onFailure {
+                        error ->
                         showToast("Error loading: ${error.message}")
                     }
                 }
             }
         }
     }
-
-
 }

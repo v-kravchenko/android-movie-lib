@@ -2,7 +2,6 @@ package com.redcatgames.movies.di
 
 import android.content.Context
 import coil.ImageLoader
-import com.redcatgames.movies.BuildConfig
 import com.redcatgames.movies.data.preferences.ImageConfigPreferences
 import com.redcatgames.movies.data.remote.interceptor.ImageHostSelectionInterceptor
 import dagger.Module
@@ -35,10 +34,10 @@ class ImageLoaderModule {
     ): ImageLoader {
         val builder = ImageLoader.Builder(context).crossfade(true).okHttpClient(httpClient)
 
-//        if (BuildConfig.DEBUG) {
-//                        builder.diskCache(null)
-//                        builder.memoryCache(null)
-//        }
+        //        if (BuildConfig.DEBUG) {
+        //                        builder.diskCache(null)
+        //                        builder.memoryCache(null)
+        //        }
 
         return builder.build()
     }

@@ -49,24 +49,18 @@ class MovieFragment : BaseFragment() {
         binding.castList.adapter = castAdapter
         binding.crewList.adapter = crewAdapter
 
-        castAdapter.onItemClick = {
-            navigateTo(
-                MovieFragmentDirections.actionMovieFragmentToPersonFragment(
-                    it.personId,
-                    it.name,
-                    it.gender
-                )
-            )
-        }
-        crewAdapter.onItemClick = {
-            navigateTo(
-                MovieFragmentDirections.actionMovieFragmentToPersonFragment(
-                    it.personId,
-                    it.name,
-                    it.gender
-                )
-            )
-        }
+        castAdapter.onItemClick =
+            {
+                navigateTo(
+                    MovieFragmentDirections.actionMovieFragmentToPersonFragment(
+                        it.personId, it.name, it.gender))
+            }
+        crewAdapter.onItemClick =
+            {
+                navigateTo(
+                    MovieFragmentDirections.actionMovieFragmentToPersonFragment(
+                        it.personId, it.name, it.gender))
+            }
 
         setupObserver()
     }
@@ -84,23 +78,21 @@ class MovieFragment : BaseFragment() {
                     error(R.drawable.poster_placeholder_medium)
                 }
 
-                binding.textGenres.text = buildSpannedString {
-                    bold {
-                        append(getString(R.string.movie_genre_list_title))
+                binding.textGenres.text =
+                    buildSpannedString {
+                        bold { append(getString(R.string.movie_genre_list_title)) }
+                        append(" ${movieInfo.genres.joinToString { genre -> genre.genreName }}")
                     }
-                    append(" ${movieInfo.genres.joinToString { genre -> genre.genreName }}")
-                }
-                binding.textReleaseDate.text = buildSpannedString {
-                    bold {
-                        append(getString(R.string.movie_release_date_title))
+                binding.textReleaseDate.text =
+                    buildSpannedString {
+                        bold { append(getString(R.string.movie_release_date_title)) }
+                        val releaseDate = movieInfo.movie.releaseDate
+                        if (releaseDate == null) {
+                            append(" -")
+                        } else {
+                            append(" ${dateFormat.format(releaseDate)}")
+                        }
                     }
-                    val releaseDate = movieInfo.movie.releaseDate
-                    if (releaseDate == null) {
-                        append(" -")
-                    } else {
-                        append(" ${dateFormat.format(releaseDate)}")
-                    }
-                }
 
                 castAdapter.setItems(movieInfo.casts.sortedBy { it.order })
                 crewAdapter.setItems(movieInfo.crews)
@@ -111,9 +103,8 @@ class MovieFragment : BaseFragment() {
 
         viewModel.events.observe { event ->
             when (event) {
-                is MovieViewModel.Event.MovieInfoLoaded -> event.result.onFailure {
-                    showToast("Error loading: ${it.message}")
-                }
+                is MovieViewModel.Event.MovieInfoLoaded ->
+                    event.result.onFailure { showToast("Error loading: ${it.message}") }
             }
         }
     }

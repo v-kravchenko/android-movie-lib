@@ -8,10 +8,10 @@ import com.redcatgames.movies.domain.usecase.movie.LoadPopularMoviesUseCase
 import com.redcatgmes.movies.baseui.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @HiltViewModel
 class PopularViewModel
@@ -33,9 +33,7 @@ constructor(
 
     init {
         viewModelScope.launch {
-            loadPopularMoviesUseCase().run {
-                eventChannel.send(Event.MoviesLoaded(this))
-            }
+            loadPopularMoviesUseCase().run { eventChannel.send(Event.MoviesLoaded(this)) }
         }
     }
 }

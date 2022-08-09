@@ -32,6 +32,7 @@ object Versions {
     const val dataStore = "1.0.0"
     const val coil = "2.1.0"
     const val okHttp = "5.0.0-alpha.5"
+    const val shimmer = "0.5.0"
 }
 
 object BuildPlugins {
@@ -50,9 +51,12 @@ object BuildClass {
         "com.android.application:com.android.application.gradle.plugin:${Versions.gradleVersion}"
     const val KOTLIN = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlinVersion}"
     const val HILT = "com.google.dagger:hilt-android-gradle-plugin:${Versions.hiltVersion}"
-    const val KSP = "com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin:${Versions.kspVersion}"
-    const val SAFEARGS = "androidx.navigation:navigation-safe-args-gradle-plugin:${Versions.navigation}"
-    const val GRADLEVERSION = "com.github.ben-manes:gradle-versions-plugin:${Versions.gradleVersions}"
+    const val KSP =
+        "com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin:${Versions.kspVersion}"
+    const val SAFEARGS =
+        "androidx.navigation:navigation-safe-args-gradle-plugin:${Versions.navigation}"
+    const val GRADLEVERSION =
+        "com.github.ben-manes:gradle-versions-plugin:${Versions.gradleVersions}"
     const val KTFMT = "com.ncorti.ktfmt.gradle:plugin:${Versions.ktFmt}"
 }
 
@@ -70,15 +74,20 @@ object Dependencies {
     const val ROOM_COMPILER = "androidx.room:room-compiler:${Versions.roomVersion}"
     const val ROOM_KTX = "androidx.room:room-ktx:${Versions.roomVersion}"
 
-    const val LIFECYCLE_VIEWMODEL = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"
+    const val LIFECYCLE_VIEWMODEL =
+        "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"
     const val LIFECYCLE_LIVEDATA = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle}"
-    const val LIFECYCLE_SAVEDSTATE = "androidx.lifecycle:lifecycle-viewmodel-savedstate:${Versions.lifecycle}"
+    const val LIFECYCLE_SAVEDSTATE =
+        "androidx.lifecycle:lifecycle-viewmodel-savedstate:${Versions.lifecycle}"
     const val LIFECYCLE_RUNTIME = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycle}"
 
-    const val COROUTINES_CORE = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
-    const val COROUTINES_ANDROID = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
+    const val COROUTINES_CORE =
+        "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
+    const val COROUTINES_ANDROID =
+        "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
 
-    const val NAVIGATION_FRAGMENT = "androidx.navigation:navigation-fragment-ktx:${Versions.navigation}"
+    const val NAVIGATION_FRAGMENT =
+        "androidx.navigation:navigation-fragment-ktx:${Versions.navigation}"
     const val NAVIGATION_UI = "androidx.navigation:navigation-ui-ktx:${Versions.navigation}"
 
     const val RETROFIT = "com.squareup.retrofit2:retrofit:${Versions.retrofit2}"
@@ -86,11 +95,14 @@ object Dependencies {
     const val OKHTTP_LOGGING = "com.squareup.okhttp3:logging-interceptor:${Versions.okHttp}"
 
     const val LEAKCANARY = "com.squareup.leakcanary:leakcanary-android:${Versions.leakCanary}"
-    const val CONSTRAINT_LAYOUT = "androidx.constraintlayout:constraintlayout:${Versions.constraint}"
+    const val CONSTRAINT_LAYOUT =
+        "androidx.constraintlayout:constraintlayout:${Versions.constraint}"
     const val TIMBER = "com.jakewharton.timber:timber:${Versions.timber}"
     const val DATASTORE = "androidx.datastore:datastore-preferences:${Versions.dataStore}"
     const val COIL = "io.coil-kt:coil:${Versions.coil}"
     const val JAVAX_INJECT = "javax.inject:javax.inject:1"
+
+    const val SHIMMER = "com.facebook.shimmer:shimmer:${Versions.shimmer}"
 }
 
 fun DependencyHandler.retrofit() {

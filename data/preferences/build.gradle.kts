@@ -35,5 +35,5 @@ dependencies {
 }
 
 ktfmt {
-    kotlinLangStyle()
+    dropboxStyle()
 }

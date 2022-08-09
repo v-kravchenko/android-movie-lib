@@ -14,13 +14,6 @@ data class ImageConfig(
     companion object {
         val EMPTY =
             ImageConfig(
-                EMPTY_STRING,
-                EMPTY_STRING,
-                listOf(),
-                listOf(),
-                listOf(),
-                listOf(),
-                listOf()
-            )
+                EMPTY_STRING, EMPTY_STRING, listOf(), listOf(), listOf(), listOf(), listOf())
     }
 }

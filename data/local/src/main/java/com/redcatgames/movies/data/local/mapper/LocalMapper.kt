@@ -47,8 +47,7 @@ fun Movie.toEntity() =
         video,
         voteAverage,
         voteCount,
-        now()
-    )
+        now())
 
 fun MovieEntity.toMovie() =
     Movie(
@@ -65,8 +64,7 @@ fun MovieEntity.toMovie() =
         title,
         video,
         voteAverage,
-        voteCount
-    )
+        voteCount)
 
 fun MovieGenre.toEntity() = MovieGenreEntity(movieId, genreId, genreName, now())
 
@@ -92,8 +90,7 @@ fun PersonCast.toEntity() =
         voteCount,
         character,
         order,
-        now()
-    )
+        now())
 
 fun MovieCast.toEntity() =
     MovieCastEntity(
@@ -110,8 +107,7 @@ fun MovieCast.toEntity() =
         castId,
         character,
         order,
-        now()
-    )
+        now())
 
 fun PersonCastEntity.toPersonCast() =
     PersonCast(
@@ -132,8 +128,7 @@ fun PersonCastEntity.toPersonCast() =
         voteAverage,
         voteCount,
         character,
-        order
-    )
+        order)
 
 fun MovieCastEntity.toMovieCast() =
     MovieCast(
@@ -149,8 +144,7 @@ fun MovieCastEntity.toMovieCast() =
         castId,
         character,
         creditId,
-        order
-    )
+        order)
 
 fun PersonCrew.toEntity() =
     PersonCrewEntity(
@@ -172,8 +166,7 @@ fun PersonCrew.toEntity() =
         voteCount,
         department,
         job,
-        now()
-    )
+        now())
 
 fun MovieCrew.toEntity() =
     MovieCrewEntity(
@@ -189,8 +182,7 @@ fun MovieCrew.toEntity() =
         profilePath ?: String.empty,
         department,
         job,
-        now()
-    )
+        now())
 
 fun PersonCrewEntity.toPersonCrew() =
     PersonCrew(
@@ -211,8 +203,7 @@ fun PersonCrewEntity.toPersonCrew() =
         voteAverage,
         voteCount,
         department,
-        job
-    )
+        job)
 
 fun MovieCrewEntity.toMovieCrew() =
     MovieCrew(
@@ -227,23 +218,17 @@ fun MovieCrewEntity.toMovieCrew() =
         profilePath,
         creditId,
         department,
-        job
-    )
+        job)
 
 fun MovieInfoEntity.fromEntity() =
     MovieInfo(
         movie.toMovie(),
         genres.map { it.toMovieGenre() },
         casts.map { it.toMovieCast() },
-        crews.map { it.toMovieCrew() }
-    )
+        crews.map { it.toMovieCrew() })
 
 fun PersonInfoEntity.fromEntity() =
-    PersonInfo(
-        person.toPerson(),
-        casts.map { it.toPersonCast() },
-        crews.map { it.toPersonCrew() }
-    )
+    PersonInfo(person.toPerson(), casts.map { it.toPersonCast() }, crews.map { it.toPersonCrew() })
 
 fun Person.toEntity() =
     PersonEntity(
@@ -261,8 +246,7 @@ fun Person.toEntity() =
         placeOfBirth,
         popularity,
         profilePath,
-        now()
-    )
+        now())
 
 fun PersonEntity.toPerson() =
     Person(
@@ -279,5 +263,4 @@ fun PersonEntity.toPerson() =
         name,
         placeOfBirth,
         popularity,
-        profilePath
-    )
+        profilePath)

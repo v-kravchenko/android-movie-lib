@@ -23,29 +23,26 @@ class MoviesApp : Application(), ImageLoaderFactory {
     }
 
     private fun loadTimber() {
-//        if (BuildConfig.DEBUG) {
-            Timber.plant(
-                object : Timber.DebugTree() {
-                    override fun createStackElementTag(element: StackTraceElement): String {
-                        return "${element.fileName}[L:${element.lineNumber}] ${
+        //        if (BuildConfig.DEBUG) {
+        Timber.plant(
+            object : Timber.DebugTree() {
+                override fun createStackElementTag(element: StackTraceElement): String {
+                    return "${element.fileName}[L:${element.lineNumber}] ${
                             super.createStackElementTag(
                                 element
                             )
                         }"
-                    }
-
-                    override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
-                        super.log(priority, BuildConfig.APPLICATION_ID, "$tag $message", t)
-                    }
                 }
-            )
-//        }
+
+                override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
+                    super.log(priority, BuildConfig.APPLICATION_ID, "$tag $message", t)
+                }
+            })
+        //        }
 
         Timber.d(
-            "Start application version: ${BuildConfig.VERSION_NAME} (code: ${BuildConfig.VERSION_CODE}) ${if (BuildConfig.DEBUG) "DEBUG" else "RELEASE"}\""
-        )
+            "Start application version: ${BuildConfig.VERSION_NAME} (code: ${BuildConfig.VERSION_CODE}) ${if (BuildConfig.DEBUG) "DEBUG" else "RELEASE"}\"")
         Timber.d(
-            "Device: ${Build.MANUFACTURER} ${Build.MODEL} - Android ${Build.VERSION.RELEASE} (API ${Build.VERSION.SDK_INT})"
-        )
+            "Device: ${Build.MANUFACTURER} ${Build.MODEL} - Android ${Build.VERSION.RELEASE} (API ${Build.VERSION.SDK_INT})")
     }
 }

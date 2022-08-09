@@ -26,7 +26,8 @@ class CrewAdapter : ListAdapter<MovieCrew, CrewHolder>(CrewDiffCallback()) {
         return CrewHolder(binding, onItemClick)
     }
 
-    override fun onBindViewHolder(CrewHolder: CrewHolder, position: Int) = CrewHolder.bind(getItem(position))
+    override fun onBindViewHolder(CrewHolder: CrewHolder, position: Int) =
+        CrewHolder.bind(getItem(position))
 }
 
 class CrewHolder(
@@ -39,8 +40,9 @@ class CrewHolder(
         itemBinding.textTitle.text = item.name
         itemBinding.textSubtitle.text = item.job
         itemBinding.castImage.loadByUrl(item.getProfileUri(ProfileSize.MEDIUM)) {
-            val resId = if (item.gender == 2) R.drawable.person_placeholder_medium_male
-            else R.drawable.person_placeholder_medium_female
+            val resId =
+                if (item.gender == 2) R.drawable.person_placeholder_medium_male
+                else R.drawable.person_placeholder_medium_female
 
             placeholder(resId)
             error(resId)

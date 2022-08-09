@@ -10,17 +10,16 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import java.lang.reflect.Type
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Named
 import javax.inject.Singleton
-
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 @InstallIn(SingletonComponent::class)
 @Module
@@ -33,28 +32,30 @@ class NetworkModule {
     @Provides
     @Singleton
     @Named("TmdbDateFormat")
-    fun provideDateFormat(locale: Locale) =
-        SimpleDateFormat(TmdbDateFormat, locale)
+    fun provideDateFormat(locale: Locale) = SimpleDateFormat(TmdbDateFormat, locale)
 
     @Provides
     @Singleton
-    fun provideGson(@Named("TmdbDateFormat") dateFormat: SimpleDateFormat): Gson = GsonBuilder()
-        .setDateFormat(TmdbDateFormat)
-        .registerTypeAdapter(Date::class.java, object : JsonDeserializer<Date> {
-            override fun deserialize(
-                json: JsonElement,
-                typeOfT: Type?,
-                context: JsonDeserializationContext?,
-            ): Date? {
-                return try {
-                    dateFormat.parse(json.asString)
-                } catch (e: ParseException) {
-                    e.printStackTrace()
-                    null
-                }
-            }
-        })
-        .create()
+    fun provideGson(@Named("TmdbDateFormat") dateFormat: SimpleDateFormat): Gson =
+        GsonBuilder()
+            .setDateFormat(TmdbDateFormat)
+            .registerTypeAdapter(
+                Date::class.java,
+                object : JsonDeserializer<Date> {
+                    override fun deserialize(
+                        json: JsonElement,
+                        typeOfT: Type?,
+                        context: JsonDeserializationContext?,
+                    ): Date? {
+                        return try {
+                            dateFormat.parse(json.asString)
+                        } catch (e: ParseException) {
+                            e.printStackTrace()
+                            null
+                        }
+                    }
+                })
+            .create()
 
     @Singleton
     @Provides

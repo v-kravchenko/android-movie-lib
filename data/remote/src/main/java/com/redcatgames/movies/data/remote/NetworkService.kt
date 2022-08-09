@@ -39,8 +39,7 @@ interface NetworkService {
     @GET("configuration/timezones")
     suspend fun getTimezones(): NetworkResponse<List<ConfigurationTimezonesResult>, BaseError>
 
-    @GET("genre/movie/list")
-    suspend fun getGenres(): NetworkResponse<GenreResult, BaseError>
+    @GET("genre/movie/list") suspend fun getGenres(): NetworkResponse<GenreResult, BaseError>
 
     @GET("discover/movie?sort_by=popularity.desc")
     suspend fun getPopularMovies(

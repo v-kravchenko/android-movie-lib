@@ -22,15 +22,13 @@ class UserConfigPreferences(private val preferences: Preferences) {
             val keyUiDarkMode = intPreferencesKey(UI_DARK_MODE)
             UserConfig(
                 it[keyApiLanguage] ?: DEFAULT_API_LANGUAGE,
-                it[keyUiDarkMode] ?: DEFAULT_UI_DARK_MODE
-            )
+                it[keyUiDarkMode] ?: DEFAULT_UI_DARK_MODE)
         }
 
     suspend fun readConfig(): UserConfig {
         return UserConfig(
             preferences.getString(API_LANGUAGE) ?: DEFAULT_API_LANGUAGE,
-            preferences.getInt(UI_DARK_MODE) ?: DEFAULT_UI_DARK_MODE
-        )
+            preferences.getInt(UI_DARK_MODE) ?: DEFAULT_UI_DARK_MODE)
     }
 
     suspend fun putConfig(userConfig: UserConfig) {

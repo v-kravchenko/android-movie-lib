@@ -25,16 +25,12 @@ class PersonFragment : BaseFragment() {
 
     private val args by navArgs<PersonFragmentArgs>()
     private val viewModel: PersonViewModel by viewModels()
-    private var binding: PersonFragmentBinding by autoCleared {
-        it.movieList.adapter = null
-    }
+    private var binding: PersonFragmentBinding by autoCleared { it.movieList.adapter = null }
     private val dateFormat: SimpleDateFormat by lazy {
         SimpleDateFormat("dd.MM.yyyy", requireContext().currentLocale)
     }
 
-    private val moviesAdapter: MovieAdapter by lazy {
-        MovieAdapter()
-    }
+    private val moviesAdapter: MovieAdapter by lazy { MovieAdapter() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,9 +49,8 @@ class PersonFragment : BaseFragment() {
         moviesAdapter.onItemClick =
             {
                 navigateTo(
-                    PersonFragmentDirections.actionPersonFragmentToMovieFragment(it.movieId,
-                        it.title)
-                )
+                    PersonFragmentDirections.actionPersonFragmentToMovieFragment(
+                        it.movieId, it.title))
             }
 
         binding.topAppBar.setNavigationOnClickListener { navigateBack() }
@@ -63,9 +58,8 @@ class PersonFragment : BaseFragment() {
         binding.personPhoto.setImageDrawable(
             ContextCompat.getDrawable(
                 requireContext(),
-                if (args.gender == 2) R.drawable.person_placeholder_medium_male else R.drawable.person_placeholder_medium_female
-            )
-        )
+                if (args.gender == 2) R.drawable.person_placeholder_medium_male
+                else R.drawable.person_placeholder_medium_female))
         setupObserver()
     }
 
@@ -73,37 +67,32 @@ class PersonFragment : BaseFragment() {
 
         viewModel.personInfo.observe { info ->
             info?.let { personInfo ->
-                binding.textOriginalName.text = buildSpannedString {
-                    bold {
-                        append(getString(R.string.person_original_name_title))
+                binding.textOriginalName.text =
+                    buildSpannedString {
+                        bold { append(getString(R.string.person_original_name_title)) }
+                        append(" ${personInfo.person.name}")
                     }
-                    append(" ${personInfo.person.name}")
-                }
-                binding.textBirthday.text = buildSpannedString {
-                    bold {
-                        append(getString(R.string.person_birthday_title))
-                    }
-                    val birthDay = personInfo.person.birthDay
-                    if (birthDay == null) {
-                        append(" -")
-                    } else {
-                        append(" ${dateFormat.format(birthDay)}")
-                    }
-                }
-
-                binding.textDeathday.text = buildSpannedString {
-                    val deathDay = personInfo.person.deathDay
-                    if (deathDay != null) {
-                        bold {
-                            append(getString(R.string.person_death_title))
+                binding.textBirthday.text =
+                    buildSpannedString {
+                        bold { append(getString(R.string.person_birthday_title)) }
+                        val birthDay = personInfo.person.birthDay
+                        if (birthDay == null) {
+                            append(" -")
+                        } else {
+                            append(" ${dateFormat.format(birthDay)}")
                         }
-                        append(" ${dateFormat.format(deathDay)}")
                     }
-                }
 
-                binding.textOverview.text = personInfo.person.biography.ifEmpty {
-                    "-"
-                }
+                binding.textDeathday.text =
+                    buildSpannedString {
+                        val deathDay = personInfo.person.deathDay
+                        if (deathDay != null) {
+                            bold { append(getString(R.string.person_death_title)) }
+                            append(" ${dateFormat.format(deathDay)}")
+                        }
+                    }
+
+                binding.textOverview.text = personInfo.person.biography.ifEmpty { "-" }
                 binding.personPhoto.loadByUrl(personInfo.person.getProfileUri(ProfileSize.MEDIUM)) {
                     val resId =
                         if (personInfo.person.gender == 2) R.drawable.person_placeholder_medium_male
@@ -113,17 +102,14 @@ class PersonFragment : BaseFragment() {
                     error(resId)
                 }
 
-                moviesAdapter.setItems(personInfo.casts.sortedByDescending {
-                    it.popularity
-                })
+                moviesAdapter.setItems(personInfo.casts.sortedByDescending { it.popularity })
             }
         }
 
         viewModel.events.observe { event ->
             when (event) {
-                is PersonViewModel.Event.PersonLoaded -> event.result.onFailure {
-                    showToast("Error loading: ${it.message}")
-                }
+                is PersonViewModel.Event.PersonLoaded ->
+                    event.result.onFailure { showToast("Error loading: ${it.message}") }
             }
         }
     }

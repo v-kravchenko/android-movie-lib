@@ -53,8 +53,7 @@ class ImageConfigPreferences(private val preferences: Preferences) {
                 (it[keyLogoSizes] ?: DEFAULT_LOGO_SIZES_VALUE).toList(SEPARATOR),
                 (it[keyPosterSizes] ?: DEFAULT_POSTER_SIZES_VALUE).toList(SEPARATOR),
                 (it[keyProfileSizes] ?: DEFAULT_PROFILE_SIZES_VALUE).toList(SEPARATOR),
-                (it[keyStillSizes] ?: DEFAULT_STILL_SIZES_VALUE).toList(SEPARATOR)
-            )
+                (it[keyStillSizes] ?: DEFAULT_STILL_SIZES_VALUE).toList(SEPARATOR))
         }
 
     suspend fun readConfig(): ImageConfig {
@@ -62,21 +61,15 @@ class ImageConfigPreferences(private val preferences: Preferences) {
                 preferences.getString(BASE_URL_KEY) ?: DEFAULT_BASE_URL_VALUE,
                 preferences.getString(SECURE_BASE_URL_KEY) ?: DEFAULT_SECURE_BASE_URL_VALUE,
                 (preferences.getString(BACKDROP_SIZES_KEY) ?: DEFAULT_BACKDROP_SIZES_VALUE).toList(
-                    SEPARATOR
-                ),
+                    SEPARATOR),
                 (preferences.getString(LOGO_SIZES_KEY) ?: DEFAULT_LOGO_SIZES_VALUE).toList(
-                    SEPARATOR
-                ),
+                    SEPARATOR),
                 (preferences.getString(POSTER_SIZES_KEY) ?: DEFAULT_POSTER_SIZES_VALUE).toList(
-                    SEPARATOR
-                ),
+                    SEPARATOR),
                 (preferences.getString(PROFILE_SIZES_KEY) ?: DEFAULT_PROFILE_SIZES_VALUE).toList(
-                    SEPARATOR
-                ),
+                    SEPARATOR),
                 (preferences.getString(STILL_SIZES_KEY) ?: DEFAULT_STILL_SIZES_VALUE).toList(
-                    SEPARATOR
-                )
-            )
+                    SEPARATOR))
             .also { currentConfig = it }
     }
 

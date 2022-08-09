@@ -22,9 +22,8 @@ class MovieAdapter : ListAdapter<PersonCast, Holder>(ItemDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val binding: LayoutPersonMovieHorizontalBinding =
-            LayoutPersonMovieHorizontalBinding.inflate(LayoutInflater.from(parent.context),
-                parent,
-                false)
+            LayoutPersonMovieHorizontalBinding.inflate(
+                LayoutInflater.from(parent.context), parent, false)
         return Holder(binding, onItemClick)
     }
 

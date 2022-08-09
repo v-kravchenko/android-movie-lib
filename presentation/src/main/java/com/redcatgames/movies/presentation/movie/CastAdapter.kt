@@ -40,9 +40,9 @@ class CastHolder(
         itemBinding.textTitle.text = item.name
         itemBinding.textSubtitle.text = item.character
         itemBinding.castImage.loadByUrl(item.getProfileUri(ProfileSize.MEDIUM)) {
-
-            val resId = if (item.gender == 2) R.drawable.person_placeholder_medium_male
-            else R.drawable.person_placeholder_medium_female
+            val resId =
+                if (item.gender == 2) R.drawable.person_placeholder_medium_male
+                else R.drawable.person_placeholder_medium_female
 
             placeholder(resId)
             error(resId)

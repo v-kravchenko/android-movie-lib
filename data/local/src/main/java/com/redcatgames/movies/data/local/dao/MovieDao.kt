@@ -41,7 +41,7 @@ interface MovieDao {
 
     @Transaction
     suspend fun replace(movies: List<MovieEntity>) {
-        //deleteAll()
+        // deleteAll()
         insertAll(movies)
     }
 }

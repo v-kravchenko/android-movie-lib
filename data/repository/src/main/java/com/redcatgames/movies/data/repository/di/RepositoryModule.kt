@@ -44,8 +44,7 @@ class RepositoryModule {
             primaryTranslationDao,
             timezoneDao,
             genreDao,
-            networkService
-        )
+            networkService)
     }
 
     @Singleton
@@ -71,7 +70,7 @@ class RepositoryModule {
             movieCrewDao,
             genreDao,
             personDao,
-            personCastDao, personCrewDao
-        )
+            personCastDao,
+            personCrewDao)
     }
 }

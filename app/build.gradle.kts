@@ -115,5 +115,5 @@ hilt {
 }
 
 ktfmt {
-    kotlinLangStyle()
+    dropboxStyle()
 }

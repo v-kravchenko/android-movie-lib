@@ -121,8 +121,7 @@ class DictionaryRepositoryImpl(
                             async { loadLanguages() },
                             async { loadPrimaryTranslations() },
                             async { loadTimezones() },
-                            async { loadGenres() }
-                        )
+                            async { loadGenres() })
                         .awaitAll()
 
                 jobList.find { job -> job.isFailure }?.let {
@@ -206,8 +205,7 @@ class DictionaryRepositoryImpl(
                         async { deleteAllLanguages() },
                         async { deleteAllPrimaryTranslations() },
                         async { deleteAllTimezones() },
-                        async { deleteAllGenres() }
-                    )
+                        async { deleteAllGenres() })
                     .awaitAll()
             }
         }

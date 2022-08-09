@@ -18,9 +18,7 @@ constructor(private val imageConfigPreferences: ImageConfigPreferences) : Interc
         request =
             request
                 .newBuilder()
-                .url(
-                    request.url.toString().replace("https://localhost", imageConfig.secureBaseUrl)
-                )
+                .url(request.url.toString().replace("https://localhost", imageConfig.secureBaseUrl))
                 .build()
 
         return chain.proceed(request)

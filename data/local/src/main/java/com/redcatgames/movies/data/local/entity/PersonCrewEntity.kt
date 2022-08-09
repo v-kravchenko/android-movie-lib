@@ -6,8 +6,7 @@ import java.util.*
 
 @Entity(tableName = "person_crews")
 data class PersonCrewEntity(
-    @PrimaryKey
-    val creditId: String,
+    @PrimaryKey val creditId: String,
     val personId: Long,
     val isAdult: Boolean,
     val backdropPath: String?,

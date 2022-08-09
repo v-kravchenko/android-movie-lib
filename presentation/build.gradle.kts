@@ -44,8 +44,9 @@ dependencies {
     implementation(Dependencies.ANDROID_MATERIAL)
     implementation(Dependencies.CONSTRAINT_LAYOUT)
     implementation(Dependencies.TIMBER)
+    implementation(Dependencies.SHIMMER)
 }
 
 ktfmt {
-    kotlinLangStyle()
+    dropboxStyle()
 }

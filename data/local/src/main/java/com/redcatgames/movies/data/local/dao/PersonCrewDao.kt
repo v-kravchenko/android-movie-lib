@@ -12,11 +12,9 @@ interface PersonCrewDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(personCrews: List<PersonCrewEntity>)
 
-    @Delete
-    suspend fun delete(personCrew: PersonCrewEntity)
+    @Delete suspend fun delete(personCrew: PersonCrewEntity)
 
-    @Query("DELETE FROM person_crews")
-    suspend fun deleteAll()
+    @Query("DELETE FROM person_crews") suspend fun deleteAll()
 
     @Query("DELETE FROM person_crews WHERE personId = :personId")
     suspend fun deleteByPerson(personId: Long)
@@ -24,17 +22,14 @@ interface PersonCrewDao {
     @Query("DELETE FROM person_crews WHERE personId IN (:personIds)")
     suspend fun deleteByPersonList(personIds: List<Long>)
 
-    @Update
-    suspend fun update(personCrew: PersonCrewEntity)
+    @Update suspend fun update(personCrew: PersonCrewEntity)
 
-    @Query("SELECT * FROM person_crews")
-    fun all(): LiveData<List<PersonCrewEntity>>
+    @Query("SELECT * FROM person_crews") fun all(): LiveData<List<PersonCrewEntity>>
 
     @Query("SELECT * FROM person_crews WHERE personId = :personId")
     fun byPerson(personId: Long): LiveData<List<PersonCrewEntity>>
 
-    @Query("SELECT COUNT(1) FROM person_crews")
-    suspend fun getCount(): Int
+    @Query("SELECT COUNT(1) FROM person_crews") suspend fun getCount(): Int
 
     @Transaction
     suspend fun replace(personId: Long, personCrews: List<PersonCrewEntity>) {

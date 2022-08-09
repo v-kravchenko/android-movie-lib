@@ -116,15 +116,15 @@ class MovieRepositoryImpl(
             when (val response = networkService.getPersonCredits(personId)) {
                 is NetworkResponse.Success -> {
                     listOf(
-                        async {
-                            val castList = response.body.toPersonCastList()
-                            putPersonCasts(personId, castList)
-                        },
-                        async {
-                            val crewList = response.body.toPersonCrewList()
-                            putPersonCrews(personId, crewList)
-                        }
-                    ).awaitAll()
+                            async {
+                                val castList = response.body.toPersonCastList()
+                                putPersonCasts(personId, castList)
+                            },
+                            async {
+                                val crewList = response.body.toPersonCrewList()
+                                putPersonCrews(personId, crewList)
+                            })
+                        .awaitAll()
 
                     Result.success(Unit)
                 }
@@ -144,7 +144,6 @@ class MovieRepositoryImpl(
     override suspend fun loadPersonInfo(personId: Long): Result<Unit> =
         withContext(Dispatchers.IO) {
             coroutineScope {
-
                 val jobList =
                     listOf(async { loadPerson(personId) }, async { loadPersonCredits(personId) })
                         .awaitAll()
@@ -167,15 +166,14 @@ class MovieRepositoryImpl(
             when (val response = networkService.getMovieCredits(movieId)) {
                 is NetworkResponse.Success -> {
                     listOf(
-                        async {
-                            val castList = response.body.toMovieCastList()
-                            putMovieCasts(movieId, castList)
-                        },
-                        async {
-                            val crewList = response.body.toMovieCrewList()
-                            putMovieCrews(movieId, crewList)
-                        }
-                    )
+                            async {
+                                val castList = response.body.toMovieCastList()
+                                putMovieCasts(movieId, castList)
+                            },
+                            async {
+                                val crewList = response.body.toMovieCrewList()
+                                putMovieCrews(movieId, crewList)
+                            })
                         .awaitAll()
 
                     Result.success(Unit)
@@ -234,10 +232,8 @@ class MovieRepositoryImpl(
                                     movieId = movie.id,
                                     genreId = it,
                                     genreName = genreList.find { genre -> genre.id == it }?.name
-                                        ?: String.empty
-                                )
-                            }
-                        )
+                                            ?: String.empty)
+                            })
                     }
                     putMoviesGenres(movies, moveGenreList)
 
@@ -267,10 +263,8 @@ class MovieRepositoryImpl(
                                     movieId = movie.id,
                                     genreId = it,
                                     genreName = genreList.find { genre -> genre.id == it }?.name
-                                        ?: String.empty
-                                )
-                            }
-                        )
+                                            ?: String.empty)
+                            })
                     }
                     putMoviesGenres(movies, moveGenreList)
 
@@ -303,15 +297,11 @@ class MovieRepositoryImpl(
     }
 
     override fun movieInfo(movieId: Long): LiveData<MovieInfo?> {
-        return Transformations.map(movieDao.infoById(movieId)) {
-            it?.fromEntity()
-        }
+        return Transformations.map(movieDao.infoById(movieId)) { it?.fromEntity() }
     }
 
     override fun personInfo(personId: Long): LiveData<PersonInfo?> {
-        return Transformations.map(personDao.infoById(personId)) {
-            it?.fromEntity()
-        }
+        return Transformations.map(personDao.infoById(personId)) { it?.fromEntity() }
     }
 
     override fun movieGenres(movieId: Long): LiveData<List<MovieGenre>> {

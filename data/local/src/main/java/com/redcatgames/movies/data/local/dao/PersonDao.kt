@@ -7,20 +7,16 @@ import com.redcatgames.movies.data.local.entity.PersonEntity
 
 @Dao
 interface PersonDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(person: PersonEntity): Long
+    @Insert(onConflict = OnConflictStrategy.REPLACE) suspend fun insert(person: PersonEntity): Long
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(persons: List<PersonEntity>)
 
-    @Delete
-    suspend fun delete(person: PersonEntity)
+    @Delete suspend fun delete(person: PersonEntity)
 
-    @Query("DELETE FROM persons")
-    suspend fun deleteAll()
+    @Query("DELETE FROM persons") suspend fun deleteAll()
 
-    @Update
-    suspend fun update(person: PersonEntity)
+    @Update suspend fun update(person: PersonEntity)
 
     @Query("SELECT * FROM persons where id = :personId")
     fun byId(personId: Long): LiveData<PersonEntity?>
@@ -29,9 +25,7 @@ interface PersonDao {
     @Query("SELECT * FROM persons where id = :personId")
     fun infoById(personId: Long): LiveData<PersonInfoEntity?>
 
-    @Query("SELECT * FROM persons")
-    fun all(): LiveData<List<PersonEntity>>
+    @Query("SELECT * FROM persons") fun all(): LiveData<List<PersonEntity>>
 
-    @Query("SELECT COUNT(1) FROM persons")
-    suspend fun getCount(): Int
+    @Query("SELECT COUNT(1) FROM persons") suspend fun getCount(): Int
 }

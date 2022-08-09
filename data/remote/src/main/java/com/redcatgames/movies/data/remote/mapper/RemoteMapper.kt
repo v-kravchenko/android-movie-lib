@@ -33,8 +33,7 @@ fun ConfigurationResult.Images.toImageConfig() =
         logoSizes = logoSizes,
         posterSizes = posterSizes,
         profileSizes = profileSizes,
-        stillSizes = stillSizes
-    )
+        stillSizes = stillSizes)
 
 fun DiscoverMovieResult.Movie.toMovie() =
     Movie(
@@ -51,8 +50,7 @@ fun DiscoverMovieResult.Movie.toMovie() =
         title = title ?: String.empty,
         video = video,
         voteAverage = voteAverage,
-        voteCount = voteCount
-    )
+        voteCount = voteCount)
 
 fun MovieResult.toMovie() =
     Movie(
@@ -69,8 +67,7 @@ fun MovieResult.toMovie() =
         title = title ?: String.empty,
         video = video,
         voteAverage = voteAverage,
-        voteCount = voteCount
-    )
+        voteCount = voteCount)
 
 fun MovieResult.Genre.toMovieGenre(movie: Movie) =
     MovieGenre(movieId = movie.id, genreId = id, genreName = name ?: String.empty)
@@ -95,8 +92,7 @@ fun PersonCreditsResult.toPersonCastList(): List<PersonCast> {
             voteAverage = it.voteAverage,
             voteCount = it.voteCount,
             character = it.character ?: String.empty,
-            order = it.order
-        )
+            order = it.order)
     }
 }
 
@@ -115,8 +111,7 @@ fun MovieCreditsResult.toMovieCastList(): List<MovieCast> {
             castId = it.castId,
             character = it.character ?: String.empty,
             creditId = it.creditId,
-            order = it.order
-        )
+            order = it.order)
     }
 }
 
@@ -140,8 +135,7 @@ fun PersonCreditsResult.toPersonCrewList(): List<PersonCrew> {
             voteAverage = it.voteAverage,
             voteCount = it.voteCount,
             department = it.department ?: String.empty,
-            job = it.job ?: String.empty
-        )
+            job = it.job ?: String.empty)
     }
 }
 
@@ -159,8 +153,7 @@ fun MovieCreditsResult.toMovieCrewList(): List<MovieCrew> {
             profilePath = it.profilePath,
             creditId = it.creditId,
             department = it.department ?: String.empty,
-            job = it.job
-        )
+            job = it.job)
     }
 }
 
@@ -179,5 +172,4 @@ fun PersonResult.toPerson() =
         name,
         placeOfBirth,
         popularity,
-        profilePath
-    )
+        profilePath)

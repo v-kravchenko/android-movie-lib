@@ -24,5 +24,4 @@ class DeviceModule {
             appContext.resources.configuration.locale
         }
     }
-
 }

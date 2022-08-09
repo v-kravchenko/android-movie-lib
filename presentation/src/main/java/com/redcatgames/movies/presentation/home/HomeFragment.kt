@@ -19,12 +19,8 @@ class HomeFragment : BaseFragment() {
         it.popularList.adapter = null
         it.mostVotesList.adapter = null
     }
-    private val popularAdapter: MovieAdapter by lazy {
-        MovieAdapter()
-    }
-    private val mostVotesAdapter: MovieAdapter by lazy {
-        MovieAdapter()
-    }
+    private val popularAdapter: MovieAdapter by lazy { MovieAdapter() }
+    private val mostVotesAdapter: MovieAdapter by lazy { MovieAdapter() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,14 +40,12 @@ class HomeFragment : BaseFragment() {
         popularAdapter.onItemClick =
             {
                 navigateTo(
-                    HomeFragmentDirections.actionHomeFragmentToMovieFragment(it.id, it.title)
-                )
+                    HomeFragmentDirections.actionHomeFragmentToMovieFragment(it.id, it.title))
             }
         mostVotesAdapter.onItemClick =
             {
                 navigateTo(
-                    HomeFragmentDirections.actionHomeFragmentToMovieFragment(it.id, it.title)
-                )
+                    HomeFragmentDirections.actionHomeFragmentToMovieFragment(it.id, it.title))
             }
 
         binding.topAppBar.setOnMenuItemClickListener { item ->
@@ -78,13 +72,9 @@ class HomeFragment : BaseFragment() {
         viewModel.events.observe { event ->
             when (event) {
                 is HomeViewModel.Event.MostVotesMoviesLoaded ->
-                    event.result.onFailure {
-                        showToast("Error loading: ${it.message}")
-                    }
+                    event.result.onFailure { showToast("Error loading: ${it.message}") }
                 is HomeViewModel.Event.PopularMoviesLoaded -> {
-                    event.result.onFailure {
-                        showToast("Error loading: ${it.message}")
-                    }
+                    event.result.onFailure { showToast("Error loading: ${it.message}") }
                 }
             }
         }

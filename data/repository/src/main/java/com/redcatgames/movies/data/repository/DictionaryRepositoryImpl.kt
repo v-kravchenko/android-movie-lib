@@ -1,8 +1,6 @@
 package com.redcatgames.movies.data.repository
 
 import android.content.Context
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Transformations
 import com.redcatgames.movies.data.local.dao.*
 import com.redcatgames.movies.data.local.mapper.toDictionaryInfo
 import com.redcatgames.movies.data.local.mapper.toEntity
@@ -16,6 +14,8 @@ import com.redcatgames.movies.domain.model.*
 import com.redcatgames.movies.domain.repository.DictionaryRepository
 import com.redcatgames.movies.util.now
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 class DictionaryRepositoryImpl(
     appContext: Context,
@@ -27,7 +27,7 @@ class DictionaryRepositoryImpl(
     private val primaryTranslationDao: PrimaryTranslationDao,
     private val timezoneDao: TimezoneDao,
     private val genreDao: GenreDao,
-    private val networkService: NetworkService
+    private val networkService: NetworkService,
 ) : DictionaryRepository, BaseRepository(appContext) {
 
     override suspend fun loadConfig(): Result<Unit> {
@@ -116,12 +116,12 @@ class DictionaryRepositoryImpl(
 
                 val jobList =
                     listOf(
-                            async { loadConfig() },
-                            async { loadCountries() },
-                            async { loadLanguages() },
-                            async { loadPrimaryTranslations() },
-                            async { loadTimezones() },
-                            async { loadGenres() })
+                        async { loadConfig() },
+                        async { loadCountries() },
+                        async { loadLanguages() },
+                        async { loadPrimaryTranslations() },
+                        async { loadTimezones() },
+                        async { loadGenres() })
                         .awaitAll()
 
                 jobList.find { job -> job.isFailure }?.let {
@@ -201,28 +201,31 @@ class DictionaryRepositoryImpl(
         withContext(Dispatchers.IO) {
             coroutineScope {
                 listOf(
-                        async { deleteAllCountries() },
-                        async { deleteAllLanguages() },
-                        async { deleteAllPrimaryTranslations() },
-                        async { deleteAllTimezones() },
-                        async { deleteAllGenres() })
+                    async { deleteAllCountries() },
+                    async { deleteAllLanguages() },
+                    async { deleteAllPrimaryTranslations() },
+                    async { deleteAllTimezones() },
+                    async { deleteAllGenres() })
                     .awaitAll()
             }
         }
     }
 
-    override fun dictionaryInfo(): LiveData<DictionaryInfo?> =
-        Transformations.map(dictionaryDao.first()) { it?.toDictionaryInfo() }
+    override fun dictionaryInfo(): Flow<DictionaryInfo?> {
+        return dictionaryDao.first().map {
+            it?.toDictionaryInfo()
+        }
+    }
 
-    override fun userConfig(): LiveData<UserConfig> = userConfigPreferences.userConfig
+    override fun userConfig(): Flow<UserConfig> = userConfigPreferences.userConfig
 
     override suspend fun getUserConfig(): UserConfig =
         withContext(Dispatchers.IO) { userConfigPreferences.readConfig() }
 
-    override fun imageConfig(): LiveData<ImageConfig> = imageConfigPreferences.imageConfig
+    override fun imageConfig(): Flow<ImageConfig> = imageConfigPreferences.imageConfig
 
-    override fun languages(): LiveData<List<Language>> =
-        Transformations.map(languageDao.all()) {
+    override fun languages(): Flow<List<Language>> =
+        languageDao.all().map {
             it.map { languageEntity -> languageEntity.toLanguage() }
         }
 

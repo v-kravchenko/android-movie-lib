@@ -60,6 +60,7 @@ class PersonFragment : BaseFragment() {
                 requireContext(),
                 if (args.gender == 2) R.drawable.person_placeholder_medium_male
                 else R.drawable.person_placeholder_medium_female))
+
         setupObserver()
     }
 

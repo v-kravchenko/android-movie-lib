@@ -2,9 +2,9 @@ package com.redcatgames.movies.data.preferences
 
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.map
 import com.redcatgames.movies.domain.model.UserConfig
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 class UserConfigPreferences(private val preferences: Preferences) {
 
@@ -16,7 +16,7 @@ class UserConfigPreferences(private val preferences: Preferences) {
         private const val DEFAULT_UI_DARK_MODE = -1
     }
 
-    val userConfig: LiveData<UserConfig> =
+    val userConfig: Flow<UserConfig> =
         preferences.data.map {
             val keyApiLanguage = stringPreferencesKey(API_LANGUAGE)
             val keyUiDarkMode = intPreferencesKey(UI_DARK_MODE)

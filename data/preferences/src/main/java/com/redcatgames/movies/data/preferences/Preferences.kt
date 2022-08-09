@@ -7,20 +7,19 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.asLiveData
-import javax.inject.Inject
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
+import javax.inject.Inject
 
 private const val PREFERENCES_NAME = "preferences"
 
 private val Context.dataStore: DataStore<Preferences> by
-    preferencesDataStore(name = PREFERENCES_NAME)
+preferencesDataStore(name = PREFERENCES_NAME)
 
 class Preferences @Inject constructor(private val context: Context) {
 
-    val data: LiveData<Preferences> = context.dataStore.data.distinctUntilChanged().asLiveData()
+    val data: Flow<Preferences> = context.dataStore.data.distinctUntilChanged()
 
     suspend fun putInt(key: String, value: Int) {
         val preferencesKey = intPreferencesKey(key)

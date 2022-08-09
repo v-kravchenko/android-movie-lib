@@ -3,16 +3,18 @@ package com.redcatgames.movies.presentation.person
 import android.content.Context
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import com.redcatgames.movies.domain.model.PersonInfo
 import com.redcatgames.movies.domain.usecase.person.GetPersonInfoUseCase
 import com.redcatgames.movies.domain.usecase.person.LoadPersonUseCase
 import com.redcatgmes.movies.baseui.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
-import javax.inject.Inject
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import javax.inject.Inject
 
 @HiltViewModel
 class PersonViewModel
@@ -21,7 +23,7 @@ constructor(
     @ApplicationContext appContext: Context,
     savedStateHandle: SavedStateHandle,
     getPersonInfoUseCase: GetPersonInfoUseCase,
-    private val loadPersonUseCase: LoadPersonUseCase
+    private val loadPersonUseCase: LoadPersonUseCase,
 ) : BaseViewModel(appContext) {
 
     sealed class Event {
@@ -29,7 +31,7 @@ constructor(
     }
 
     private val args = PersonFragmentArgs.fromSavedStateHandle(savedStateHandle)
-    val personInfo = getPersonInfoUseCase(args.personId)
+    val personInfo: Flow<PersonInfo?> = getPersonInfoUseCase(args.personId)
 
     private val eventChannel = Channel<Event>(Channel.BUFFERED)
     val events = eventChannel.receiveAsFlow()
@@ -41,6 +43,8 @@ constructor(
 
     private fun loadPersonUseCase() =
         viewModelScope.launch {
-            loadPersonUseCase(args.personId).run { eventChannel.send(Event.PersonLoaded(this)) }
+            loadPersonUseCase(args.personId).run {
+                eventChannel.send(Event.PersonLoaded(this))
+            }
         }
 }

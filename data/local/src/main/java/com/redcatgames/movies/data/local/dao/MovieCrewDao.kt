@@ -1,8 +1,8 @@
 package com.redcatgames.movies.data.local.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.redcatgames.movies.data.local.entity.MovieCrewEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface MovieCrewDao {
@@ -12,9 +12,11 @@ interface MovieCrewDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(movieCrews: List<MovieCrewEntity>)
 
-    @Delete suspend fun delete(movieCrew: MovieCrewEntity)
+    @Delete
+    suspend fun delete(movieCrew: MovieCrewEntity)
 
-    @Query("DELETE FROM movie_crews") suspend fun deleteAll()
+    @Query("DELETE FROM movie_crews")
+    suspend fun deleteAll()
 
     @Query("DELETE FROM movie_crews WHERE movieId = :movieId")
     suspend fun deleteByMovie(movieId: Long)
@@ -22,14 +24,17 @@ interface MovieCrewDao {
     @Query("DELETE FROM movie_crews WHERE movieId IN (:movieIds)")
     suspend fun deleteByMovieList(movieIds: List<Long>)
 
-    @Update suspend fun update(movieCrew: MovieCrewEntity)
+    @Update
+    suspend fun update(movieCrew: MovieCrewEntity)
 
-    @Query("SELECT * FROM movie_crews") fun all(): LiveData<List<MovieCrewEntity>>
+    @Query("SELECT * FROM movie_crews")
+    fun all(): Flow<List<MovieCrewEntity>>
 
     @Query("SELECT * FROM movie_crews WHERE movieId = :movieId")
-    fun byMovie(movieId: Long): LiveData<List<MovieCrewEntity>>
+    fun byMovie(movieId: Long): Flow<List<MovieCrewEntity>>
 
-    @Query("SELECT COUNT(1) FROM movie_crews") suspend fun getCount(): Int
+    @Query("SELECT COUNT(1) FROM movie_crews")
+    suspend fun getCount(): Int
 
     @Transaction
     suspend fun replace(movieId: Long, movieCrews: List<MovieCrewEntity>) {

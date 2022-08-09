@@ -1,7 +1,7 @@
 package com.redcatgames.movies.domain.repository
 
-import androidx.lifecycle.LiveData
 import com.redcatgames.movies.domain.model.*
+import kotlinx.coroutines.flow.Flow
 
 interface DictionaryRepository {
     suspend fun loadConfig(): Result<Unit>
@@ -28,10 +28,10 @@ interface DictionaryRepository {
     suspend fun deleteAllGenres(): Result<Int>
     suspend fun deleteAll()
 
-    fun dictionaryInfo(): LiveData<DictionaryInfo?>
-    fun userConfig(): LiveData<UserConfig>
-    fun imageConfig(): LiveData<ImageConfig>
-    fun languages(): LiveData<List<Language>>
+    fun dictionaryInfo(): Flow<DictionaryInfo?>
+    fun userConfig(): Flow<UserConfig>
+    fun imageConfig(): Flow<ImageConfig>
+    fun languages(): Flow<List<Language>>
 
     suspend fun getLanguage(iso: String): Language?
 

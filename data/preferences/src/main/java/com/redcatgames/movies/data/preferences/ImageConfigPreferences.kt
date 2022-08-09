@@ -1,12 +1,12 @@
 package com.redcatgames.movies.data.preferences
 
 import androidx.datastore.preferences.core.stringPreferencesKey
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.map
 import com.redcatgames.movies.domain.model.ImageConfig
 import com.redcatgames.movies.util.EMPTY_STRING
 import com.redcatgames.movies.util.fromList
 import com.redcatgames.movies.util.toList
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 class ImageConfigPreferences(private val preferences: Preferences) {
 
@@ -35,7 +35,7 @@ class ImageConfigPreferences(private val preferences: Preferences) {
     var currentConfig: ImageConfig = ImageConfig.EMPTY
         private set
 
-    val imageConfig: LiveData<ImageConfig> =
+    val imageConfig: Flow<ImageConfig> =
         preferences.data.map {
             val keyBaseUrl = stringPreferencesKey(BASE_URL_KEY)
             val keySecureBaseUrl = stringPreferencesKey(SECURE_BASE_URL_KEY)
@@ -58,18 +58,18 @@ class ImageConfigPreferences(private val preferences: Preferences) {
 
     suspend fun readConfig(): ImageConfig {
         return ImageConfig(
-                preferences.getString(BASE_URL_KEY) ?: DEFAULT_BASE_URL_VALUE,
-                preferences.getString(SECURE_BASE_URL_KEY) ?: DEFAULT_SECURE_BASE_URL_VALUE,
-                (preferences.getString(BACKDROP_SIZES_KEY) ?: DEFAULT_BACKDROP_SIZES_VALUE).toList(
-                    SEPARATOR),
-                (preferences.getString(LOGO_SIZES_KEY) ?: DEFAULT_LOGO_SIZES_VALUE).toList(
-                    SEPARATOR),
-                (preferences.getString(POSTER_SIZES_KEY) ?: DEFAULT_POSTER_SIZES_VALUE).toList(
-                    SEPARATOR),
-                (preferences.getString(PROFILE_SIZES_KEY) ?: DEFAULT_PROFILE_SIZES_VALUE).toList(
-                    SEPARATOR),
-                (preferences.getString(STILL_SIZES_KEY) ?: DEFAULT_STILL_SIZES_VALUE).toList(
-                    SEPARATOR))
+            preferences.getString(BASE_URL_KEY) ?: DEFAULT_BASE_URL_VALUE,
+            preferences.getString(SECURE_BASE_URL_KEY) ?: DEFAULT_SECURE_BASE_URL_VALUE,
+            (preferences.getString(BACKDROP_SIZES_KEY) ?: DEFAULT_BACKDROP_SIZES_VALUE).toList(
+                SEPARATOR),
+            (preferences.getString(LOGO_SIZES_KEY) ?: DEFAULT_LOGO_SIZES_VALUE).toList(
+                SEPARATOR),
+            (preferences.getString(POSTER_SIZES_KEY) ?: DEFAULT_POSTER_SIZES_VALUE).toList(
+                SEPARATOR),
+            (preferences.getString(PROFILE_SIZES_KEY) ?: DEFAULT_PROFILE_SIZES_VALUE).toList(
+                SEPARATOR),
+            (preferences.getString(STILL_SIZES_KEY) ?: DEFAULT_STILL_SIZES_VALUE).toList(
+                SEPARATOR))
             .also { currentConfig = it }
     }
 

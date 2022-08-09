@@ -27,7 +27,8 @@ import kotlin.reflect.KProperty
  *
  * Accessing this variable while the fragment's view is destroyed will throw NPE.
  */
-class AutoClearedValue<T : Any>(val fragment: Fragment, val onDestroy: ((T) -> Unit)?) : ReadWriteProperty<Fragment, T> {
+class AutoClearedValue<T : Any>(val fragment: Fragment, val onDestroy: ((T) -> Unit)?) :
+    ReadWriteProperty<Fragment, T> {
     private var _value: T? = null
 
     init {
@@ -64,4 +65,5 @@ class AutoClearedValue<T : Any>(val fragment: Fragment, val onDestroy: ((T) -> U
 }
 
 /** Creates an [AutoClearedValue] associated with this fragment. */
-fun <T : Any> Fragment.autoCleared(onDestroy: ((T) -> Unit)? = null) = AutoClearedValue(this, onDestroy)
+fun <T : Any> Fragment.autoCleared(onDestroy: ((T) -> Unit)? = null) =
+    AutoClearedValue(this, onDestroy)

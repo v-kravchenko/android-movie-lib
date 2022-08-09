@@ -77,7 +77,7 @@ class MovieRepositoryImpl(
 
     private suspend fun putMoviesGenres(
         movies: List<Movie>,
-        moviesGenres: MutableList<MovieGenre>,
+        moviesGenres: List<MovieGenre>,
     ) {
         movieGenreDao.replace(movies.map { it.id }, moviesGenres.map { it.toEntity() })
     }
@@ -132,9 +132,6 @@ class MovieRepositoryImpl(
                 is NetworkResponse.NetworkError -> {
                     Result.failure(response.error)
                 }
-                is NetworkResponse.UnknownError -> {
-                    Result.failure(response.error)
-                }
             }
         }
     }
@@ -179,7 +176,6 @@ class MovieRepositoryImpl(
                 is NetworkResponse.ApiError ->
                     Result.failure(Exception(response.body.statusMessage))
                 is NetworkResponse.NetworkError -> Result.failure(response.error)
-                is NetworkResponse.UnknownError -> Result.failure(response.error)
             }
         }
     }
@@ -196,7 +192,6 @@ class MovieRepositoryImpl(
             }
             is NetworkResponse.ApiError -> Result.failure(Exception(response.body.statusMessage))
             is NetworkResponse.NetworkError -> Result.failure(response.error)
-            is NetworkResponse.UnknownError -> Result.failure(response.error)
         }
     }
 
@@ -209,7 +204,6 @@ class MovieRepositoryImpl(
             }
             is NetworkResponse.ApiError -> Result.failure(Exception(response.body.statusMessage))
             is NetworkResponse.NetworkError -> Result.failure(response.error)
-            is NetworkResponse.UnknownError -> Result.failure(response.error)
         }
     }
 
@@ -222,17 +216,17 @@ class MovieRepositoryImpl(
                     movieDao.replace(movies.map { it.toEntity() })
 
                     val genreList = genreDao.getAll()
-                    val moveGenreList = mutableListOf<MovieGenre>()
-                    response.body.movies.forEach { movie ->
-                        moveGenreList.addAll(
-                            movie.genreIds.map {
-                                MovieGenre(
-                                    movieId = movie.id,
-                                    genreId = it,
-                                    genreName = genreList.find { genre -> genre.id == it }?.name
-                                        ?: String.empty)
-                            })
+
+                    val moveGenreList: List<MovieGenre> = response.body.movies.flatMap { movie ->
+                        movie.genreIds.map {
+                            MovieGenre(
+                                movieId = movie.id,
+                                genreId = it,
+                                genreName = genreList.find { genre -> genre.id == it }?.name
+                                    ?: String.empty)
+                        }
                     }
+
                     putMoviesGenres(movies, moveGenreList)
 
                     Result.success(movies)
@@ -240,7 +234,6 @@ class MovieRepositoryImpl(
                 is NetworkResponse.ApiError ->
                     Result.failure(Exception(response.body.statusMessage))
                 is NetworkResponse.NetworkError -> Result.failure(response.error)
-                is NetworkResponse.UnknownError -> Result.failure(response.error)
             }
         }
 
@@ -253,17 +246,16 @@ class MovieRepositoryImpl(
                     movieDao.replace(movies.map { it.toEntity() })
 
                     val genreList = genreDao.getAll()
-                    val moveGenreList = mutableListOf<MovieGenre>()
-                    response.body.movies.forEach { movie ->
-                        moveGenreList.addAll(
-                            movie.genreIds.map {
-                                MovieGenre(
-                                    movieId = movie.id,
-                                    genreId = it,
-                                    genreName = genreList.find { genre -> genre.id == it }?.name
-                                        ?: String.empty)
-                            })
+                    val moveGenreList = response.body.movies.flatMap { movie ->
+                        movie.genreIds.map {
+                            MovieGenre(
+                                movieId = movie.id,
+                                genreId = it,
+                                genreName = genreList.find { genre -> genre.id == it }?.name
+                                    ?: String.empty)
+                        }
                     }
+
                     putMoviesGenres(movies, moveGenreList)
 
                     Result.success(movies)
@@ -271,7 +263,6 @@ class MovieRepositoryImpl(
                 is NetworkResponse.ApiError ->
                     Result.failure(Exception(response.body.statusMessage))
                 is NetworkResponse.NetworkError -> Result.failure(response.error)
-                is NetworkResponse.UnknownError -> Result.failure(response.error)
             }
         }
 

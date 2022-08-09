@@ -1,6 +1,5 @@
 package com.redcatgames.movies.data.remote.adapter
 
-import java.io.IOException
 import okhttp3.Request
 import okhttp3.ResponseBody
 import okio.Timeout
@@ -15,7 +14,7 @@ import retrofit2.Response
  */
 internal class NetworkResponseCall<S : Any, E : Any>(
     private val delegate: Call<S>,
-    private val errorConverter: Converter<ResponseBody, E>
+    private val errorConverter: Converter<ResponseBody, E>,
 ) : Call<NetworkResponse<S, E>> {
 
     private companion object {
@@ -44,18 +43,18 @@ internal class NetworkResponseCall<S : Any, E : Any>(
     }
 
     private fun enqueueFailure(callback: Callback<NetworkResponse<S, E>>, throwable: Throwable) {
-        val networkResponse =
-            when (throwable) {
-                is IOException -> NetworkResponse.NetworkError(throwable)
-                else -> NetworkResponse.UnknownError(throwable)
-            }
+        val networkResponse = NetworkResponse.NetworkError(throwable)
+//            when (throwable) {
+//                is IOException -> NetworkResponse.NetworkError(throwable)
+//                else -> NetworkResponse.UnknownError(throwable)
+//            }
         callback.onResponse(this@NetworkResponseCall, Response.success(networkResponse))
     }
 
     private fun enqueueNotSuccess(
         callback: Callback<NetworkResponse<S, E>>,
         error: ResponseBody?,
-        code: Int
+        code: Int,
     ) {
         val errorBody =
             when {
@@ -77,7 +76,7 @@ internal class NetworkResponseCall<S : Any, E : Any>(
             // Response is not successful but the error body is null
             callback.onResponse(
                 this@NetworkResponseCall,
-                Response.success(NetworkResponse.UnknownError(Exception(ERROR_EMPTY_BODY))))
+                Response.success(NetworkResponse.NetworkError(Exception(ERROR_EMPTY_BODY))))
         }
     }
 
@@ -90,7 +89,7 @@ internal class NetworkResponseCall<S : Any, E : Any>(
             // Response is successful but the body is null
             callback.onResponse(
                 this@NetworkResponseCall,
-                Response.success(NetworkResponse.UnknownError(Exception(ERROR_EMPTY_BODY))))
+                Response.success(NetworkResponse.NetworkError(Exception(ERROR_EMPTY_BODY))))
         }
     }
 

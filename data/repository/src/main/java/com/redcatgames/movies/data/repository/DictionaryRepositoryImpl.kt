@@ -39,7 +39,6 @@ class DictionaryRepositoryImpl(
             }
             is NetworkResponse.ApiError -> Result.failure(Exception(response.body.statusMessage))
             is NetworkResponse.NetworkError -> Result.failure(response.error)
-            is NetworkResponse.UnknownError -> Result.failure(response.error)
         }
     }
 
@@ -52,7 +51,6 @@ class DictionaryRepositoryImpl(
             }
             is NetworkResponse.ApiError -> Result.failure(Exception(response.body.statusMessage))
             is NetworkResponse.NetworkError -> Result.failure(response.error)
-            is NetworkResponse.UnknownError -> Result.failure(response.error)
         }
     }
 
@@ -65,7 +63,6 @@ class DictionaryRepositoryImpl(
             }
             is NetworkResponse.ApiError -> Result.failure(Exception(response.body.statusMessage))
             is NetworkResponse.NetworkError -> Result.failure(response.error)
-            is NetworkResponse.UnknownError -> Result.failure(response.error)
         }
     }
 
@@ -78,7 +75,6 @@ class DictionaryRepositoryImpl(
             }
             is NetworkResponse.ApiError -> Result.failure(Exception(response.body.statusMessage))
             is NetworkResponse.NetworkError -> Result.failure(response.error)
-            is NetworkResponse.UnknownError -> Result.failure(response.error)
         }
     }
 
@@ -92,7 +88,6 @@ class DictionaryRepositoryImpl(
             }
             is NetworkResponse.ApiError -> Result.failure(Exception(response.body.statusMessage))
             is NetworkResponse.NetworkError -> Result.failure(response.error)
-            is NetworkResponse.UnknownError -> Result.failure(response.error)
         }
     }
 
@@ -105,7 +100,6 @@ class DictionaryRepositoryImpl(
             }
             is NetworkResponse.ApiError -> Result.failure(Exception(response.body.statusMessage))
             is NetworkResponse.NetworkError -> Result.failure(response.error)
-            is NetworkResponse.UnknownError -> Result.failure(response.error)
         }
     }
 

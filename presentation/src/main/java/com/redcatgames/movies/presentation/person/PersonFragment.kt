@@ -9,6 +9,7 @@ import androidx.core.text.bold
 import androidx.core.text.buildSpannedString
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import com.redcatgames.movies.domain.model.Person
 import com.redcatgames.movies.presentation.ProfileSize
 import com.redcatgames.movies.presentation.R
 import com.redcatgames.movies.presentation.databinding.PersonFragmentBinding
@@ -17,6 +18,7 @@ import com.redcatgmes.movies.baseui.BaseFragment
 import com.redcatgmes.movies.baseui.util.autoCleared
 import com.redcatgmes.movies.baseui.util.currentLocale
 import com.redcatgmes.movies.baseui.util.loadByUrl
+import com.redcatgmes.movies.baseui.util.visible
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 
@@ -68,40 +70,10 @@ class PersonFragment : BaseFragment() {
 
         viewModel.personInfo.observe { info ->
             info?.let { personInfo ->
-                binding.textOriginalName.text =
-                    buildSpannedString {
-                        bold { append(getString(R.string.person_original_name_title)) }
-                        append(" ${personInfo.person.name}")
-                    }
-                binding.textBirthday.text =
-                    buildSpannedString {
-                        bold { append(getString(R.string.person_birthday_title)) }
-                        val birthDay = personInfo.person.birthDay
-                        if (birthDay == null) {
-                            append(" -")
-                        } else {
-                            append(" ${dateFormat.format(birthDay)}")
-                        }
-                    }
 
-                binding.textDeathday.text =
-                    buildSpannedString {
-                        val deathDay = personInfo.person.deathDay
-                        if (deathDay != null) {
-                            bold { append(getString(R.string.person_death_title)) }
-                            append(" ${dateFormat.format(deathDay)}")
-                        }
-                    }
+                updateBaseInfo(personInfo.person)
 
-                binding.textOverview.text = personInfo.person.biography.ifEmpty { "-" }
-                binding.personPhoto.loadByUrl(personInfo.person.getProfileUri(ProfileSize.MEDIUM)) {
-                    val resId =
-                        if (personInfo.person.gender == 2) R.drawable.person_placeholder_medium_male
-                        else R.drawable.person_placeholder_medium_female
-
-                    placeholder(resId)
-                    error(resId)
-                }
+                binding.textBiography.text = personInfo.person.biography.ifEmpty { "-" }
 
                 moviesAdapter.setItems(personInfo.casts.sortedByDescending { it.popularity })
             }
@@ -113,5 +85,44 @@ class PersonFragment : BaseFragment() {
                     event.result.onFailure { showToast("Error loading: ${it.message}") }
             }
         }
+    }
+
+    private fun updateBaseInfo(person: Person) {
+
+        binding.personPhoto.loadByUrl(person.getProfileUri(ProfileSize.MEDIUM)) {
+            val resId =
+                if (person.gender == 2) R.drawable.person_placeholder_medium_male
+                else R.drawable.person_placeholder_medium_female
+
+            placeholder(resId)
+            error(resId)
+        }
+
+        binding.textOriginalName.text =
+            buildSpannedString {
+                bold { append(getString(R.string.person_original_name_title)) }
+                append(" ${person.name}")
+            }
+        binding.textBirthday.text =
+            buildSpannedString {
+                bold { append(getString(R.string.person_birthday_title)) }
+                val birthDay = person.birthDay
+                if (birthDay == null) {
+                    append(" -")
+                } else {
+                    append(" ${dateFormat.format(birthDay)}")
+                }
+            }
+
+        binding.textDeathday.text =
+            buildSpannedString {
+                val deathDay = person.deathDay
+                if (deathDay != null) {
+                    bold { append(getString(R.string.person_death_title)) }
+                    append(" ${dateFormat.format(deathDay)}")
+                }
+            }
+
+        binding.viewBaseInfo.visible()
     }
 }

@@ -56,9 +56,12 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <LinearLayout
+                    android:id="@+id/view_base_info"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="invisible"
+                    tools:visibility="visible">
 
                     <TextView
                         android:id="@+id/text_original_name"
@@ -97,7 +100,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/text_overview"
+                android:id="@+id/text_biography"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?attr/textAppearanceBody1"

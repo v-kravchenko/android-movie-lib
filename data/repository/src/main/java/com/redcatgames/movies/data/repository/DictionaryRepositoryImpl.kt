@@ -106,21 +106,23 @@ class DictionaryRepositoryImpl(
     override suspend fun loadDictionary(): Result<Unit> =
         withContext(Dispatchers.IO) {
             coroutineScope {
-                deleteDictionaryInfo()
+                if (BuildConfig.DEBUG) {
+                    deleteDictionaryInfo()
 
-                val jobList =
-                    listOf(
-                        async { loadConfig() },
-                        async { loadCountries() },
-                        async { loadLanguages() },
-                        async { loadPrimaryTranslations() },
-                        async { loadTimezones() },
-                        async { loadGenres() })
-                        .awaitAll()
+                    val jobList =
+                        listOf(
+                            async { loadConfig() },
+                            async { loadCountries() },
+                            async { loadLanguages() },
+                            async { loadPrimaryTranslations() },
+                            async { loadTimezones() },
+                            async { loadGenres() })
+                            .awaitAll()
 
-                jobList.find { job -> job.isFailure }?.let {
-                    if (it.isFailure) {
-                        return@coroutineScope it
+                    jobList.find { job -> job.isFailure }?.let {
+                        if (it.isFailure) {
+                            return@coroutineScope it
+                        }
                     }
                 }
 

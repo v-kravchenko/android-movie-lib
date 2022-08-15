@@ -12,6 +12,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @HiltViewModel
 class PopularViewModel
@@ -27,13 +28,17 @@ constructor(
     }
 
     private val eventChannel = Channel<Event>(Channel.BUFFERED)
-    val events = eventChannel.receiveAsFlow()
 
+    val events = eventChannel.receiveAsFlow()
     val popularMovies = getPopularMoviesUseCase()
 
     init {
         viewModelScope.launch {
             loadPopularMoviesUseCase().run { eventChannel.send(Event.MoviesLoaded(this)) }
         }
+    }
+
+    fun loadNextPage(itemCount: Int) {
+        Timber.d("Load next page request!")
     }
 }

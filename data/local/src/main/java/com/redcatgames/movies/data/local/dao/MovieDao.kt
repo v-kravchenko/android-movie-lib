@@ -26,7 +26,7 @@ interface MovieDao {
     fun byId(movieId: Long): Flow<MovieEntity?>
 
     @Transaction
-    @Query("SELECT * FROM movies where id = :movieId")
+    @Query("SELECT * FROM movies where id = :movieId ORDER BY popularity DESC")
     fun infoById(movieId: Long): Flow<MovieInfoEntity?>
 
     @Query("SELECT * FROM movies")

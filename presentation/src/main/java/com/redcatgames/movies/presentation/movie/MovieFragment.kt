@@ -8,6 +8,7 @@ import androidx.core.text.bold
 import androidx.core.text.buildSpannedString
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import com.redcatgames.movies.domain.model.MovieCrew
 import com.redcatgames.movies.presentation.*
 import com.redcatgames.movies.presentation.databinding.MovieFragmentBinding
 import com.redcatgmes.movies.baseui.BaseFragment
@@ -24,10 +25,11 @@ class MovieFragment : BaseFragment() {
     private val viewModel: MovieViewModel by viewModels()
     private var binding: MovieFragmentBinding by autoCleared {
         it.castList.adapter = null
-        it.crewList.adapter = null
+//        it.crewList.adapter = null
     }
     private val castAdapter: CastAdapter = CastAdapter()
-    private val crewAdapter: CrewAdapter = CrewAdapter()
+
+    //    private val crewAdapter: CrewAdapter = CrewAdapter()
     private val dateFormat: SimpleDateFormat by lazy {
         SimpleDateFormat("dd.MM.yyyy", requireContext().currentLocale)
     }
@@ -47,7 +49,7 @@ class MovieFragment : BaseFragment() {
         binding.topAppBar.setNavigationOnClickListener { navigateBack() }
         binding.topAppBar.title = args.movieTitle
         binding.castList.adapter = castAdapter
-        binding.crewList.adapter = crewAdapter
+//        binding.crewList.adapter = crewAdapter
 
         castAdapter.onItemClick =
             {
@@ -55,12 +57,12 @@ class MovieFragment : BaseFragment() {
                     MovieFragmentDirections.actionMovieFragmentToPersonFragment(
                         it.personId, it.name, it.gender))
             }
-        crewAdapter.onItemClick =
-            {
-                navigateTo(
-                    MovieFragmentDirections.actionMovieFragmentToPersonFragment(
-                        it.personId, it.name, it.gender))
-            }
+//        crewAdapter.onItemClick =
+//            {
+//                navigateTo(
+//                    MovieFragmentDirections.actionMovieFragmentToPersonFragment(
+//                        it.personId, it.name, it.gender))
+//            }
 
         setupObserver()
     }
@@ -95,7 +97,9 @@ class MovieFragment : BaseFragment() {
                     }
 
                 castAdapter.setItems(movieInfo.casts.sortedBy { it.order })
-                crewAdapter.setItems(movieInfo.crews)
+//                crewAdapter.setItems(movieInfo.crews)
+
+                updateCrew(movieInfo.crews)
 
                 binding.backdropImage.loadByUrl(movieInfo.movie.getBackdropUri(BackdropSize.MEDIUM))
             }
@@ -107,5 +111,22 @@ class MovieFragment : BaseFragment() {
                     event.result.onFailure { showToast("Error loading: ${it.message}") }
             }
         }
+    }
+
+    private fun updateCrew(crews: List<MovieCrew>) {
+        val directorList = crews.filter { it.job == "Director" }
+
+        binding.textDirector.text =
+            buildSpannedString {
+                bold {
+                    append(getString(R.string.movie_director_title))
+                }
+                append("\n")
+                if (directorList.isEmpty()) {
+                    append("-")
+                } else {
+                    append(directorList.joinToString { it.name })
+                }
+            }
     }
 }

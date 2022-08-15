@@ -213,7 +213,7 @@ class MovieRepositoryImpl(
                 is NetworkResponse.Success -> {
 
                     val movies = response.body.movies.map { it.toMovie() }
-                    movieDao.replace(movies.map { it.toEntity() })
+                    movieDao.insertAll(movies.map { it.toEntity() })
 
                     val genreList = genreDao.getAll()
 
@@ -243,7 +243,7 @@ class MovieRepositoryImpl(
                 is NetworkResponse.Success -> {
 
                     val movies = response.body.movies.map { it.toMovie() }
-                    movieDao.replace(movies.map { it.toEntity() })
+                    movieDao.insertAll(movies.map { it.toEntity() })
 
                     val genreList = genreDao.getAll()
                     val moveGenreList = response.body.movies.flatMap { movie ->

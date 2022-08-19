@@ -25,11 +25,9 @@ class MovieFragment : BaseFragment() {
     private val viewModel: MovieViewModel by viewModels()
     private var binding: MovieFragmentBinding by autoCleared {
         it.castList.adapter = null
-//        it.crewList.adapter = null
     }
     private val castAdapter: CastAdapter = CastAdapter()
 
-    //    private val crewAdapter: CrewAdapter = CrewAdapter()
     private val dateFormat: SimpleDateFormat by lazy {
         SimpleDateFormat("dd.MM.yyyy", requireContext().currentLocale)
     }
@@ -49,7 +47,6 @@ class MovieFragment : BaseFragment() {
         binding.topAppBar.setNavigationOnClickListener { navigateBack() }
         binding.topAppBar.title = args.movieTitle
         binding.castList.adapter = castAdapter
-//        binding.crewList.adapter = crewAdapter
 
         castAdapter.onItemClick =
             {
@@ -57,12 +54,6 @@ class MovieFragment : BaseFragment() {
                     MovieFragmentDirections.actionMovieFragmentToPersonFragment(
                         it.personId, it.name, it.gender))
             }
-//        crewAdapter.onItemClick =
-//            {
-//                navigateTo(
-//                    MovieFragmentDirections.actionMovieFragmentToPersonFragment(
-//                        it.personId, it.name, it.gender))
-//            }
 
         setupObserver()
     }
@@ -97,7 +88,6 @@ class MovieFragment : BaseFragment() {
                     }
 
                 castAdapter.setItems(movieInfo.casts.sortedBy { it.order })
-//                crewAdapter.setItems(movieInfo.crews)
 
                 updateCrew(movieInfo.crews)
 
@@ -115,6 +105,7 @@ class MovieFragment : BaseFragment() {
 
     private fun updateCrew(crews: List<MovieCrew>) {
         val directorList = crews.filter { it.job == "Director" }
+        val writerList = crews.filter { it.job == "Writer" }
 
         binding.textDirector.text =
             buildSpannedString {
@@ -126,6 +117,19 @@ class MovieFragment : BaseFragment() {
                     append("-")
                 } else {
                     append(directorList.joinToString { it.name })
+                }
+            }
+
+        binding.textWriter.text =
+            buildSpannedString {
+                bold {
+                    append(getString(R.string.movie_writer_title))
+                }
+                append("\n")
+                if (writerList.isEmpty()) {
+                    append("-")
+                } else {
+                    append(writerList.joinToString { it.name })
                 }
             }
     }

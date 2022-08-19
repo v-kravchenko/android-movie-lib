@@ -21,6 +21,7 @@
     <string name="movie_release_date_title">Release date:</string>
     <string name="movie_cast_list_title">Cast list</string>
     <string name="movie_director_title">Director</string>
+    <string name="movie_writer_title">Writer</string>
     <string name="home_popular_title">Popular movies</string>
     <string name="home_button_popular">View all</string>
     <string name="settings_dark_mode_title">Dark mode</string>

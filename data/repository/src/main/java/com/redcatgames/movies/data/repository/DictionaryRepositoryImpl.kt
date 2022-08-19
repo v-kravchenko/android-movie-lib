@@ -106,7 +106,7 @@ class DictionaryRepositoryImpl(
     override suspend fun loadDictionary(): Result<Unit> =
         withContext(Dispatchers.IO) {
             coroutineScope {
-                if (BuildConfig.DEBUG) {
+//                if (!BuildConfig.DEBUG) {
                     deleteDictionaryInfo()
 
                     val jobList =
@@ -124,7 +124,7 @@ class DictionaryRepositoryImpl(
                             return@coroutineScope it
                         }
                     }
-                }
+//                }
 
                 val row = DictionaryInfo(getUserConfig().apiLanguage, now())
                 putDictionaryInfo(row)

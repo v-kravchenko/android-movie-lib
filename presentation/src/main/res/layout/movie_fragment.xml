@@ -141,7 +141,7 @@
                     android:layout_columnWeight="1"
                     android:gravity="end"
                     android:textAppearance="?attr/textAppearanceBody1"
-                    tools:text="Writter" />
+                    tools:text="Writer" />
 
             </GridLayout>
 
